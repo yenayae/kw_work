@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div>
+      <div class="navbar">
+        <div>
+          <h1>Dashboard</h1>
+        </div>
+
+        <div class="navbar-right">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <img
+            class="user-profile"
+            src="duck flowe 2.png"
+            alt="user profile {link}"
+          />
+        </div>
+      </div>
+      <div class="header">
+        <h2>Welcome, Walnut Valley Senior Living</h2>
+        <span>Today is Thursday, March 20, 2025</span>
+      </div>
+
+      <div class="content">
+        <div class="performance-summary-container">
+          <div class="card">
+            <div class="card-title">
+              <span class="card-title-span">Performance Summary for </span>
+              <button class="calendar-button">
+                <i class="fa-solid fa-calendar-day"></i>
+                <span>Last 30 days</span>
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <hr />
+            <div class="details-container">
+              <div class="details-card">
+                <div>
+                  <div class="details-title">
+                    <span>Refunds Initiated</span>
+                    <i class="fa-regular fa-circle-question"></i>
+                  </div>
+                  <span class="details-amount">$0.00</span>
+                </div>
+                <div class="details-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+              <div class="details-card">
+                <div>
+                  <div class="details-title">
+                    <span>Refunds Initiated</span>
+                    <i class="fa-regular fa-circle-question"></i>
+                  </div>
+                  <span class="details-amount">$0.00</span>
+                </div>
+                <div class="details-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+              <div class="details-card">
+                <div>
+                  <div class="details-title">
+                    <span>Refunds Initiated</span>
+                    <i class="fa-regular fa-circle-question"></i>
+                  </div>
+                  <span class="details-amount">$0.00</span>
+                </div>
+                <div class="details-arrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards-container">
+          <div class="card-left">
+            <div class="card">
+              <div class="card-title generic">
+                <div>
+                  <span class="card-title-span">Processing Payments</span>
+                </div>
+                <div>
+                  <span class="primary">View All</span>
+                </div>
+              </div>
+              <hr />
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="card">
+              <div class="card-title generic">
+                <div>
+                  <span class="card-title-span">Settlements</span>
+                  <i class="fa-regular fa-circle-question"></i>
+                </div>
+                <div>
+                  <button class="export-button">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Export</span>
+                  </button>
+                </div>
+              </div>
+              <hr />
+              <div class="card-content">
+                <div class="card-entry-header">
+                  <span><b>03-24-2025</b></span>
+                  <span> <b>$17,000.00 </b> (4 payments)</span>
+                </div>
+
+                <div class="card-entry-list">
+                  <!-- one item start -->
+                  <div class="entry-item">
+                    <div class="entry-item-name">
+                      <span>Joan Tull</span>
+                    </div>
+                    <div>
+                      <span>$12,000.00</span>
+                      <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                  </div>
+                  <!-- <hr /> -->
+                  <!-- one item end -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

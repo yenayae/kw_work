@@ -1,0 +1,189 @@
+h1,h2 {
+    margin: 0;
+}
+
+.primary {
+    color: var(--primary-color);
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    color: var(--primary-color);
+    
+
+    /* background-color: pink; */
+
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+
+}
+
+.user-profile {
+    height: 40px;
+    width: 40px;
+    background-color: yellow;
+    border-radius: 50%;
+
+    margin-left: 30px;
+}
+
+.header {
+    color: white;
+    background-color: var(--primary-color)
+}
+
+.header h2 {
+    margin-bottom: 5px;
+}
+
+.navbar, .header {
+    padding: 25px 20px;
+}
+
+.content {
+    padding: 25px 20px;
+}
+
+.card {
+    border: 1px solid var(--outline-color);
+    border-radius: 10px;
+    padding: 15px;
+
+    background-color: white;
+    /* flex: 1; */
+    
+}
+
+.card-title{
+    font-weight: 600;
+    font-size: 1em;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    height: 32px;
+}
+
+.card-title.generic  {
+    justify-content: space-between;
+}
+
+.card-title-span {
+    margin-right: 10px;
+}
+
+.calendar-button {
+    border: 1px solid  var(--primary-color);
+    border-radius: 40px;
+
+    background-color: white;
+    color: var(--primary-color);
+
+    font-size: .9em;
+    font-weight: 600;
+
+    padding: 5px 20px;
+    /* margin-left: 10px; */
+
+    cursor: pointer;
+
+}
+
+.calendar-button span {
+    margin: 0 5px;
+}
+
+hr {
+    margin: 15px 0;
+    border: .1px solid var(--outline-color);
+    
+}
+
+.details-container {
+    display: flex;
+    gap: 15px;
+
+}
+
+.details-card {
+    border: 1px solid var(--outline-color);
+    border-radius: 10px;
+    flex: 1;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px 20px;
+    /* margin: 20px; */
+
+
+}
+
+.details-title {
+    color: grey;
+    margin-bottom: 5px;
+}
+
+.details-amount{
+    font-size: 1.5em;
+    font-weight: 700;
+    
+}
+
+.details-arrow {
+    color: rgb(164, 164, 164);
+}
+
+
+.cards-container {
+    /* background-color: pink; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.card-left, .card-right {
+    flex: 1;
+}
+
+.export-button {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 40px;
+    border: none;
+
+    font-size: .9em;
+    font-weight: 700;
+
+    padding: 10px 15px;
+    
+    cursor: pointer;
+}
+
+.card-entry-header, .entry-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.entry-item-name {
+    margin-left: 20px;
+}
+
+
+
+
