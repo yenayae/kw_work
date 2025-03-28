@@ -7,9 +7,17 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard.css" />
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- font awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- google materials -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
     />
   </head>
   <body>
@@ -44,15 +52,17 @@
                 <i class="fa-solid fa-chevron-right"></i>
               </button>
             </div>
-            <hr />
+            <hr class="performance-summary" />
             <div class="details-container">
               <div class="details-card">
                 <div>
                   <div class="details-title">
                     <span>Refunds Initiated</span>
-                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="material-symbols-outlined info-icon">
+                      info
+                    </span>
                   </div>
-                  <span class="details-amount">$0.00</span>
+                  <span class="money-amount">$0.00</span>
                 </div>
                 <div class="details-arrow">
                   <i class="fa-solid fa-chevron-right"></i>
@@ -62,9 +72,11 @@
                 <div>
                   <div class="details-title">
                     <span>Refunds Initiated</span>
-                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="material-symbols-outlined info-icon">
+                      info
+                    </span>
                   </div>
-                  <span class="details-amount">$0.00</span>
+                  <span class="money-amount">$0.00</span>
                 </div>
                 <div class="details-arrow">
                   <i class="fa-solid fa-chevron-right"></i>
@@ -74,9 +86,11 @@
                 <div>
                   <div class="details-title">
                     <span>Refunds Initiated</span>
-                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="material-symbols-outlined info-icon">
+                      info
+                    </span>
                   </div>
-                  <span class="details-amount">$0.00</span>
+                  <span class="money-amount">$0.00</span>
                 </div>
                 <div class="details-arrow">
                   <i class="fa-solid fa-chevron-right"></i>
@@ -86,26 +100,35 @@
           </div>
         </div>
 
+        <!-- card section 1 start -->
         <div class="cards-container">
           <div class="card-left">
             <div class="card">
               <div class="card-title generic">
                 <div>
-                  <span class="card-title-span">Processing Payments</span>
+                  <span>Processing Payments</span>
                 </div>
                 <div>
                   <span class="primary">View All</span>
                 </div>
               </div>
-              <hr />
+              <hr class="generic" />
+
+              <div class="card-content" id="processing-payments-container">
+                <!-- processing payments items -->
+              </div>
             </div>
           </div>
           <div class="card-right">
             <div class="card">
               <div class="card-title generic">
                 <div>
-                  <span class="card-title-span">Settlements</span>
-                  <i class="fa-regular fa-circle-question"></i>
+                  <span>Settlements</span>
+                  <span
+                    class="material-symbols-outlined info-icon info-icon-card"
+                  >
+                    info
+                  </span>
                 </div>
                 <div>
                   <button class="export-button">
@@ -114,34 +137,57 @@
                   </button>
                 </div>
               </div>
-              <hr />
-              <div class="card-content">
-                <div class="card-entry-header">
-                  <span><b>03-24-2025</b></span>
-                  <span> <b>$17,000.00 </b> (4 payments)</span>
-                </div>
-
-                <div class="card-entry-list">
-                  <!-- one item start -->
-                  <div class="entry-item">
-                    <div class="entry-item-name">
-                      <span>Joan Tull</span>
-                    </div>
-                    <div>
-                      <span>$12,000.00</span>
-                      <i class="fa-solid fa-chevron-right"></i>
-                    </div>
-                  </div>
-                  <!-- <hr /> -->
-                  <!-- one item end -->
-                </div>
+              <hr class="generic" />
+              <div class="card-content" id="settlements-container">
+                <!-- settlement items -->
               </div>
             </div>
           </div>
         </div>
+        <!-- card section 1 end -->
+
+        <!-- card section 2 start -->
+        <div class="cards-container">
+          <div class="card-left generic">
+            <div class="card">
+              <div class="card-title generic">
+                <div>
+                  <span id="past-due-invoice">Past Due Invoices (1)</span>
+                </div>
+                <div>
+                  <span class="primary">View All</span>
+                </div>
+              </div>
+              <span class="past-due-span">Past Due Balance</span>
+              <span id="past-due-balance-amount">$6,100.01</span>
+              <hr class="generic" />
+              <div class="card-content" id="past-due-invoices-container">
+                <!-- past due invoices -->
+              </div>
+            </div>
+          </div>
+          <div class="card-right generic">
+            <div class="card">
+              <div class="card-title generic">
+                <div>
+                  <span>Recent Activity</span>
+                </div>
+                <div>
+                  <span class="material-symbols-outlined"> tune </span>
+                </div>
+              </div>
+              <hr class="generic" />
+              <div class="card-content" id="recent-activities">
+                <!-- recent activities -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- card section 2 end -->
       </div>
     </div>
 
-    <script src="dashboard.js"></script>
+    <script type="module" src="dashboard.js"></script>
   </body>
 </html>
