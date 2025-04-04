@@ -10,6 +10,11 @@
   --dark-icon-color: rgb(94, 94, 94);
 }
 
+.material-symbols-outlined {
+  visibility: hidden;
+  font-display: block;
+}
+
 body {
   margin: 0;
   /* font-family: "Roboto", sans-serif; */
@@ -157,10 +162,19 @@ h2 {
   color: white;
 }
 
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
 .filter-bar {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: 5px;
+
   white-space: nowrap;
 
   font-weight: 600;
@@ -187,6 +201,12 @@ h2 {
   display: flex;
   align-items: center;
   /* justify-content: center; */
+}
+
+.filter-button:hover {
+  background-color: var(--lighter-outline-color);
+  cursor: pointer;
+  /* color: white; */
 }
 
 .material-symbols-outlined.plus-icon,
@@ -285,6 +305,7 @@ td.link {
 
 .status {
   text-transform: uppercase;
+  white-space: nowrap;
   font-size: 0.8em;
   font-weight: 600;
   padding: 3px 10px;
@@ -304,6 +325,19 @@ td.link {
 .status.past-due {
   background-color: rgb(230, 168, 168);
   color: rgb(97, 7, 7);
+}
+
+.material-symbols-outlined.frequency-icon {
+  font-size: 1.5em;
+  color: var(--selected-color);
+  /* background-color: pink; */
+}
+
+.frequency {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* background-color: pink; */
 }
 
 /* table css end */

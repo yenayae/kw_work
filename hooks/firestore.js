@@ -18,6 +18,12 @@ const DEV_USER_ID = 1;
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
+/* DASHBOARD FUNCTIONS 
+- fetchSettlements
+- fetchProcessingPayments
+- fetchPastDueInvoices
+- fetchRecentActivities
+*/
 //fetch settlemnts data
 export async function fetchSettlements(userId = DEV_USER_ID) {
   const settlementsRef = collection(db, "settlements");
@@ -137,4 +143,22 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
     console.error("Error fetching activities:", error);
     return [];
   }
+}
+
+/* INVOICES FUNCTIONS
+- fetchInvoices
+*/
+
+//fetch invoices data
+export async function fetchInvoices(userId = DEV_USER_ID) {
+  const invoicesRef = collection(db, "invoices");
+  const invoicesSnapshot = await getDocs(invoicesRef);
+
+  let data = [];
+
+  invoicesSnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
 }

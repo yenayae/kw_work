@@ -1,0 +1,11 @@
+invoices: 
+- createdAt
+- lastUpdatedAt
+- customerName
+- dueDate
+- frequency
+- invoiceAmount
+- entryNumber
+- issueDate
+- lastEvent
+- paidStatus

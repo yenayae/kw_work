@@ -77,140 +77,17 @@
           </div>
         </div>
 
-        <div class="filter-container">
-          <div class="filter-bar">
-            <span class="material-symbols-outlined"> tune </span>
-            <span>Filter By:</span>
-            <button class="filter-button">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Invoice Status</span>
-            </button>
-            <button class="filter-button">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Amount</span>
-            </button>
-            <button class="filter-button">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Issue Date</span>
-            </button>
-            <button class="filter-button">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Due Date</span>
-            </button>
-            <button class="filter-button">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Invoice Date(s)</span>
-            </button>
-            <button class="filter-button">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Payemnt Status</span>
-            </button>
-          </div>
+        <div class="filter-container" id="filter-container">
+          <span class="material-symbols-outlined"> tune </span>
+          <span>Filter By:</span>
         </div>
 
-        <div class="table-container">
-          <table class="generic-table">
-            <thead>
-              <tr class="header-row">
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <div class="arrow-container">
-                      <span class="material-symbols-outlined arrow-icon">
-                        keyboard_arrow_down
-                      </span>
-                      <span>Payment Date</span>
-                    </div>
-                    <div>
-                      <span class="material-symbols-outlined header-icon">
-                        unfold_more
-                      </span>
-                    </div>
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Amount</span>
-                    <span class="material-symbols-outlined header-icon">
-                      unfold_more
-                    </span>
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Customer</span>
-                    <span class="material-symbols-outlined header-icon">
-                      unfold_more
-                    </span>
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Payment Status</span>
-                    <span class="material-symbols-outlined header-icon">
-                      unfold_more
-                    </span>
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Source</span>
-                    <span class="material-symbols-outlined header-icon">
-                      unfold_more
-                    </span>
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Payment Method</span>
-                    <span class="material-symbols-outlined header-icon">
-                      unfold_more
-                    </span>
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content actions">
-                    <span>Actions</span>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>
-                  <div class="arrow-container">
-                    <span class="material-symbols-outlined arrow-icon">
-                      keyboard_arrow_down
-                    </span>
-                    <span>04/04/2025</span>
-                  </div>
-                </td>
-                <td class="money">$40.00</td>
-                <td class="link">John Doe</td>
-                <td>
-                  <span class="status scheduled"> Scheduled </span>
-                </td>
-                <td class="link">Invoice #001111</td>
-                <td>
-                  <div class="payment-method">
-                    <span>bank icon and card info</span>
-                  </div>
-                </td>
-
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon disabled"
-                    >
-                      more_vert
-                    </span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="table-container" id="table-container">
+          <!-- table content -->
         </div>
       </div>
     </div>
+
+    <script type="module" src="invoices.js"></script>
   </body>
 </html>
