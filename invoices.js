@@ -1,10 +1,13 @@
 import { fetchInvoices } from "./hooks/firestore.js";
 import createTable from "./hooks/createTable.js";
+import createFilterBar from "./hooks/createFilterBar.js";
 import loadIcons from "./hooks/loadIcons.js";
 import formatCost from "./hooks/formatCost.js";
 import formatDate from "./hooks/formatDate.js";
 import formatInvoiceEntryId from "./hooks/formatInvoiceEntryId.js";
+import checkStatus from "./hooks/checkStatus.js";
 
+/* display invoices start */
 const FILTER_OPTIONS = [
   "Invoice Status",
   "Amount",
@@ -31,6 +34,7 @@ function displayInvoices(invoices) {
   filterContainer.appendChild(filterBar);
 
   displayTable(invoices);
+  loadIcons();
 }
 
 function displayTable(invoices) {
@@ -58,7 +62,7 @@ function displayTable(invoices) {
     return [
       formatInvoiceEntryId(invoice.entryId ?? 0), // default to 0 if undefined
       invoice.customerName ?? "N/A", // fallback name
-      invoice.paidStatus ?? "Unknown", // fallback status
+      checkStatus(invoice.dueDate, invoice.paidStatus) ?? "Unknown", // fallback status
       formatCost(invoice.invoiceAmount ?? 0), // default to 0 if missing
       invoice.frequency ?? "N/A",
       formatDate(invoice.dueDate) ?? "N/A",
@@ -70,36 +74,20 @@ function displayTable(invoices) {
 
   const table = createTable(headers, content);
   invoicesContainer.appendChild(table);
+} // load icons
+/* display invoices end */
+
+/* uploading to database start */
+async function addOneTimeInvoice() {
+  console.log("add one time invoice clicked");
 }
 
-function createFilterBar(filters) {
-  // create filter bar container if it doesn't already exist
-  const filterBar = document.createElement("div");
-  filterBar.classList.add("filter-bar");
-
-  // iterate over filters and create buttons
-  filters.forEach((filter) => {
-    const button = document.createElement("button");
-    button.classList.add("filter-button");
-
-    const icon = document.createElement("span");
-    icon.classList.add("material-symbols-outlined", "plus-icon");
-    icon.textContent = "add";
-
-    const label = document.createElement("span");
-    label.textContent = filter;
-
-    // append icon and label to the button
-    button.appendChild(icon);
-    button.appendChild(label);
-
-    // append the button to the filter bar
-    filterBar.appendChild(button);
-  });
-
-  return filterBar;
+async function addRecurringInvoice() {
+  console.log("add recurring invoice clicked");
 }
+
+/* uploading to database end */
 
 //call function
-loadIcons(); // load icons
+loadIcons();
 loadInvoices();

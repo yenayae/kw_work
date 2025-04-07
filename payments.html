@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invoices</title>
+    <title>Payments</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="invoices.css" />
 
@@ -23,7 +23,7 @@
     <div>
       <div class="navbar">
         <div>
-          <h1>Invoices</h1>
+          <h1>Payments</h1>
         </div>
         <div class="navbar-right">
           <span class="material-symbols-outlined"> search </span>
@@ -41,10 +41,10 @@
             <span>All</span>
           </div>
           <div class="tab">
-            <span>One-Time</span>
+            <span>Invoice</span>
           </div>
           <div class="tab">
-            <span>Recurring</span>
+            <span>Pay-By-Link</span>
           </div>
         </div>
 
@@ -64,16 +64,6 @@
               </span>
               <span>Export</span>
             </button>
-
-            <button class="options-button blue" onclick="addOneTimeInvoice()">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Invoice</span>
-            </button>
-
-            <button class="options-button blue" onclick="addRecurringInvoice()">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span>Recurring Invoice</span>
-            </button>
           </div>
         </div>
 
@@ -88,6 +78,6 @@
       </div>
     </div>
 
-    <script type="module" src="invoices.js"></script>
+    <script type="module" src="payments.js"></script>
   </body>
 </html>

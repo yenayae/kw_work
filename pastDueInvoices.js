@@ -4,6 +4,7 @@ import formatTimePassed from "./hooks/formatTimePassed.js";
 
 export default async function loadPastDueInvoices() {
   const pastDueInvoices = await fetchPastDueInvoices();
+  console.log("Past Due Invoices:", pastDueInvoices);
 
   //display information
   displayPastDueInvoices(pastDueInvoices);

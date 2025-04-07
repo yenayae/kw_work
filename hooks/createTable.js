@@ -66,7 +66,7 @@ export default function createTable(headers, content) {
 
       // handle first cell case
       if (i === 0) {
-        // First cell with arrow icon
+        console.log("First cell:", cell);
         const arrowContainer = document.createElement("div");
         arrowContainer.classList.add("arrow-container");
 
@@ -80,19 +80,22 @@ export default function createTable(headers, content) {
         arrowContainer.appendChild(arrowIcon);
         arrowContainer.appendChild(label);
         td.appendChild(arrowContainer);
+
+        if (header == "Invoice #") {
+          td.classList.add("link");
+        }
       }
 
       //if the cell should be a link
-      if (
+      else if (
         header === "Customer" ||
         header === "Source" ||
         header === "Invoice #"
       ) {
         td.classList.add("link");
-        if (i !== 0) {
-          contentSpan.textContent = cell;
-          td.appendChild(contentSpan);
-        }
+
+        contentSpan.textContent = cell;
+        td.appendChild(contentSpan);
       }
 
       //if the cell should be formatted for money
@@ -164,7 +167,8 @@ export default function createTable(headers, content) {
 
       //default case
       else {
-        td.textContent = cell;
+        contentSpan.textContent = cell;
+        td.appendChild(contentSpan);
       }
 
       tr.appendChild(td);

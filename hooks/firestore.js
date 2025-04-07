@@ -76,7 +76,6 @@ export async function fetchPastDueInvoices(userId = DEV_USER_ID) {
 
   const pastDueQuery = query(
     invoicesRef,
-    where("userId", "==", userId),
     where("dueDate", "<", today),
     where("paidStatus", "==", false)
   );
@@ -147,6 +146,7 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
 
 /* INVOICES FUNCTIONS
 - fetchInvoices
+- addInvoice
 */
 
 //fetch invoices data
@@ -157,6 +157,52 @@ export async function fetchInvoices(userId = DEV_USER_ID) {
   let data = [];
 
   invoicesSnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+}
+
+export async function addInvoice(invoiceData) {
+  try {
+    const invoicesRef = collection(db, "invoices");
+    await addDoc(invoicesRef, invoiceData);
+    console.log("Invoice added successfully:", invoiceData);
+  } catch (error) {
+    console.error("Error adding invoice:", error);
+  }
+}
+
+/* PAYMENTS FUNCTIONS
+- fetchPayments
+*/
+
+//fetch payments data
+export async function fetchPayments(userId = DEV_USER_ID) {
+  const paymentsRef = collection(db, "payments");
+  const paymentsSnapshot = await getDocs(paymentsRef);
+
+  let data = [];
+
+  paymentsSnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+}
+
+/* PRICING FUNCTIONS 
+- fetchProducts
+*/
+
+//fetch products data
+export async function fetchProducts() {
+  const productsRef = collection(db, "products");
+  const productsSnapshot = await getDocs(productsRef);
+
+  let data = [];
+
+  productsSnapshot.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() });
   });
 

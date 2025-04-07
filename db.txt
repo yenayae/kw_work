@@ -9,3 +9,14 @@ invoices:
 - issueDate
 - lastEvent
 - paidStatus
+
+payments
+- createdAt
+- lastUpdatedAt
+- paymentDate
+- amount
+- customerName
+- paidStatus
+- source
+- paymentMethod
+- actions
