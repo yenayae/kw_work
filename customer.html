@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pricing</title>
+    <title>Manage Customers</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="invoices.css" />
 
@@ -23,7 +23,7 @@
     <div>
       <div class="navbar">
         <div>
-          <h1>Pricing</h1>
+          <h1 id="header-label">Resident/Payer Name</h1>
         </div>
         <div class="navbar-right">
           <span class="material-symbols-outlined"> search </span>
@@ -37,14 +37,20 @@
 
       <div class="content">
         <div class="tab-bar">
-          <div class="tab selected" onclick="setPageTab('products')">
-            <span>Products</span>
+          <div class="tab selected" onclick="setPageTab('profile')">
+            <span>Profile</span>
           </div>
-          <div class="tab" onclick="setPageTab('discounts')">
-            <span>Discounts & Surcharges</span>
+          <div class="tab" onclick="setPageTab('payment')">
+            <span>Payment History</span>
           </div>
-          <div class="tab" onclick="setPageTab('taxes')">
-            <span>Taxes</span>
+          <div class="tab" onclick="setPageTab('invoice')">
+            <span>Invoice History</span>
+          </div>
+          <div class="tab" onclick="setPageTab('quote')">
+            <span>Quote History</span>
+          </div>
+          <div class="tab" onclick="setPageTab('recurring')">
+            <span>Recurring Invoices</span>
           </div>
         </div>
 
@@ -52,7 +58,7 @@
           <div class="options-left search-wrapper">
             <input
               type="text"
-              placeholder="Search in products..."
+              placeholder="Search customers..."
               class="table-search-bar"
               id="table-search-bar"
             />
@@ -66,9 +72,9 @@
               <span>Export</span>
             </button>
 
-            <button class="options-button blue" onclick="addRecurringInvoice()">
+            <button class="options-button blue" onclick="">
               <span class="material-symbols-outlined plus-icon"> add </span>
-              <span id="add-item-button">Product</span>
+              <span id="add-item-button">Customer</span>
             </button>
           </div>
         </div>
@@ -84,6 +90,6 @@
       </div>
     </div>
 
-    <script type="module" src="pricing.js"></script>
+    <script type="module" src="customer.js"></script>
   </body>
 </html>

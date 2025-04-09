@@ -4,12 +4,16 @@ import createFilterBar from "./hooks/createFilterBar.js";
 import loadIcons from "./hooks/loadIcons.js";
 import formatCost from "./hooks/formatCost.js";
 import formatDate from "./hooks/formatDate.js";
+import clearTable from "./hooks/clearTable.js";
+import setSearchBarPlaceholder from "./hooks/setSearchBarPlaceholder.js";
 
 let pageTab = "products"; // default tab
 
 //change tabs function
 window.setPageTab = function (tab) {
   pageTab = tab;
+
+  console.log(pageTab);
 
   // Remove 'selected' class from all tabs
   const tabs = document.querySelectorAll(".tab");
@@ -24,41 +28,46 @@ window.setPageTab = function (tab) {
 
   loadIcons();
 
-  //clear filter bar content
-  const filterBar = document.querySelector("#filter-bar");
-  if (filterBar.firstChild) {
-    console.log("clearing filter bar");
-    filterBar.innerHTML = ""; // Clear the filter bar
-  }
-
-  //clear previous table content
-  const tableContainer = document.getElementById("table-container");
-  if (tableContainer.firstChild) {
-    console.log("clearing");
-    tableContainer.innerHTML = ""; // Clear the table container
-  }
+  //clear previous content
+  clearTable();
 
   //load corresponding data based on the selected tab
   if (pageTab === "products") {
+    //set specific option button
+    document.querySelector("#add-item-button").textContent = "Product";
+
     loadProducts();
   } else if (pageTab === "discounts") {
+    //set specific option button
+    document.querySelector("#add-item-button").textContent =
+      "Discount / Surcharge";
+
     loadDiscounts();
   } else if (pageTab === "taxes") {
+    //set specific option button
+    document.querySelector("#add-item-button").textContent = "Tax";
+
     loadTaxes();
   }
+
+  //set search bar placeholder
+  setSearchBarPlaceholder(tab);
 };
 
 /* display invoices start */
-const FILTER_OPTIONS = [
-  "Price",
-  "Category",
-  "Qty on Hand",
-  "Last Inventory Update",
-  "Date Added",
-  "Taxable",
-];
+const FILTER_OPTIONS = {
+  products: [
+    "Price",
+    "Category",
+    "Qty on Hand",
+    "Last Inventory Update",
+    "Date Added",
+    "Taxable",
+  ],
+  discounts: ["Type", "Calculation", "Date Added"],
+  taxes: ["Region", "Tax Rate", "Effective Date"],
+};
 
-//load products function
 async function loadProducts() {
   console.log("Loading products...");
   const products = await fetchProducts();
@@ -67,23 +76,28 @@ async function loadProducts() {
   displayData(products);
 }
 
-//load discounts
 async function loadDiscounts() {
   console.log("Loading discounts...");
-  // Fetch discounts from the database or API
+
+  // TODO: Fetch discounts from the database or API
+  const discounts = await fetchProducts();
+  displayData(discounts);
 }
 
-function loadTaxes() {
+async function loadTaxes() {
   console.log("Loading taxes...");
-  // Fetch taxes from the database or API
+  // TODO: Fetch taxes from the database or API
+  const taxes = await fetchProducts();
+  displayData(taxes);
 }
 
 function displayData(products) {
   console.log("products:", products);
+  console.log("pagetabe:", pageTab);
 
   // set filters
   const filterContainer = document.querySelector("#filter-container");
-  const filterBar = createFilterBar(FILTER_OPTIONS);
+  const filterBar = createFilterBar(FILTER_OPTIONS[pageTab]);
   filterContainer.appendChild(filterBar);
 
   displayTable(products);
@@ -130,4 +144,5 @@ function displayTable(products) {
 
 //call function
 loadIcons();
+setSearchBarPlaceholder(pageTab);
 loadProducts();

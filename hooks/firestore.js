@@ -208,3 +208,35 @@ export async function fetchProducts() {
 
   return data;
 }
+
+/* CUSTOMER FUNCTIONS
+- fetchResidents
+- fetchPayers
+ */
+
+//fetch customers
+export async function fetchResidents() {
+  const residentsRef = collection(db, "residents");
+  const residentsSnapshot = await getDocs(residentsRef);
+
+  let data = [];
+
+  residentsSnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+}
+
+export async function fetchPayers() {
+  const payersRef = collection(db, "payers");
+  const payersSnapshot = await getDocs(payersRef);
+
+  let data = [];
+
+  payersSnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+}

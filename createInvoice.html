@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="invoices.css" />
+    <link rel="stylesheet" href="createInvoice.css" />
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- google materials -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    />
+  </head>
+
+  <body>
+    <form class="create-form" onSubmit="{handleSubmit}">
+      <label>
+        Invoice #:
+        <input type="text" name="entryId" required />
+      </label>
+
+      <label>
+        Customer (Resident or Payer Name):
+        <input type="text" name="customerName" required />
+      </label>
+
+      <label>
+        Status:
+        <select name="paidStatus" required>
+          <option value="paid">Paid</option>
+          <option value="unpaid">Unpaid</option>
+          <option value="overdue">Overdue</option>
+        </select>
+      </label>
+
+      <label>
+        Invoice Amount:
+        <input type="number" name="invoiceAmount" step="0.01" required />
+      </label>
+
+      <label>
+        Frequency:
+        <select name="frequency" required>
+          <option value="One-time">One-time</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Quarterly">Quarterly</option>
+          <option value="Annually">Annually</option>
+        </select>
+      </label>
+
+      <label>
+        Due Date:
+        <input type="date" name="dueDate" required />
+      </label>
+
+      <label>
+        Issue Date:
+        <input type="date" name="issueDate" required />
+      </label>
+
+      <button type="submit">Upload Invoice</button>
+    </form>
+  </body>
+</html>

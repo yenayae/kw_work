@@ -26,6 +26,7 @@ function displayPayments(payments) {
   filterContainer.appendChild(filterBar);
 
   displayTable(payments);
+  loadIcons();
 }
 
 function displayTable(payments) {

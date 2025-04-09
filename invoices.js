@@ -7,6 +7,14 @@ import formatDate from "./hooks/formatDate.js";
 import formatInvoiceEntryId from "./hooks/formatInvoiceEntryId.js";
 import checkStatus from "./hooks/checkStatus.js";
 
+function formatCustomerName(resident, payer) {
+  if (payer.length === 0) {
+    return resident;
+  }
+
+  return `${resident} c/o ${payer}`;
+}
+
 /* display invoices start */
 const FILTER_OPTIONS = [
   "Invoice Status",
@@ -61,13 +69,13 @@ function displayTable(invoices) {
   const content = invoices.map((invoice) => {
     return [
       formatInvoiceEntryId(invoice.entryId ?? 0), // default to 0 if undefined
-      invoice.customerName ?? "N/A", // fallback name
+      formatCustomerName(invoice.resident, invoice.payer) ?? "N/A", // fallback name
       checkStatus(invoice.dueDate, invoice.paidStatus) ?? "Unknown", // fallback status
       formatCost(invoice.invoiceAmount ?? 0), // default to 0 if missing
       invoice.frequency ?? "N/A",
       formatDate(invoice.dueDate) ?? "N/A",
       formatDate(invoice.issueDate) ?? "N/A",
-      invoice.lastEvent ?? "None",
+      invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
       true,
     ];
   });
