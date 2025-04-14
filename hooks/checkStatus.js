@@ -1,5 +1,5 @@
 export default function checkStatus(dueDate, payStatus) {
-  if (!dueDate || !payStatus) {
+  if (!dueDate) {
     return "n/a";
   }
 

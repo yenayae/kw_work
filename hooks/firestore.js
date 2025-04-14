@@ -8,7 +8,11 @@ import {
   query,
   where,
   doc,
-  onSnapshot,
+  serverTimestamp,
+  addDoc,
+  runTransaction,
+  increment,
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // FIRESTORE FUNCTIONS USED IN DASHBORD.HTML
@@ -146,7 +150,7 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
 
 /* INVOICES FUNCTIONS
 - fetchInvoices
-- addInvoice
+- uploadInvoice
 */
 
 //fetch invoices data
@@ -163,11 +167,72 @@ export async function fetchInvoices(userId = DEV_USER_ID) {
   return data;
 }
 
-export async function addInvoice(invoiceData) {
+//fetch and sort invoices by category
+export async function fetchSortedInvoices({
+  sortField = "invoiceNumber",
+  sortDirection = "asc",
+} = {}) {
+  const invoicesRef = collection(db, "invoices");
+  const invoicesQuery = query(invoicesRef, orderBy(sortField, sortDirection));
+  const snapshot = await getDocs(invoicesQuery);
+
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+}
+
+//fetch by frequency: 0 = one time 1 = recurring
+export async function fetchInvoicesByFrequency(frequency) {
+  const invoicesRef = collection(db, "invoices");
+  const invoicesQuery = query(
+    invoicesRef,
+    where("frequencyType", "==", frequency)
+  );
+  const invoicesSnapshot = await getDocs(invoicesQuery);
+
+  let data = [];
+
+  invoicesSnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+  return data;
+}
+
+export async function uploadInvoice(invoiceData) {
   try {
+    const counterRef = doc(db, "counters", "invoiceNumber");
+
+    // run transaction to safely increment invoice number
+    const invoiceNumber = await runTransaction(db, async (transaction) => {
+      const counterDoc = await transaction.get(counterRef);
+
+      if (!counterDoc.exists()) {
+        throw new Error("Invoice counter document does not exist!");
+      }
+
+      const current = counterDoc.data().current || 0;
+      const nextInvoiceNumber = current + 1;
+
+      // update the counter
+      transaction.update(counterRef, {
+        current: increment(1),
+      });
+
+      // return the new invoice number as a string (with zero-padding)
+      return nextInvoiceNumber.toString().padStart(4, "0"); // e.g. "0002"
+    });
+
     const invoicesRef = collection(db, "invoices");
-    await addDoc(invoicesRef, invoiceData);
-    console.log("Invoice added successfully:", invoiceData);
+
+    const invoiceWithExtras = {
+      ...invoiceData,
+      invoiceNumber,
+      ...(invoiceData.createdAt ? {} : { createdAt: serverTimestamp() }),
+    };
+
+    await addDoc(invoicesRef, invoiceWithExtras);
+    console.log("Invoice added successfully:", invoiceWithExtras);
   } catch (error) {
     console.error("Error adding invoice:", error);
   }

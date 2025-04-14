@@ -1,1 +1,2 @@
 hooks/firebase-config.js
+hooks/stripe-config.js

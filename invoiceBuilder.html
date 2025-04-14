@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pricing</title>
+    <title>Invoice Builder</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="invoices.css" />
-    <link rel="stylesheet" href="createInvoice.css" />
+    <link rel="stylesheet" href="invoiceBuilder.css" />
 
     <!-- font awesome -->
     <link
@@ -22,7 +22,56 @@
   </head>
 
   <body>
-    <form class="create-form" onSubmit="{handleSubmit}">
+    <form onsubmit="addInvoice(event)" method="POST" class="create-form">
+      <label for="invoice-amount">
+        Invoice Amount:
+        <input
+          type="number"
+          id="invoice-amount"
+          name="invoiceAmount"
+          step="0.01"
+          required
+        />
+      </label>
+
+      <button
+        style="
+          display: block;
+          margin: 0 auto;
+          background-color: blue;
+          color: white;
+          padding: 10px 20px;
+          text-align: center;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+        "
+        type="submit"
+      >
+        ADD TEST INVOICE
+      </button>
+    </form>
+
+    <button
+      style="
+        display: block;
+        margin: 0 auto;
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      "
+      onclick="payInvoice()"
+    >
+      TEST PAYING INVOICE
+    </button>
+
+    <!-- <form class="create-form" onSubmit="{handleSubmit}">
       <label>
         Invoice #:
         <input type="text" name="entryId" required />
@@ -68,6 +117,8 @@
       </label>
 
       <button type="submit">Upload Invoice</button>
-    </form>
+    </form> -->
+
+    <script type="module" src="invoiceBuilder.js"></script>
   </body>
 </html>

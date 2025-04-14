@@ -37,13 +37,13 @@
 
       <div class="content">
         <div class="tab-bar">
-          <div class="tab selected">
+          <div class="tab selected" onclick="setPageTab('all')">
             <span>All</span>
           </div>
-          <div class="tab">
+          <div class="tab" onclick="setPageTab('one-time')">
             <span>One-Time</span>
           </div>
-          <div class="tab">
+          <div class="tab" onclick="setPageTab('recurring')">
             <span>Recurring</span>
           </div>
         </div>
@@ -54,10 +54,11 @@
               type="text"
               placeholder="Search In Invoices..."
               class="table-search-bar"
+              id="table-search-bar"
             />
             <span class="material-symbols-outlined search-icon"> search </span>
           </div>
-          <div class="options-right">
+          <div class="options-right" id="options-buttons">
             <button class="options-button">
               <span class="material-symbols-outlined export-icon">
                 download
@@ -65,7 +66,10 @@
               <span>Export</span>
             </button>
 
-            <button class="options-button blue" onclick="addOneTimeInvoice()">
+            <button
+              class="options-button blue"
+              onclick="window.location.href='invoiceBuilder.html'"
+            >
               <span class="material-symbols-outlined plus-icon"> add </span>
               <span>Invoice</span>
             </button>

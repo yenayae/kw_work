@@ -1,4 +1,4 @@
-export default function createTable(headers, content) {
+export function createTable(headers, content, onSort = null) {
   const table = document.createElement("table");
   table.classList.add("generic-table");
 
@@ -41,6 +41,17 @@ export default function createTable(headers, content) {
       icon.classList.add("material-symbols-outlined", "header-icon");
       icon.textContent = "unfold_more";
       div.appendChild(icon);
+
+      // if a sort handler is provided, make clickable
+      if (onSort) {
+        let sortDirection = "asc";
+
+        th.addEventListener("click", () => {
+          // toggle direction each click
+          sortDirection = sortDirection === "asc" ? "desc" : "asc";
+          onSort(header, sortDirection);
+        });
+      }
     } else {
       div.classList.add("actions");
     }
@@ -53,7 +64,60 @@ export default function createTable(headers, content) {
   table.appendChild(thead);
 
   // ===== Create TBODY =====
+  table.appendChild(createTableContent(headers, content));
+
+  return table;
+}
+
+export function updateTable(headers, content, table) {
+  //clear previous content
+  const tbody = table.querySelector("tbody");
+  if (tbody) {
+    table.removeChild(tbody);
+  }
+
+  // fill in table
+  const newTbody = createTableContent(headers, content);
+  table.appendChild(newTbody);
+  return table;
+}
+
+function createStatusComponent(status) {
+  const statusSpan = document.createElement("span");
+
+  statusSpan.classList.add("status", status.replace(/\s+/g, "-").toLowerCase());
+  statusSpan.textContent = status;
+  return statusSpan;
+}
+
+export function createTableContent(headers, content) {
+  // ===== Create TBODY =====
   const tbody = document.createElement("tbody");
+  tbody.classList.add("generic-table-body");
+
+  if (content.length === 0) {
+    //create empty state message
+
+    const emptySpan = document.createElement("span");
+    emptySpan.textContent = "No data available.";
+    emptySpan.classList.add("empty-state-message");
+    tbody.appendChild(emptySpan);
+
+    for (let i = 0; i < 1; i++) {
+      const emptyRow = document.createElement("tr");
+      headers.forEach(() => {
+        const td = document.createElement("td");
+        td.classList.add("empty-state-td");
+
+        const emptyDiv = document.createElement("div");
+        emptyDiv.classList.add("empty-state-div");
+        td.appendChild(emptyDiv);
+
+        emptyRow.appendChild(td);
+      });
+      tbody.appendChild(emptyRow);
+    }
+  }
 
   content.forEach((row) => {
     const tr = document.createElement("tr");
@@ -153,7 +217,7 @@ export default function createTable(headers, content) {
         frequencyDiv.appendChild(frequencyIcon);
         frequencyDiv.appendChild(frequencyLabel);
 
-        if (cell == "monthly") {
+        if (cell.toLowerCase() == "monthly") {
           frequencyIcon.textContent = "sync";
         }
 
@@ -177,17 +241,7 @@ export default function createTable(headers, content) {
     tbody.appendChild(tr);
   });
 
-  table.appendChild(tbody);
-
-  return table;
-}
-
-function createStatusComponent(status) {
-  const statusSpan = document.createElement("span");
-
-  statusSpan.classList.add("status", status.replace(/\s+/g, "-").toLowerCase());
-  statusSpan.textContent = status;
-  return statusSpan;
+  return tbody;
 }
 
 /*
