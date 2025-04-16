@@ -1,6 +1,6 @@
 import { fetchPayments } from "./hooks/firestore.js";
 import loadIcons from "./hooks/loadIcons.js";
-import createTable from "./hooks/createTable.js";
+import { createTable } from "./hooks/createTable.js";
 import createFilterBar from "./hooks/createFilterBar.js";
 import formatDate from "./hooks/formatDate.js";
 import formatCost from "./hooks/formatCost.js";

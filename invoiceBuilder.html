@@ -66,59 +66,13 @@
         cursor: pointer;
         font-size: 16px;
       "
-      onclick="payInvoice()"
+      id="pay-invoice-button"
     >
       TEST PAYING INVOICE
     </button>
 
-    <!-- <form class="create-form" onSubmit="{handleSubmit}">
-      <label>
-        Invoice #:
-        <input type="text" name="entryId" required />
-      </label>
-
-      <label>
-        Customer (Resident or Payer Name):
-        <input type="text" name="customerName" required />
-      </label>
-
-      <label>
-        Status:
-        <select name="paidStatus" required>
-          <option value="paid">Paid</option>
-          <option value="unpaid">Unpaid</option>
-          <option value="overdue">Overdue</option>
-        </select>
-      </label>
-
-      <label>
-        Invoice Amount:
-        <input type="number" name="invoiceAmount" step="0.01" required />
-      </label>
-
-      <label>
-        Frequency:
-        <select name="frequency" required>
-          <option value="One-time">One-time</option>
-          <option value="Monthly">Monthly</option>
-          <option value="Quarterly">Quarterly</option>
-          <option value="Annually">Annually</option>
-        </select>
-      </label>
-
-      <label>
-        Due Date:
-        <input type="date" name="dueDate" required />
-      </label>
-
-      <label>
-        Issue Date:
-        <input type="date" name="issueDate" required />
-      </label>
-
-      <button type="submit">Upload Invoice</button>
-    </form> -->
-
+    <script src="https://js.stripe.com/v3/"></script>
     <script type="module" src="invoiceBuilder.js"></script>
+    <script type="module" src="testInvoicePay.js"></script>
   </body>
 </html>

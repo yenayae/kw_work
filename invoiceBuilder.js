@@ -1,8 +1,6 @@
 import { uploadInvoice } from "./hooks/firestore.js";
 
-window.payInvoice = function () {
-  console.log("paying invoice");
-};
+console.log("ughhhh");
 
 window.addInvoice = function (event) {
   event.preventDefault();
@@ -11,7 +9,7 @@ window.addInvoice = function (event) {
   const invoiceCredits = 0;
   const invoiceTotal = invoiceSubtotal - invoiceDiscount - invoiceCredits;
 
-  console.log(invoiceAmount);
+  console.log(invoiceTotal);
 
   console.log("Adding invoice...");
 

@@ -1,0 +1,15 @@
+- invoices html stuff
+- stripe, invoice connection
+- imagine how the flow would look like: 
+	- create an invoice
+	- where does it go? (email, fill up in display table)
+	- once clicked, go to resident portal: pay now or set up autopay
+	- if click on pay now, what does the wbesite look like
+	- if click autopay, what does the website look like
+	- when completing payment, it should show up in payments tab
+- recurring payment case in the cycle
+
+heroku scheduler : auto feature?
+- every month, how are invoices are sent out again
+
+create a flow chart to present: 

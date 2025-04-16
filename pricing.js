@@ -1,10 +1,10 @@
 import { fetchProducts } from "./hooks/firestore.js";
-import createTable from "./hooks/createTable.js";
+import { createTable } from "./hooks/createTable.js";
 import createFilterBar from "./hooks/createFilterBar.js";
 import loadIcons from "./hooks/loadIcons.js";
 import formatCost from "./hooks/formatCost.js";
 import formatDate from "./hooks/formatDate.js";
-import clearTable from "./hooks/clearTable.js";
+import { clearTable } from "./hooks/clearTable.js";
 import setSearchBarPlaceholder from "./hooks/setSearchBarPlaceholder.js";
 
 let pageTab = "products"; // default tab
