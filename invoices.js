@@ -145,7 +145,29 @@ function formatContent(content) {
       formatDate(invoice.dueDateTimestamp) ?? "N/A",
       formatDate(invoice.issueDateTimestamp) ?? "N/A",
       invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
-      true,
+      [
+        {
+          label: "View",
+          icon: "visibility",
+          action: () => {
+            console.log("View invoice clicked: #", invoice.invoiceNumber);
+          },
+        },
+        {
+          label: "Edit Invoice",
+          icon: "edit",
+          action: () => {
+            console.log("Edit invoice clicked: #", invoice.invoiceNumber);
+          },
+        },
+        {
+          label: "Delete Invoice",
+          icon: "delete",
+          action: () => {
+            console.log("Delete invoice clicked: #", invoice.invoiceNumber);
+          },
+        },
+      ],
     ];
   });
 }

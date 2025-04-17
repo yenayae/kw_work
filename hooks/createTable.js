@@ -90,6 +90,78 @@ function createStatusComponent(status) {
   return statusSpan;
 }
 
+function createActionsMenu(functions) {
+  //create elements
+  const actionsMenu = document.createElement("div");
+  actionsMenu.classList.add("actions-menu");
+
+  const actionsList = document.createElement("ul");
+  actionsList.classList.add("actions-list");
+
+  functions.forEach((func) => {
+    const actionsListItem = document.createElement("li");
+
+    const actionsItem = document.createElement("div");
+    actionsItem.classList.add("actions-item");
+
+    actionsItem.addEventListener("click", () => {
+      func.action();
+    });
+
+    const actionsIcon = document.createElement("span");
+    actionsIcon.classList.add("material-symbols-outlined", "action-icon");
+    actionsIcon.textContent = func.icon;
+
+    const actionsLabel = document.createElement("span");
+    actionsLabel.textContent = func.label;
+
+    //append items
+    actionsItem.appendChild(actionsIcon);
+    actionsItem.appendChild(actionsLabel);
+    actionsListItem.appendChild(actionsItem);
+    actionsList.appendChild(actionsListItem);
+  });
+
+  actionsMenu.appendChild(actionsList);
+
+  return actionsMenu;
+}
+
+function closeAllMenus() {
+  document.querySelectorAll(".actions-menu").forEach((menu) => {
+    menu.style.display = "none";
+  });
+}
+
+function actionsButtonClick(button) {
+  console.log("Actions button clicked!");
+
+  // First, close all menus
+  closeAllMenus();
+
+  const td = button.closest(".actions-td");
+  if (!td) return;
+
+  const menu = td.querySelector(".actions-menu");
+  if (!menu) return;
+
+  // Show the clicked menu
+  menu.style.display = "block";
+
+  // Prevent this click from triggering the document click listener
+  setTimeout(() => {
+    document.addEventListener("click", handleDocumentClick);
+  }, 0);
+}
+
+function handleDocumentClick(e) {
+  const isInsideMenu = e.target.closest(".actions-td");
+  if (!isInsideMenu) {
+    closeAllMenus();
+    document.removeEventListener("click", handleDocumentClick);
+  }
+}
+
 export function createTableContent(headers, content) {
   // ===== Create TBODY =====
   const tbody = document.createElement("tbody");
@@ -186,18 +258,29 @@ export function createTableContent(headers, content) {
         td.classList.add("actions-td");
         const btn = document.createElement("button");
         btn.classList.add("actions-button");
+        btn.addEventListener("click", () => {
+          actionsButtonClick(btn);
+        });
 
         //options icon
         const icon = document.createElement("span");
         icon.classList.add("material-symbols-outlined", "actions-icon");
-        if (!cell) {
-          icon.classList.add("disabled");
-        }
+
         icon.textContent = "more_vert";
 
         //append items
         btn.appendChild(icon);
         td.appendChild(btn);
+
+        //actions stuff
+        if (cell.length == 0 || !cell) {
+          icon.classList.add("disabled");
+          btn.disabled = true;
+        } else {
+          //create actions list
+          const actionsMenu = createActionsMenu(cell);
+          td.appendChild(actionsMenu);
+        }
       }
 
       //auto renew or one time payment

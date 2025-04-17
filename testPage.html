@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Invoices</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="invoices.css" />
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- google materials -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    />
+  </head>
+  <body>
+    <div>
+      <div class="navbar">
+        <div>
+          <h1>Invoices</h1>
+        </div>
+        <div class="navbar-right">
+          <span class="material-symbols-outlined"> search </span>
+          <img
+            class="user-profile"
+            src="duck flowe 2.png"
+            alt="user profile {TODO: link}"
+          />
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="tab-bar">
+          <div class="tab selected" onclick="setPageTab('all')">
+            <span>All</span>
+          </div>
+          <div class="tab" onclick="setPageTab('one-time')">
+            <span>One-Time</span>
+          </div>
+          <div class="tab" onclick="setPageTab('recurring')">
+            <span>Recurring</span>
+          </div>
+        </div>
+
+        <div class="options-bar">
+          <div class="options-left search-wrapper">
+            <input
+              type="text"
+              placeholder="Search In Invoices..."
+              class="table-search-bar"
+              id="table-search-bar"
+            />
+            <span class="material-symbols-outlined search-icon"> search </span>
+          </div>
+          <div class="options-right" id="options-buttons">
+            <button class="options-button">
+              <span class="material-symbols-outlined export-icon">
+                download
+              </span>
+              <span>Export</span>
+            </button>
+
+            <button
+              class="options-button blue"
+              onclick="window.location.href='invoiceBuilder.html'"
+            >
+              <span class="material-symbols-outlined plus-icon"> add </span>
+              <span>Invoice</span>
+            </button>
+
+            <button class="options-button blue" onclick="addRecurringInvoice()">
+              <span class="material-symbols-outlined plus-icon"> add </span>
+              <span>Recurring Invoice</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-container" id="filter-container">
+          <span class="material-symbols-outlined"> tune </span>
+          <span>Filter By:</span>
+        </div>
+        <div class="table-container" id="table-container">
+          <table class="generic-table">
+            <thead>
+              <tr class="header-row">
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <div class="arrow-container">
+                      <span
+                        class="material-symbols-outlined arrow-icon"
+                        style="visibility: visible"
+                        >keyboard_arrow_down</span
+                      ><span>Invoice #</span>
+                    </div>
+                    <span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Customer</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Status</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Invoice Amount</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Frequency</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Due Date</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Issue Date</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content">
+                    <span>Last Event</span
+                    ><span
+                      class="material-symbols-outlined header-icon"
+                      style="visibility: visible"
+                      >unfold_more</span
+                    >
+                  </div>
+                </th>
+                <th class="header-item">
+                  <div class="header-item-content actions">
+                    <span>Actions</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="generic-table-body">
+              <tr>
+                <td class="link">
+                  <div class="arrow-container">
+                    <span
+                      class="material-symbols-outlined arrow-icon"
+                      style="visibility: visible"
+                      >keyboard_arrow_down</span
+                    ><span>#0000003</span>
+                  </div>
+                </td>
+                <td class="link"><span>John Doe c/o John Doe</span></td>
+                <td><span class="status past-due">past due</span></td>
+                <td class="money">$250.00</td>
+                <td>
+                  <div class="frequency">
+                    <span
+                      class="material-symbols-outlined frequency-icon"
+                      style="visibility: visible"
+                      >payment</span
+                    ><span>One-Time</span>
+                  </div>
+                </td>
+                <td><span>05-13-2024</span></td>
+                <td><span>05-13-2024</span></td>
+                <td><span>None</span></td>
+                <td class="actions-td">
+                  <button
+                    class="actions-button"
+                    onclick="actionsButtonClick(this)"
+                  >
+                    <span
+                      class="material-symbols-outlined actions-icon"
+                      style="visibility: visible"
+                      >more_vert</span
+                    >
+                  </button>
+                  <div class="actions-menu">
+                    <ul class="actions-list">
+                      <li>
+                        <div class="actions-item">
+                          <span class="material-symbols-outlined action-icon">
+                            search
+                          </span>
+                          <span>Send Reminder</span>
+                        </div>
+                      </li>
+                      <li class="actions-item">Edit</li>
+                      <li class="actions-item">Delete</li>
+                      <li class="actions-item">Send Reminder</li>
+                      <li class="actions-item">Mark as Paid</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="link">
+                  <div class="arrow-container">
+                    <span
+                      class="material-symbols-outlined arrow-icon"
+                      style="visibility: visible"
+                      >keyboard_arrow_down</span
+                    ><span>#0000002</span>
+                  </div>
+                </td>
+                <td class="link"><span>Lame Name c/o John Doe</span></td>
+                <td><span class="status past-due">past due</span></td>
+                <td class="money">$250.00</td>
+                <td>
+                  <div class="frequency">
+                    <span
+                      class="material-symbols-outlined frequency-icon"
+                      style="visibility: visible"
+                      >payment</span
+                    ><span>One-Time</span>
+                  </div>
+                </td>
+                <td><span>05-13-2024</span></td>
+                <td><span>05-13-2024</span></td>
+                <td><span>None</span></td>
+                <td class="actions-td">
+                  <button
+                    class="actions-button"
+                    onclick="actionsButtonClick(this)"
+                  >
+                    <span
+                      class="material-symbols-outlined actions-icon"
+                      style="visibility: visible"
+                      >more_vert</span
+                    >
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="link">
+                  <div class="arrow-container">
+                    <span
+                      class="material-symbols-outlined arrow-icon"
+                      style="visibility: visible"
+                      >keyboard_arrow_down</span
+                    ><span>#0000005</span>
+                  </div>
+                </td>
+                <td class="link"><span>John Doe</span></td>
+                <td><span class="status past-due">past due</span></td>
+                <td class="money">$250.00</td>
+                <td>
+                  <div class="frequency">
+                    <span
+                      class="material-symbols-outlined frequency-icon"
+                      style="visibility: visible"
+                      >sync</span
+                    ><span>Monthly</span>
+                  </div>
+                </td>
+                <td><span>05-13-2024</span></td>
+                <td><span>05-13-2024</span></td>
+                <td><span>None</span></td>
+                <td class="actions-td">
+                  <button class="actions-button">
+                    <span
+                      class="material-symbols-outlined actions-icon"
+                      style="visibility: visible"
+                      >more_vert</span
+                    >
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="link">
+                  <div class="arrow-container">
+                    <span
+                      class="material-symbols-outlined arrow-icon"
+                      style="visibility: visible"
+                      >keyboard_arrow_down</span
+                    ><span>#0000001</span>
+                  </div>
+                </td>
+                <td class="link"><span>Cool Name c/o John Doe</span></td>
+                <td><span class="status past-due">past due</span></td>
+                <td class="money">$250.00</td>
+                <td>
+                  <div class="frequency">
+                    <span
+                      class="material-symbols-outlined frequency-icon"
+                      style="visibility: visible"
+                      >payment</span
+                    ><span>One-Time</span>
+                  </div>
+                </td>
+                <td><span>05-13-2024</span></td>
+                <td><span>05-13-2024</span></td>
+                <td><span>None</span></td>
+                <td class="actions-td">
+                  <button class="actions-button">
+                    <span
+                      class="material-symbols-outlined actions-icon"
+                      style="visibility: visible"
+                      >more_vert</span
+                    >
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="link">
+                  <div class="arrow-container">
+                    <span
+                      class="material-symbols-outlined arrow-icon"
+                      style="visibility: visible"
+                      >keyboard_arrow_down</span
+                    ><span>#0000004</span>
+                  </div>
+                </td>
+                <td class="link"><span>John Doe</span></td>
+                <td><span class="status past-due">past due</span></td>
+                <td class="money">$250.00</td>
+                <td>
+                  <div class="frequency">
+                    <span
+                      class="material-symbols-outlined frequency-icon"
+                      style="visibility: visible"
+                      >payment</span
+                    ><span>One-Time</span>
+                  </div>
+                </td>
+                <td><span>05-13-2024</span></td>
+                <td><span>05-13-2024</span></td>
+                <td><span>None</span></td>
+                <td class="actions-td">
+                  <button class="actions-button">
+                    <span
+                      class="material-symbols-outlined actions-icon"
+                      style="visibility: visible"
+                      >more_vert</span
+                    >
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="link">
+                  <div class="arrow-container">
+                    <span
+                      class="material-symbols-outlined arrow-icon"
+                      style="visibility: visible"
+                      >keyboard_arrow_down</span
+                    ><span>#0000006</span>
+                  </div>
+                </td>
+                <td class="link"><span>John Doe</span></td>
+                <td><span class="status past-due">past due</span></td>
+                <td class="money">$10.00</td>
+                <td>
+                  <div class="frequency">
+                    <span
+                      class="material-symbols-outlined frequency-icon"
+                      style="visibility: visible"
+                      >sync</span
+                    ><span>Monthly</span>
+                  </div>
+                </td>
+                <td><span>05-13-2024</span></td>
+                <td><span>05-13-2024</span></td>
+                <td><span>None</span></td>
+                <td class="actions-td">
+                  <button class="actions-button">
+                    <span
+                      class="material-symbols-outlined actions-icon"
+                      style="visibility: visible"
+                      >more_vert</span
+                    >
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- <script type="module" src="invoices.js"></script> -->
+    <script>
+      function actionsButtonClick(button) {
+        console.log("Actions button clicked!");
+
+        // Find the closest parent <td>
+        const td = button.closest(".actions-td");
+
+        if (!td) {
+          return;
+        }
+
+        // Find the corresponding actions-menu inside this <td>
+        const menu = td.querySelector(".actions-menu");
+
+        if (!menu) {
+          return;
+        }
+
+        // Toggle display
+        if (menu.style.display === "block") {
+          menu.style.display = "none";
+        } else {
+          menu.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>

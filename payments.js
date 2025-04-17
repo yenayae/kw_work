@@ -50,7 +50,29 @@ function displayTable(payments) {
       payment.paymentStatus ?? "N/A",
       payment.source ?? "N/A",
       payment.paymentMethod ?? "N/A",
-      false,
+      [
+        {
+          label: "Refund",
+          icon: "attach_money",
+          action: () => {
+            console.log("View invoice clicked ID: ", payment.id);
+          },
+        },
+        {
+          label: "Send Receipt",
+          icon: "send",
+          action: () => {
+            console.log("Edit invoice clicked ID: ", payment.id);
+          },
+        },
+        {
+          label: "Download Receipt",
+          icon: "download",
+          action: () => {
+            console.log("Delete invoice clicked ID: ", payment.id);
+          },
+        },
+      ],
     ];
   });
 

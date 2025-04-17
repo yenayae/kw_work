@@ -292,6 +292,55 @@ td.link {
 
 .actions-td {
   text-align: center;
+  position: relative;
+}
+
+.actions-menu {
+  display: none;
+
+  position: absolute;
+  top: 100%;
+  right: -5px;
+  z-index: 1000;
+
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.205);
+}
+
+.actions-list {
+  list-style: none;
+  padding: 5px 10px;
+  margin: 0;
+
+  text-align: left;
+}
+
+.actions-item {
+  height: 30px;
+  display: flex;
+  align-items: center;
+
+  font-size: 1em;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  gap: 10px;
+}
+
+.actions-item span {
+  white-space: nowrap;
+}
+
+.material-symbols-outlined.action-icon {
+  font-size: 1.4em;
+  font-weight: 600;
+  color: black;
+  cursor: pointer;
+
+  visibility: visible;
+  /* background-color: pink; */
 }
 
 .material-symbols-outlined.arrow-icon {
