@@ -131,7 +131,7 @@ function displayTable(products) {
       product.lastInventoryUpdate ?? "N/A",
       formatDate(product.dateAdded) ?? "N/A",
       (product.taxable ? "Yes" : "No") ?? "N/A",
-      true,
+      [],
     ];
   });
 

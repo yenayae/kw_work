@@ -136,22 +136,29 @@ function closeAllMenus() {
 function actionsButtonClick(button) {
   console.log("Actions button clicked!");
 
-  // First, close all menus
-  closeAllMenus();
-
   const td = button.closest(".actions-td");
   if (!td) return;
 
   const menu = td.querySelector(".actions-menu");
   if (!menu) return;
 
-  // Show the clicked menu
-  menu.style.display = "block";
+  // toggle the menu visibility
+  const isMenuOpen = menu.style.display === "block";
 
-  // Prevent this click from triggering the document click listener
-  setTimeout(() => {
-    document.addEventListener("click", handleDocumentClick);
-  }, 0);
+  // close all menus first
+  closeAllMenus();
+
+  if (!isMenuOpen) {
+    menu.style.display = "block";
+
+    // prevent this click from triggering the document click listener
+    setTimeout(() => {
+      document.addEventListener("click", handleDocumentClick);
+    }, 0);
+  } else {
+    // remove the listener if closing manually
+    document.removeEventListener("click", handleDocumentClick);
+  }
 }
 
 function handleDocumentClick(e) {
@@ -169,7 +176,6 @@ export function createTableContent(headers, content) {
 
   if (content.length === 0) {
     //create empty state message
-
     const emptySpan = document.createElement("span");
     emptySpan.textContent = "No data available.";
     emptySpan.classList.add("empty-state-message");
