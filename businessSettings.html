@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Business Settings</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="invoices.css" />
+    <link rel="stylesheet" href="businessSettings.css" />
 
     <!-- font awesome -->
     <link
@@ -54,28 +54,79 @@
           </div>
         </div>
 
-        <div class="options-bar">
-          <div class="options-left search-wrapper">
-            <input
-              type="text"
-              placeholder="Search in products..."
-              class="table-search-bar"
-              id="table-search-bar"
-            />
-            <span class="material-symbols-outlined search-icon"> search </span>
+        <div class="card">
+          <div class="card-left">
+            <h2 class="card-label">Processing Fee</h2>
+            <span class="card-description">
+              Determine who will pay the 3% processing fee for credit card
+              payments.
+            </span>
+            <span class="label-bold"
+              >ACH (bank-to-bank) transactions are free!</span
+            >
           </div>
-          <div class="options-right">
-            <button class="options-button">
-              <span class="material-symbols-outlined export-icon">
-                download
-              </span>
-              <span>Export</span>
-            </button>
+          <hr />
+          <div class="card-right">
+            <div class="card-right-content">
+              <span class="label-bold"
+                >Select who will pay the 3% credit card processing fee.</span
+              >
+              <div>
+                <input
+                  type="radio"
+                  id="business"
+                  name="business"
+                  value="business"
+                />
+                <label for="business">My Business</label><br />
+              </div>
 
-            <button class="options-button blue" onclick="addRecurringInvoice()">
-              <span class="material-symbols-outlined plus-icon"> add </span>
-              <span id="add-item-button">Product</span>
-            </button>
+              <div>
+                <input
+                  type="radio"
+                  id="customer"
+                  name="customer"
+                  value="customer"
+                />
+                <label for="customer">My Customers</label><br />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-left">
+            <h2 class="card-label">Bank Account for Deposits</h2>
+            <span class="card-description">
+              Payments from your customers will be deposited into this account.
+            </span>
+          </div>
+          <hr />
+          <div class="card-right">
+            <div class="card-right-content bank-account">
+              <div class="info-card">
+                <span class="label-bold">Account Holder Name</span>
+                <span>Checking ...1234</span>
+              </div>
+
+              <div class="info-card">
+                <span class="label-bold">Bank</span>
+                <span>Test Bank Name</span>
+              </div>
+
+              <div class="info-card">
+                <span class="label-bold">Routing Number</span>
+                <span>01010101</span>
+              </div>
+
+              <div class="info-card">
+                <span class="label-bold">Account Number</span>
+                <span>******1234</span>
+              </div>
+            </div>
+            <hr />
+
+            <button class="options-button">Replace Bank Account</button>
           </div>
         </div>
       </div>
