@@ -1,42 +1,44 @@
 import stripeConfig from "./hooks/stripe-config.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("pay-invoice-button");
+const stripe = window.Stripe(stripeConfig.publishableKey);
 
-  if (!button) {
-    console.error("Pay invoice button not found!");
-    return;
-  }
+const elements = stripe.elements();
+const cardElement = elements.create("card");
+cardElement.mount("#card-element");
 
-  button.addEventListener("click", async () => {
-    console.log("paying invoice");
+const form = document.getElementById("payment-form");
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-    try {
-      const response = await fetch(
-        "https://kinnwell-20e1b8a898e0.herokuapp.com/create-checkout-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const session = await response.json();
-
-      // ✅ Use window.Stripe instead of just Stripe
-      const stripe = window.Stripe(stripeConfig.publishableKey);
-
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (result.error) {
-        alert(result.error.message);
-      }
-    } catch (err) {
-      console.error("Error creating checkout session:", err);
-      alert("There was an error. Check the console.");
+  // Call your backend to create the payment intent
+  const response = await fetch(
+    "https://your-heroku-url.com/create-payment-intent",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        amount: 5000, // $50 in cents
+        connectedAccountId: "acct_1ABCDEF...", // replace with actual connected account
+      }),
     }
-  });
+  );
+
+  const { clientSecret } = await response.json();
+
+  const { error, paymentIntent } = await stripe.confirmCardPayment(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+      },
+    }
+  );
+
+  if (error) {
+    alert(error.message);
+  } else if (paymentIntent.status === "succeeded") {
+    alert("Payment successful!");
+  }
 });

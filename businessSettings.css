@@ -14,6 +14,10 @@
   border-radius: 10px;
 }
 
+.card.processing-fee {
+  min-height: 200px;
+}
+
 .card-left,
 .card-right {
   display: flex;
@@ -81,6 +85,11 @@ hr {
 .label-bold {
   font-size: 0.9em;
   font-weight: 700;
+}
+
+.input-option input,
+.input-option label {
+  cursor: pointer;
 }
 
 .info-card {
