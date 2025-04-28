@@ -83,6 +83,7 @@ window.addInvoice = async function (event) {
     customerId: selectedCustomer.stripeId,
     amount: invoiceData.total,
     currency: "usd",
+    dueDate: invoiceData.dueDateTimestamp,
   };
 
   console.log(invoiceData);
@@ -128,6 +129,7 @@ window.addInvoice = async function (event) {
 
 function createInvoiceObject(data) {
   console.log(data);
+  const DUMMY_DUE_DATE = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60;
 
   const invoiceSubtotal = Math.floor(
     parseFloat(document.getElementById("invoice-amount").value) * 100
@@ -154,11 +156,11 @@ function createInvoiceObject(data) {
     isPaid: false,
     dueDateIndex: 0,
     dueDateVal: "05/14/2024",
-    dueDateTimestamp: new Date("2024-05-14"),
+    dueDateTimestamp: DUMMY_DUE_DATE,
     issueDateVal: "05/14/2024",
-    issueDateTimestamp: new Date("2024-05-14"),
+    issueDateTimestamp: Date.now(),
     notifyDateVal: "05/14/2024",
-    notifyDateTimestamp: new Date("2024-05-14"),
+    notifyDateTimestamp: Date.now(),
     subtotal: invoiceSubtotal,
     discounts: invoiceDiscount,
     credits: invoiceCredits,
