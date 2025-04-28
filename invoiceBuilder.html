@@ -22,6 +22,20 @@
   </head>
 
   <body>
+    <div class="invoice-form">
+      <form action="" method="POST">
+        <div class="customer">
+          <div class="billto">
+            <span>Bill To: &nbsp;</span>
+            <div id="customer-selected"></div>
+          </div>
+
+          <button onclick="searchCustomers()">Search Customers</button>
+          <div id="customer-list"></div>
+        </div>
+      </form>
+    </div>
+
     <form onsubmit="addInvoice(event)" method="POST" class="create-form">
       <label for="invoice-amount">
         Invoice Amount:
@@ -73,6 +87,6 @@
 
     <script src="https://js.stripe.com/v3/"></script>
     <script type="module" src="invoiceBuilder.js"></script>
-    <script type="module" src="testInvoicePay.js"></script>
+    <!-- <script type="module" src="testInvoicePay.js"></script> -->
   </body>
 </html>

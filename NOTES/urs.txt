@@ -1,0 +1,5 @@
+- resident portal / billign page
+
+- resident payment methods + connecting 
+	receiving invoice
+	paying invoice

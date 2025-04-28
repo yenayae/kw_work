@@ -15,3 +15,60 @@ body {
 
   gap: 20px;
 }
+
+.invoice-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.customer {
+  width: 400px;
+}
+
+.billto {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#customer-selected {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* height: 50px; */
+}
+
+.customer-entry {
+  background-color: white;
+  /* border-radius: 5px; */
+  cursor: pointer;
+}
+
+.customer-entry:hover {
+  background-color: lightgray;
+}
+
+.remove-customer-button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  /* background-color: blue; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.material-symbols-outlined.close-icon {
+  font-size: 20px;
+  cursor: pointer;
+}

@@ -140,7 +140,7 @@ function formatContent(content) {
         { name: invoice.payerName, id: invoice.payerId }
       ) ?? "N/A", // fallback name
       checkStatus(invoice.dueDateTimestamp, invoice.isPaid) ?? "Unknown", // fallback status
-      formatCost(invoice.total ?? 0), // default to 0 if missing
+      formatCost(parseFloat(invoice.total) / 100 ?? 0), // default to 0 if missing
       invoice.frequencyInterval ?? "N/A",
       formatDate(invoice.dueDateTimestamp) ?? "N/A",
       formatDate(invoice.issueDateTimestamp) ?? "N/A",

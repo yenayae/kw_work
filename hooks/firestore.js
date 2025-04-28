@@ -22,6 +22,20 @@ const DEV_USER_ID = 1;
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
+//generic function to fetch data from firestore
+export async function fetchData(collectionName) {
+  const collectionRef = collection(db, collectionName);
+  const snapshot = await getDocs(collectionRef);
+
+  let data = [];
+
+  snapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+}
+
 /* DASHBOARD FUNCTIONS 
 - fetchSettlements
 - fetchProcessingPayments
@@ -277,6 +291,7 @@ export async function fetchProducts() {
 /* CUSTOMER FUNCTIONS
 - fetchResidents
 - fetchPayers
+- addCustomer
  */
 
 //fetch customers
@@ -304,4 +319,19 @@ export async function fetchPayers() {
   });
 
   return data;
+}
+
+export async function addCustomer(customerData) {
+  try {
+    const customersRef = collection(db, "customers");
+
+    const customerWithExtras = {
+      ...customerData,
+      ...(customerData.createdAt ? {} : { createdAt: serverTimestamp() }),
+    };
+
+    const docRef = await addDoc(customersRef, customerWithExtras);
+  } catch (error) {
+    console.error("Error adding customer:", error);
+  }
 }
