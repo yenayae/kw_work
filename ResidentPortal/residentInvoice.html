@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resident Invoice</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="residentInvoice.css" />
+
+    <!-- google materials -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="page-header">
+        <div class="location">
+          <span>TEST Location</span>
+        </div>
+        <div class="account">
+          <span>Hello, CUSTOMER NAME</span>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="main-wrapper">
+        <div class="main">
+          <div class="content">
+            <div class="resident-navbar">
+              <div>
+                <div class="navbar-wrapper">
+                  <div class="navbar-profile">
+                    <span class="material-symbols-outlined">
+                      account_circle
+                    </span>
+                    <span>CUSTOMER NAME</span>
+                    <span class="material-symbols-outlined">
+                      arrow_drop_down
+                    </span>
+                  </div>
+                </div>
+
+                <div class="navbar-wrapper">
+                  <ul class="navbar-tabs">
+                    <li>
+                      <div class="nav-tab">
+                        <span class="material-symbols-outlined tab-icon">
+                          home
+                        </span>
+                        <span>Home</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span class="material-symbols-outlined tab-icon">
+                          cards_star
+                        </span>
+                        <span>Attended Events</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span class="material-symbols-outlined tab-icon">
+                          calendar_month
+                        </span>
+                        <span>Activity Calendar</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span class="material-symbols-outlined tab-icon">
+                          restaurant
+                        </span>
+                        <span>Dining</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span class="material-symbols-outlined tab-icon">
+                          assignment
+                        </span>
+                        <span>Forms</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span class="material-symbols-outlined tab-icon">
+                          contact_page
+                        </span>
+                        <span>Resident Profile</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="navbar-wrapper">
+                <div class="general-info">
+                  <h3>General Information</h3>
+                  <div class="general-info-item">
+                    <span class="material-symbols-outlined general-icon">
+                      pin_drop
+                    </span>
+                    <span>123 W. Main Street, Los Angeles, CA, 91123 </span>
+                  </div>
+
+                  <div class="general-info-item">
+                    <span class="material-symbols-outlined general-icon">
+                      call
+                    </span>
+                    <span>123-123-1234 </span>
+                  </div>
+
+                  <div class="general-info-item">
+                    <span class="material-symbols-outlined general-icon">
+                      mail
+                    </span>
+                    <span>test@gmail.com</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-wrapper">
+              <div class="content-header">
+                <div>
+                  <h2 class="content-title">Billing</h2>
+                </div>
+                <div class="content-tabs">
+                  <div>
+                    <button class="content-tab selected">Overview</button>
+                  </div>
+                  <div>
+                    <button class="content-tab">Billing History</button>
+                  </div>
+                  <div>
+                    <button class="content-tab">Details & Settings</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cards-wrapper">
+                <div class="card-section">
+                  <div class="card">
+                    <div class="card-header">
+                      <span>Your Current Balance</span>
+                      <span id="current-balance">$0.00</span>
+                      <span id="next-bill">Next bill due on DATE</span>
+                    </div>
+
+                    <div class="card-notifications">
+                      <div class="notification">
+                        <span class="material-symbols-outlined red">
+                          fiber_manual_record
+                        </span>
+                        <span class="bold"
+                          >Attention: You have bast due bill(s)</span
+                        >
+                      </div>
+                      <div class="notification">
+                        <span class="material-symbols-outlined green">
+                          fiber_manual_record
+                        </span>
+                        <span
+                          >You have schedule a payment of AMOUNT that will occur
+                          on DATE</span
+                        >
+                      </div>
+                    </div>
+                    <div class="card-buttons">
+                      <button class="pay-button blue" onclick="payNow()">
+                        Pay Now
+                      </button>
+                      <button class="pay-button grey">Set Up Autopay</button>
+                    </div>
+
+                    <div class="month">
+                      <span>May (this month)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-section">
+                  <div class="card">
+                    <div class="card-header">
+                      <span>Scheduled Payments</span>
+                      <div class="space-between-section">
+                        <span id="scheduled-payments">$0.00</span>
+                        <span>00/00/0000</span>
+                      </div>
+                      <span>INVOICE DESCRIPTION</span>
+                      <div class="space-between-section">
+                        <span>Auto-Payment created by CREATOR</span>
+                        <button class="edit-button">Edit</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-header">
+                      <span>Last Payment</span>
+                    </div>
+                    <div class="card-content">
+                      <div class="last-payment-content">
+                        <div class="space-between-section">
+                          <span>Paid on 00/00/0000</span>
+                          <span>$0.00</span>
+                        </div>
+                        <span>Confirmation #: 0000-0000</span>
+                        <span>Paid by CUSTOMER</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of cards -->
+            </div>
+            <!-- end of main -->
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="module" src="residentInvoice.js"></script>
+  </body>
+</html>

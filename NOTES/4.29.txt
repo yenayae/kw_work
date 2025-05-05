@@ -1,0 +1,29 @@
+- connect bank accounts instead of cards
+	- only if autopay is on
+- make connected account client side
+	- setting set to autopayout
+	- directly to bankaccount or autopayout everyday
+payment amount instead of invoice? 
+- '
+frequency might not be necessary for invoices (and dispaly on table)
+
+
+invoice status accuracy
+
+customers can pay (dummy customer page just to simulate paying)
+	- have option for card or bank account
+table status will update
+dashboard of only paid invoices
+
+notes
+receipts: paid stuff
+
+====================================================
+customers can connect bank account
+simulate paying
+update invoice data status through HEROKU
+
+payment portal for resident 
+- billing history
+- upcoming payments
+=====================================================

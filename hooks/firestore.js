@@ -168,9 +168,26 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
 */
 
 //fetch invoices data
-export async function fetchInvoices(userId = DEV_USER_ID) {
+export async function fetchInvoices(
+  customerId = undefined,
+  paidStatus = undefined
+) {
   const invoicesRef = collection(db, "invoices");
-  const invoicesSnapshot = await getDocs(invoicesRef);
+
+  let constraints = [];
+
+  if (customerId !== undefined) {
+    constraints.push(where("payerId", "==", customerId));
+  }
+
+  if (paidStatus !== undefined) {
+    constraints.push(where("statusIndex", "==", paidStatus));
+  }
+
+  const q =
+    constraints.length > 0 ? query(invoicesRef, ...constraints) : invoicesRef;
+
+  const invoicesSnapshot = await getDocs(q);
 
   let data = [];
 

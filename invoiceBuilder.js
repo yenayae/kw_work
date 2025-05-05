@@ -2,6 +2,9 @@ import { uploadInvoice, fetchData } from "./hooks/firestore.js";
 import stripeConfig from "../hooks/stripe-config.js";
 import loadIcons from "./hooks/loadIcons.js";
 
+import { serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import formatDate from "./hooks/formatDate.js";
+
 let selectedCustomer = null;
 const TEST_ACCOUNT_ID = "acct_1RFsHoAk76Jp7S9G";
 
@@ -157,8 +160,8 @@ function createInvoiceObject(data) {
     dueDateIndex: 0,
     dueDateVal: "05/14/2024",
     dueDateTimestamp: DUMMY_DUE_DATE,
-    issueDateVal: "05/14/2024",
-    issueDateTimestamp: Date.now(),
+    issueDateVal: formatDate(serverTimestamp()),
+    issueDateTimestamp: serverTimestamp(),
     notifyDateVal: "05/14/2024",
     notifyDateTimestamp: Date.now(),
     subtotal: invoiceSubtotal,

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Customer</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="addCustomer.css" />
   </head>
   <body>
     <header>
@@ -21,7 +22,53 @@
         <label for="phone">Phone:</label>
         <input type="tel" id="phone" name="phone" required />
 
-        <div id="card-element"></div>
+        <div class="payment-method-wrapper">
+          <ul class="payment-method-list">
+            <li>
+              <div
+                class="payment-method-option"
+                onclick="selectPaymentMethod(this)"
+              >
+                <span>Card</span>
+              </div>
+              <div class="payment-method closed" id="card-payment-method"></div>
+            </li>
+            <li>
+              <div
+                class="payment-method-option"
+                onclick="selectPaymentMethod(this)"
+              >
+                <span>Bank Account</span>
+              </div>
+              <div class="payment-method closed" id="bank-payment-method">
+                <input
+                  type="text"
+                  id="bank-name"
+                  placeholder="Account holder name"
+                  required
+                />
+                <input
+                  type="text"
+                  id="bank-routing"
+                  placeholder="Routing number"
+                  required
+                />
+                <input
+                  type="text"
+                  id="bank-account"
+                  placeholder="Account number"
+                  required
+                />
+                <select id="bank-type">
+                  <option value="checking">Checking</option>
+                  <option value="savings">Savings</option>
+                </select>
+              </div>
+            </li>
+          </ul>
+
+          <div id="payment-method"></div>
+        </div>
 
         <button type="submit">Add Customer</button>
       </form>
