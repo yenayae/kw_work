@@ -20,7 +20,7 @@
           <span>TEST Location</span>
         </div>
         <div class="account">
-          <span>Hello, CUSTOMER NAME</span>
+          <span id="customer-name">Hello, CUSTOMER NAME</span>
         </div>
       </div>
     </header>
@@ -32,10 +32,12 @@
               <div>
                 <div class="navbar-wrapper">
                   <div class="navbar-profile">
-                    <span class="material-symbols-outlined">
-                      account_circle
-                    </span>
-                    <span>CUSTOMER NAME</span>
+                    <div class="navbar-profile-wrapper">
+                      <span class="material-symbols-outlined">
+                        account_circle
+                      </span>
+                      <span id="navbar-customer-name">CUSTOMER NAME</span>
+                    </div>
                     <span class="material-symbols-outlined">
                       arrow_drop_down
                     </span>
@@ -120,85 +122,70 @@
                 </div>
                 <div class="content-tabs">
                   <div>
-                    <button class="content-tab selected">Overview</button>
+                    <button
+                      class="content-tab selected"
+                      onclick="setPageTab('overview')"
+                    >
+                      Overview
+                    </button>
                   </div>
+
                   <div>
-                    <button class="content-tab">Billing History</button>
-                  </div>
-                  <div>
-                    <button class="content-tab">Details & Settings</button>
+                    <button
+                      class="content-tab"
+                      onclick="setPageTab('settings')"
+                    >
+                      Details & Settings
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <div class="cards-wrapper">
+              <div id="tab-display" class="cards-wrapper">
                 <div class="card-section">
                   <div class="card">
-                    <div class="card-header">
-                      <span>Your Current Balance</span>
-                      <span id="current-balance">$0.00</span>
-                      <span id="next-bill">Next bill due on DATE</span>
-                    </div>
+                    <div class="card-header payments">
+                      <div class="card-left">
+                        <span class="bold">Payment Methods</span>
+                      </div>
 
-                    <div class="card-notifications">
-                      <div class="notification">
-                        <span class="material-symbols-outlined red">
-                          fiber_manual_record
-                        </span>
-                        <span class="bold"
-                          >Attention: You have bast due bill(s)</span
-                        >
-                      </div>
-                      <div class="notification">
-                        <span class="material-symbols-outlined green">
-                          fiber_manual_record
-                        </span>
-                        <span
-                          >You have schedule a payment of AMOUNT that will occur
-                          on DATE</span
-                        >
-                      </div>
-                    </div>
-                    <div class="card-buttons">
-                      <button class="pay-button blue" onclick="payNow()">
-                        Pay Now
-                      </button>
-                      <button class="pay-button grey">Set Up Autopay</button>
-                    </div>
-
-                    <div class="month">
-                      <span>May (this month)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-section">
-                  <div class="card">
-                    <div class="card-header">
-                      <span>Scheduled Payments</span>
-                      <div class="space-between-section">
-                        <span id="scheduled-payments">$0.00</span>
-                        <span>00/00/0000</span>
-                      </div>
-                      <span>INVOICE DESCRIPTION</span>
-                      <div class="space-between-section">
-                        <span>Auto-Payment created by CREATOR</span>
-                        <button class="edit-button">Edit</button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card">
-                    <div class="card-header">
-                      <span>Last Payment</span>
-                    </div>
-                    <div class="card-content">
-                      <div class="last-payment-content">
-                        <div class="space-between-section">
-                          <span>Paid on 00/00/0000</span>
-                          <span>$0.00</span>
+                      <hr class="payments-divider light-grey" />
+                      <div class="card-right">
+                        <div>
+                          <span class="bold">TEST Cards</span>
+                          <div class="payment-method-wrapper">
+                            <div class="payment-method">
+                              <span class="material-symbols-outlined">
+                                credit_card
+                              </span>
+                              <span>Add credit or debit card</span>
+                            </div>
+                            <div>
+                              <span class="material-symbols-outlined">
+                                add
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <span>Confirmation #: 0000-0000</span>
-                        <span>Paid by CUSTOMER</span>
+
+                        <hr class="light-grey" />
+
+                        <div>
+                          <span class="bold">Bank Accounts</span>
+                          <div class="payment-method-wrapper">
+                            <div class="payment-method">
+                              <span class="material-symbols-outlined">
+                                account_balance
+                              </span>
+                              <span>Add credit or debit card</span>
+                            </div>
+                            <div>
+                              <span class="material-symbols-outlined">
+                                add
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

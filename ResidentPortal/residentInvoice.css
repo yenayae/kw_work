@@ -6,6 +6,14 @@
   font-size: 1.5em;
 }
 
+.material-symbols-outlined.urgent {
+  color: red;
+}
+
+.material-symbols-outlined.pasive {
+  color: green;
+}
+
 button {
   cursor: pointer;
 }
@@ -49,6 +57,12 @@ button {
 
   border-radius: 5px;
   border: 1px solid black;
+}
+
+.navbar-profile-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-tabs {
@@ -181,15 +195,20 @@ button {
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
 
-  flex: 1;
+  /* flex: 1; */
   padding: 20px;
 }
 
 .card-header {
   display: flex;
   flex-direction: column;
+}
+
+.card-header.payments {
+  flex-direction: row;
 }
 
 #current-balance {
@@ -207,6 +226,23 @@ button {
   font-size: 0.9em;
 
   padding: 5px 0;
+}
+
+.no-notification {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+
+  height: 100px;
+  margin: 10px 0;
+
+  font-weight: bold;
+
+  padding: 5px 0;
+
+  background-color: var(--lighter-outline-color);
+  border-radius: 5px;
 }
 
 .card-buttons {
@@ -272,4 +308,54 @@ button {
   display: flex;
   flex-direction: column;
   padding-left: 30px;
+}
+
+/* payments */
+
+.card-title {
+  font-weight: bold;
+}
+
+.payments-divider {
+  margin: 0 30px;
+}
+
+.card-left {
+  width: 250px;
+}
+
+.card-right {
+  width: 100%;
+}
+
+.light-grey {
+  /* color: var(--outline-color); */
+  border: 1px solid var(--lighter-outline-color);
+}
+
+.payment-method-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 300px;
+  font-size: 0.9em;
+  font-weight: 500;
+
+  border: 1px solid var(--outline-color);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px 0;
+
+  cursor: pointer;
+}
+
+.payment-method {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 100%;
+  gap: 10px;
 }

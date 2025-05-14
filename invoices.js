@@ -90,12 +90,22 @@ window.setPageTab = function (tab) {
 
 /* display invoices start */
 const FILTER_OPTIONS = [
-  "Invoice Status",
-  "Amount",
-  "Issue Date",
-  "Due Date",
-  "Invoice Date(s)",
-  "Payment Status",
+  { name: "Invoice Status", options: ["Paid", "Scheduled", "Past Due"] },
+  {
+    name: "Amount",
+    options: [
+      "All",
+      "0 - 100",
+      "100 - 200",
+      "200 - 500",
+      "500 - 1000",
+      "1000+",
+    ],
+  },
+  { name: "Issue Date", options: ["Today", "Not Today"] },
+  { name: "Due Date", options: ["Today", "Not Today"] },
+  { name: "Invoice Date(s)", options: ["Today", "Not Today"] },
+  { name: "Payment Status", options: ["Paid", "Unpaid", "Past Due"] },
 ];
 
 async function loadOneTimeInvoices() {

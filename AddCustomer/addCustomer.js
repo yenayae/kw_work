@@ -1,5 +1,9 @@
 import stripeConfig from "../hooks/stripe-config.js";
 import { addCustomer } from "../hooks/firestore.js";
+import {
+  mountCardPayment,
+  mountBankPayment,
+} from "../hooks/mountPaymentMethods.js";
 
 const TEST_ACCOUNT_ID = "acct_1RFsHoAk76Jp7S9G";
 
@@ -129,20 +133,10 @@ form.addEventListener("submit", async (event) => {
 //front end stuff
 
 //mount card elements:
-const cardElement = elements.create("card");
-cardElement.mount("#card-payment-method");
+mountCardPayment("#card-payment-method", stripe);
 
-//mount bank account elements:
-// const usBankAccount = elements.create("usBankAccount", {
-//   // Optionally prefill billing details
-//   defaultValues: {
-//     billingDetails: {
-//       name: "Jane Doe",
-//       email: "jane@example.com",
-//     },
-//   },
-// });
-// usBankAccount.mount("#bank-payment-method");
+//mount bank elements:
+mountBankPayment("#bank-payment-method");
 
 window.selectPaymentMethod = function (clickedElement) {
   // Find the associated payment-method div

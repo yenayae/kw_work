@@ -1,25 +1,83 @@
 import loadIcons from "../hooks/loadIcons.js";
-import { fetchInvoices } from "../hooks/firestore.js";
+import { fetchInvoices, fetchUserById } from "../hooks/firestore.js";
 import formatCost from "../hooks/formatCost.js";
 import formatDate from "../hooks/formatDate.js";
+import { displayOverview, displaySettings } from "./displayTabs.js";
 
 import stripeConfig from "../hooks/stripe-config.js";
 
-const stripe = window.Stripe(stripeConfig.publishableKey);
 const HEROKU_URL = stripeConfig.serverUrl;
 
-const YONE_PORO_ID = "uSpp2ApQElgQ3yuxsPHu";
+const YONE_PORO_ID = "rBCPLxqkvhU9bnLN2ttU";
 
-async function loadCustomerInvoices() {
-  // status index == 0 should be unpaid invoices
-  const invoices = await fetchInvoices(YONE_PORO_ID, 0);
+let pageTab = "overview";
+window.setPageTab = function (tab) {
+  pageTab = tab;
 
-  console.log("Invoices for YONE_PORO_ID:", invoices);
+  // Remove 'selected' class from all tabs
+  const tabs = document.querySelectorAll(".content-tab");
+  tabs.forEach((tabEl) => tabEl.classList.remove("selected"));
+  const selectedTab = document.querySelector(
+    `.content-tabs .content-tab[onclick*="${tab}"]`
+  );
 
-  displayCustomerInvoices(invoices);
+  if (selectedTab) {
+    selectedTab.classList.add("selected");
+  }
+  loadIcons();
+
+  if (pageTab === "overview") {
+    loadData();
+  } else if (pageTab === "settings") {
+    displaySettings();
+  }
+};
+
+async function loadData() {
+  loadCustomerData(YONE_PORO_ID);
+
+  const currentBalance = loadCustomerInvoices(YONE_PORO_ID);
+  displayOverview({
+    currentBalance: await currentBalance,
+    scheduledPayments: {
+      amount: 0,
+      dueDate: new Date(),
+      description: "No scheduled payments",
+      createdBy: "N/A",
+    },
+    lastPayment: {
+      amount: 0,
+      date: new Date(),
+      confirmationNumber: "N/A",
+      paidBy: "N/A",
+    },
+  });
+
+  loadIcons();
 }
 
-function displayCustomerInvoices(invoices) {
+async function loadCustomerData(userId) {
+  const user = await fetchUserById(userId, "customers");
+  if (!user) {
+    console.error("User not found");
+    return;
+  }
+
+  console.log("Customer data:", user);
+
+  const customerName = document.querySelector("#customer-name");
+  customerName.textContent = `Hello, ${user.name}`;
+}
+
+async function loadCustomerInvoices(userId) {
+  // status index == 0 should be unpaid invoices
+  const invoices = await fetchInvoices(userId, 0);
+
+  console.log("Invoices for YONE_PORO_ID:", invoices);
+  return createCurrentBalanceObject(invoices);
+}
+
+function createCurrentBalanceObject(invoices) {
   let currentBalance = 0;
   let dueDate = null;
 
@@ -36,18 +94,24 @@ function displayCustomerInvoices(invoices) {
     }
   }
 
-  // display current balance
   currentBalance = currentBalance / 100;
-  const currentBalanceSpan = document.querySelector("#current-balance");
-  currentBalanceSpan.textContent = formatCost(currentBalance);
+  // const currentBalanceSpan = document.querySelector("#current-balance");
+  // currentBalanceSpan.textContent = formatCost(currentBalance);
 
-  // display next bill due date
-  const dueDateSpan = document.querySelector("#next-bill");
-  const formattedDate = dueDate ? formatDate(dueDate) : "N/A";
-  dueDateSpan.textContent = `Next bill due on ${formattedDate}`;
+  // // display next bill due date
+  // const dueDateSpan = document.querySelector("#next-bill");
+  // const formattedDate = dueDate ? formatDate(dueDate) : "N/A";
+  // dueDateSpan.textContent = `Next bill due on ${formattedDate}`;
+
+  return {
+    amount: currentBalance,
+    dueDate: dueDate ? new Date(dueDate.seconds * 1000) : null,
+    notifications: [],
+    payNowFunction: payNow,
+  };
 }
 
-window.payNow = async function () {
+async function payNow() {
   console.log("Pay Now button clicked");
 
   const invoices = await fetchInvoices(YONE_PORO_ID, 0);
@@ -75,7 +139,7 @@ window.payNow = async function () {
 
   alert("Payment successful!");
   await markInvoicesAsPaid(invoices);
-};
+}
 
 async function markInvoicesAsPaid(invoices) {
   if (!Array.isArray(invoices) || invoices.length === 0) {
@@ -106,5 +170,8 @@ async function markInvoicesAsPaid(invoices) {
 }
 
 console.log("Resident Invoice Page Loaded");
-loadIcons();
-loadCustomerInvoices();
+
+//initial load
+loadData();
+
+// loadIcons();

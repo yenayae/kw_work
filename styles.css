@@ -19,7 +19,7 @@
 }
 
 .bold {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .material-symbols-outlined {
@@ -178,54 +178,6 @@ h2 {
 .options-button.blue {
   background-color: var(--primary-color);
   color: white;
-}
-
-.filter-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-  height: 30px;
-}
-
-.filter-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: 5px;
-
-  white-space: nowrap;
-
-  font-weight: 600;
-  font-size: 0.9em;
-}
-
-.filter-button {
-  border: dashed 1px var(--primary-color);
-  border-radius: 40px;
-  background-color: white;
-
-  color: var(--primary-color);
-  font-weight: 500;
-  font-size: 1em;
-
-  /* padding: 0 100px; */
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.205);
-
-  padding-right: 10px;
-  height: 30px;
-  width: fit-content;
-  white-space: nowrap;
-
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-}
-
-.filter-button:hover {
-  background-color: var(--lighter-outline-color);
-  cursor: pointer;
-  /* color: white; */
 }
 
 .material-symbols-outlined.plus-icon,
@@ -447,3 +399,150 @@ td.link {
 }
 
 /* table css end */
+
+/* filter options menu */
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 5px;
+
+  white-space: nowrap;
+
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.filter-button {
+  border: dashed 1px var(--primary-color);
+  border-radius: 40px;
+  background-color: white;
+
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 1em;
+
+  /* padding: 0 100px; */
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.205);
+
+  padding-right: 10px;
+  height: 30px;
+  width: fit-content;
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-button:hover {
+  background-color: var(--lighter-outline-color);
+  cursor: pointer;
+  /* color: white; */
+}
+
+.filter-button.selected {
+  border: solid 1px var(--primary-color);
+}
+
+.filter-button.filtered {
+  background-color: var(--primary-color);
+  color: white;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-button-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+}
+
+.filter-menu {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.205);
+
+  z-index: 10;
+
+  padding: 10px;
+  width: 250px;
+
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
+}
+
+.filter-menu.hidden {
+  display: none;
+}
+
+.filter-menu.visible {
+  display: block;
+}
+
+.filter-menu-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.filter-option {
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.filter-option input {
+  cursor: pointer;
+}
+
+.filter-menu-footer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.filter-menu-button {
+  display: flex;
+  align-items: center;
+
+  border: 1px solid var(--outline-color);
+  padding: 5px 10px;
+  border-radius: 20px;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filter-menu-button.disabled {
+  color: rgb(153, 153, 153);
+  cursor: default;
+}
+
+.filter-menu-button.clear {
+  background-color: white;
+}
+
+.filter-menu-close {
+  border: none;
+  background: none;
+  cursor: pointer;
+}

@@ -311,6 +311,19 @@ export async function fetchProducts() {
 - addCustomer
  */
 
+// fetch specific customer by ID
+export async function fetchUserById(userId, dbTable = "residents") {
+  const userRef = doc(db, dbTable, userId);
+  const userSnapshot = await getDoc(userRef);
+
+  if (userSnapshot.exists()) {
+    return { id: userSnapshot.id, ...userSnapshot.data() };
+  } else {
+    console.warn("User not found:", userId);
+    return null;
+  }
+}
+
 //fetch customers
 export async function fetchResidents() {
   const residentsRef = collection(db, "residents");

@@ -1,0 +1,16 @@
+- card / bank acount add as details & settings in billing
+- my payments page for just invoices that has been paid
+- invoice and payent history:
+	bacnk account information
+	notes
+	timeline for invoicve
+
+- connected account onboarding portal
+- billing page: 
+
+- my payments page tab
+- invoice history tab
+- billing page: get rid of billing history
+-clickng invoice should lead to invoice detials
+- bank account can 
+- 
