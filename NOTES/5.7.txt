@@ -13,4 +13,11 @@
 - billing page: get rid of billing history
 -clickng invoice should lead to invoice detials
 - bank account can 
+
+
+DONE:
+- - card / bank acount add as details & settings in billing
+
+
+
 - 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Details</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="invoiceDetails.css" />
+
+    <!-- google materials -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="page-header">
+        <div class="left">
+          <div class="location">
+            <span>TEST Location</span>
+          </div>
+          <div class="account">
+            <span id="customer-name">Hello, cow poro</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="user-profile"></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-wrapper">
+        <div class="main">
+          <div class="content">
+            <div class="invoice-wrapper">
+              <div class="user-profile invoice"></div>
+              <div class="location-name">Old Poro Senior Living</div>
+              <div class="invoice-status">
+                <span class="status canceled">Canceled</span>
+              </div>
+              <div id="invoice-amount" class="invoice-amount">$123123.01</div>
+              <div class="invoice-due-date">Due Sep 01, 2024</div>
+              <hr class="invoice-divider" />
+              <div class="metadata-wrapper">
+                <div class="metadata-entry">
+                  <div class="label-wrapper">
+                    <span class="metadata-label">Invoice #</span>
+                  </div>
+
+                  <div>
+                    <span>0000000</span>
+                  </div>
+                </div>
+
+                <div class="metadata-entry">
+                  <div class="label-wrapper">
+                    <span class="metadata-label">Bill To</span>
+                  </div>
+
+                  <div>
+                    <span>Cow Poro</span>
+                  </div>
+                </div>
+
+                <div class="metadata-entry">
+                  <div class="label-wrapper">
+                    <span class="metadata-label">From</span>
+                  </div>
+
+                  <div>
+                    <span>Old Poro Senior Living</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="metadata-wrapper">
+                <div class="metadata-notif">
+                  <span class="material-symbols-outlined"> autorenew </span>
+                  <span>This is a <b>recurring</b> invoice</span>
+                </div>
+
+                <div class="metadata-entry">
+                  <div class="label-wrapper">
+                    <span class="metadata-label">Frequency</span>
+                  </div>
+
+                  <div>
+                    <span>Every 1 Month</span>
+                  </div>
+                </div>
+
+                <div class="metadata-entry">
+                  <div class="label-wrapper">
+                    <span class="metadata-label">Occurence</span>
+                  </div>
+
+                  <div>
+                    <span>Ends never</span>
+                  </div>
+                </div>
+              </div>
+              <hr class="invoice-divider" />
+              <div class="invoice-footer">
+                <div>
+                  <button class="options-button smaller">View Invoice</button>
+                </div>
+                <div class="invoice-actions">
+                  <button class="action-button">
+                    <span class="material-symbols-outlined"> download </span>
+                  </button>
+
+                  <button class="action-button">
+                    <span class="material-symbols-outlined"> print </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="./invoiceDetails.js"></script>
+  </body>
+</html>

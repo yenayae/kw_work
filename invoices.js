@@ -144,7 +144,10 @@ function displayInvoices(invoices) {
 function formatContent(content) {
   return content.map((invoice) => {
     return [
-      formatInvoiceEntryId(invoice.invoiceNumber ?? 0), // default to 0 if undefined
+      {
+        entryId: formatInvoiceEntryId(invoice.invoiceNumber ?? 0),
+        id: invoice.id,
+      }, // default to 0 if undefined
       formatCustomerName(
         { name: invoice.residentName, id: invoice.residentId },
         { name: invoice.payerName, id: invoice.payerId }

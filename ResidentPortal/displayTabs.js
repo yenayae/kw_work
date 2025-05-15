@@ -1,6 +1,8 @@
 import loadIcons from "../hooks/loadIcons.js";
 import formatCost from "../hooks/formatCost.js";
 import formatDate from "../hooks/formatDate.js";
+import createModal from "../hooks/createModal.js";
+import { mountBankPayment } from "../hooks/mountPaymentMethods.js";
 
 /* this function will need three objects:
 { current balance object,
@@ -234,16 +236,61 @@ export function displayOverview(content = {}) {
 }
 
 // Details & Settings tab ==========================================
+function buildCardFormContent(stripe) {
+  const container = document.createElement("div");
+  container.classList.add("card-container");
 
-function displayAddCard() {
+  const cardTitle = document.createElement("span");
+  cardTitle.classList.add("bold", "modal-card-title");
+  cardTitle.textContent = "Add Credit or Debit Card";
+  container.appendChild(cardTitle);
+
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("modal-card-content");
+  cardContent.id = "card-element";
+  container.appendChild(cardContent);
+
+  return container;
+}
+function buildBankFormContent() {
+  const container = document.createElement("div");
+  container.classList.add("card-container");
+
+  const bankTitle = document.createElement("span");
+  bankTitle.classList.add("bold", "modal-card-title");
+  bankTitle.textContent = "Add Bank Account";
+  container.appendChild(bankTitle);
+
+  const bankContent = document.createElement("div");
+  bankContent.classList.add("modal-card-content");
+  bankContent.id = "bank-element";
+  container.appendChild(bankContent);
+
+  const bankForm = mountBankPayment();
+  bankContent.appendChild(bankForm);
+
+  return container;
+}
+
+function displayAddCard(stripe) {
   console.log("Add Card button clicked");
+  const container = buildCardFormContent(stripe);
+  createModal(() => container);
+
+  // defer mounting until DOM is ready
+  setTimeout(() => {
+    const elements = stripe.elements();
+    const cardElement = elements.create("card");
+    cardElement.mount("#card-element");
+  }, 0);
 }
 
 function displayAddBank() {
   console.log("Add Bank button clicked");
+  createModal(buildBankFormContent);
 }
 
-export function displaySettings() {
+export function displaySettings(stripe) {
   const displayContainer = document.querySelector("#tab-display");
   displayContainer.innerHTML = ""; // Clear previous content
 
@@ -281,7 +328,7 @@ export function displaySettings() {
       "Credit Card",
       "credit_card",
       "Add credit or debit card",
-      displayAddCard
+      () => displayAddCard(stripe)
     )
   );
 

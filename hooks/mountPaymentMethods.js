@@ -1,15 +1,16 @@
 export function mountCardPayment(containerId, stripe) {
+  if (!containerId) {
+    console.error("Container ID is required to mount card payment.");
+    return;
+  }
+
   const elements = stripe.elements();
   const cardElement = elements.create("card");
   cardElement.mount(containerId);
 }
 
-export function mountBankPayment(containerId) {
-  const container = document.querySelector(containerId);
-  if (!container) {
-    console.error(`Container with ID ${containerId} not found.`);
-    return;
-  }
+export function mountBankPayment() {
+  const container = document.createElement("div");
 
   const holderNameInput = document.createElement("input");
   holderNameInput.setAttribute("placeholder", "Account Holder Name");
@@ -49,4 +50,6 @@ export function mountBankPayment(containerId) {
   savingsOption.value = "savings";
   savingsOption.text = "Savings";
   selectBankType.appendChild(savingsOption);
+
+  return container;
 }

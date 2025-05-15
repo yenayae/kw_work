@@ -8,6 +8,7 @@
   --outline-color: rgb(216, 216, 216);
   --lighter-outline-color: rgb(241, 241, 241);
   --dark-icon-color: rgb(94, 94, 94);
+  --light-icon-color: rgb(153, 153, 153);
 }
 
 .red {
@@ -160,7 +161,7 @@ h2 {
   font-weight: 600;
 
   /* padding: 7px 15px 7px 7px; */
-  padding-left: 10px;
+  padding-left: 15px;
   padding-right: 15px;
   height: 40px;
 
@@ -351,6 +352,11 @@ td.link {
 .status.past-due {
   background-color: rgb(230, 168, 168);
   color: rgb(97, 7, 7);
+}
+
+.status.canceled {
+  background-color: rgb(217, 220, 224);
+  color: black;
 }
 
 .material-symbols-outlined.frequency-icon {
@@ -544,5 +550,36 @@ td.link {
 .filter-menu-close {
   border: none;
   background: none;
+  cursor: pointer;
+}
+
+/* modal stuff (test) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* dim background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  position: relative;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
 }

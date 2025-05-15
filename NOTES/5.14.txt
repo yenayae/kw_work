@@ -1,0 +1,23 @@
+- pay now redirects to invoice detils:
+
+- invoice overview
+- details
+- payment method block
+- pay buttons
+
+
+new TAB: overview, invoices, payments, settings
+my payments
+- use the table 
+my invoices
+- use the table
+
+test ach payments (check if theress a fee 0.8% and cap of $5: use amounts $5000+)
+
+revamp card or debit card payment (inputs instad of stripe elements)
+
+stripe dashboard bank account verification process
+- select personal or business
+- redirect to stripe
+
+prioritize layouts

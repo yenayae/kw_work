@@ -359,3 +359,7 @@ button {
   width: 100%;
   gap: 10px;
 }
+
+.modal-card-content {
+  margin-top: 10px;
+}

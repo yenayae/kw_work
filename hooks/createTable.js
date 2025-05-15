@@ -82,9 +82,8 @@ export function updateTable(headers, content, table) {
   return table;
 }
 
-function createStatusComponent(status) {
+export function createStatusComponent(status) {
   const statusSpan = document.createElement("span");
-
   statusSpan.classList.add("status", status.replace(/\s+/g, "-").toLowerCase());
   statusSpan.textContent = status;
   return statusSpan;
@@ -217,7 +216,6 @@ export function createTableContent(headers, content) {
         arrowIcon.textContent = "keyboard_arrow_down";
 
         const label = document.createElement("span");
-        label.textContent = cell;
 
         arrowContainer.appendChild(arrowIcon);
         arrowContainer.appendChild(label);
@@ -225,15 +223,20 @@ export function createTableContent(headers, content) {
 
         if (header == "Invoice #") {
           td.classList.add("link");
+
+          const invoiceLink = document.createElement("a");
+
+          invoiceLink.href = `/InvoiceDetails/invoiceDetails.html?id=${cell.id}`;
+          invoiceLink.textContent = cell.entryId;
+          invoiceLink.classList.add("link");
+          invoiceLink.target = "_blank"; // Open in new tab
+          invoiceLink.rel = "noopener noreferrer"; // Security measure
+          arrowContainer.appendChild(invoiceLink);
         }
       }
 
       //if the cell should be a link
-      else if (
-        header === "Customer" ||
-        header === "Source" ||
-        header === "Invoice #"
-      ) {
+      else if (header === "Customer" || header === "Source") {
         td.classList.add("link");
 
         contentSpan.textContent = cell;

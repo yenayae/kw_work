@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Invoices</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="invoices.css" />
+    <link rel="stylesheet" href="./ResidentPortal/residentInvoice.css" />
 
     <!-- font awesome -->
     <link
@@ -20,1222 +20,230 @@
     />
   </head>
   <body>
-    <div>
-      <div class="navbar">
-        <div>
-          <h1>Invoices</h1>
+    <header>
+      <div class="page-header">
+        <div class="location">
+          <span>TEST Location</span>
         </div>
-        <div class="navbar-right">
-          <span class="material-symbols-outlined" style="visibility: visible">
-            search
-          </span>
-          <img
-            class="user-profile"
-            src="duck flowe 2.png"
-            alt="user profile {TODO: link}"
-          />
+        <div class="account">
+          <span id="customer-name">Hello, cow poro</span>
         </div>
       </div>
-
-      <div class="content">
-        <div class="tab-bar">
-          <div class="tab selected" onclick="setPageTab('all')">
-            <span>All</span>
-          </div>
-          <div class="tab" onclick="setPageTab('one-time')">
-            <span>One-Time</span>
-          </div>
-          <div class="tab" onclick="setPageTab('recurring')">
-            <span>Recurring</span>
-          </div>
-        </div>
-
-        <div class="options-bar">
-          <div class="options-left search-wrapper">
-            <input
-              type="text"
-              placeholder="Search In Invoices..."
-              class="table-search-bar"
-              id="table-search-bar"
-            />
-            <span
-              class="material-symbols-outlined search-icon"
-              style="visibility: visible"
-            >
-              search
-            </span>
-          </div>
-          <div class="options-right" id="options-buttons">
-            <button class="options-button">
-              <span
-                class="material-symbols-outlined export-icon"
-                style="visibility: visible"
-              >
-                download
-              </span>
-              <span>Export</span>
-            </button>
-
-            <button
-              class="options-button blue"
-              onclick="window.location.href='invoiceBuilder.html'"
-            >
-              <span
-                class="material-symbols-outlined plus-icon"
-                style="visibility: visible"
-              >
-                add
-              </span>
-              <span>Invoice</span>
-            </button>
-
-            <button class="options-button blue" onclick="addRecurringInvoice()">
-              <span
-                class="material-symbols-outlined plus-icon"
-                style="visibility: visible"
-              >
-                add
-              </span>
-              <span>Recurring Invoice</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="filter-container" id="filter-container">
-          <span class="material-symbols-outlined" style="visibility: visible">
-            tune
-          </span>
-          <span>Filter By:</span>
-          <div class="filter-bar" id="filter-bar">
-            <div class="filter-button-wrapper">
-              <button class="filter-button">
-                <span
-                  class="material-symbols-outlined plus-icon"
-                  style="visibility: visible"
-                  >add</span
-                ><span>Invoice Status</span>
-              </button>
-
-              <div class="filter-menu">
-                <div class="filter-menu-header">
-                  <span>Invoice Status</span>
-                  <span
-                    class="material-symbols-outlined close-icon filter-menu-close"
-                    style="visibility: visible"
-                    >close</span
-                  >
+    </header>
+    <main>
+      <div class="main-wrapper">
+        <div class="main">
+          <div class="content">
+            <div class="resident-navbar">
+              <div>
+                <div class="navbar-wrapper">
+                  <div class="navbar-profile">
+                    <div class="navbar-profile-wrapper">
+                      <span
+                        class="material-symbols-outlined"
+                        style="visibility: visible"
+                      >
+                        account_circle
+                      </span>
+                      <span id="navbar-customer-name">CUSTOMER NAME</span>
+                    </div>
+                    <span
+                      class="material-symbols-outlined"
+                      style="visibility: visible"
+                    >
+                      arrow_drop_down
+                    </span>
+                  </div>
                 </div>
-                <hr />
-                <div class="filter-menu-options">
-                  <ul class="filter-menu-list">
+
+                <div class="navbar-wrapper">
+                  <ul class="navbar-tabs">
                     <li>
-                      <label class="filter-option">
-                        <input type="checkbox" value="paid" />
-                        <span class="custom-box"></span>
-                        <span>Paid</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="filter-option">
-                        <input type="checkbox" value="unpaid" />
-                        <span class="custom-box"></span>
-                        Unpaid
-                      </label>
-                    </li>
-                    <li>
-                      <label class="filter-option">
-                        <input type="checkbox" value="overdue" />
-                        <span class="custom-box"></span>
-                        Overdue
-                      </label>
+                      <div class="nav-tab">
+                        <span
+                          class="material-symbols-outlined tab-icon"
+                          style="visibility: visible"
+                        >
+                          home
+                        </span>
+                        <span>Home</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span
+                          class="material-symbols-outlined tab-icon"
+                          style="visibility: visible"
+                        >
+                          cards_star
+                        </span>
+                        <span>Attended Events</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span
+                          class="material-symbols-outlined tab-icon"
+                          style="visibility: visible"
+                        >
+                          calendar_month
+                        </span>
+                        <span>Activity Calendar</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span
+                          class="material-symbols-outlined tab-icon"
+                          style="visibility: visible"
+                        >
+                          restaurant
+                        </span>
+                        <span>Dining</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span
+                          class="material-symbols-outlined tab-icon"
+                          style="visibility: visible"
+                        >
+                          assignment
+                        </span>
+                        <span>Forms</span>
+                      </div>
+                      <div class="nav-tab">
+                        <span
+                          class="material-symbols-outlined tab-icon"
+                          style="visibility: visible"
+                        >
+                          contact_page
+                        </span>
+                        <span>Resident Profile</span>
+                      </div>
                     </li>
                   </ul>
                 </div>
+              </div>
 
-                <hr />
-                <div class="filter-menu-footer">
-                  <button class="filter-menu-button clear">Clear</button>
-                  <button class="filter-menu-button apply">Apply</button>
+              <div class="navbar-wrapper">
+                <div class="general-info">
+                  <h3>General Information</h3>
+                  <div class="general-info-item">
+                    <span
+                      class="material-symbols-outlined general-icon"
+                      style="visibility: visible"
+                    >
+                      pin_drop
+                    </span>
+                    <span>123 W. Main Street, Los Angeles, CA, 91123 </span>
+                  </div>
+
+                  <div class="general-info-item">
+                    <span
+                      class="material-symbols-outlined general-icon"
+                      style="visibility: visible"
+                    >
+                      call
+                    </span>
+                    <span>123-123-1234 </span>
+                  </div>
+
+                  <div class="general-info-item">
+                    <span
+                      class="material-symbols-outlined general-icon"
+                      style="visibility: visible"
+                    >
+                      mail
+                    </span>
+                    <span>test@gmail.com</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              <button class="filter-button">
-                <span
-                  class="material-symbols-outlined plus-icon"
-                  style="visibility: visible"
-                  >add</span
-                ><span>Amount</span>
-              </button>
+
+            <div class="content-wrapper">
+              <div class="content-header">
+                <div>
+                  <h2 class="content-title">Billing</h2>
+                </div>
+                <div class="content-tabs">
+                  <div>
+                    <button
+                      class="content-tab"
+                      onclick="setPageTab('overview')"
+                    >
+                      Overview
+                    </button>
+                  </div>
+
+                  <div>
+                    <button
+                      class="content-tab selected"
+                      onclick="setPageTab('settings')"
+                    >
+                      Details &amp; Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="tab-display" class="cards-wrapper">
+                <div class="card-section">
+                  <div class="card">
+                    <div class="card-header payments">
+                      <div class="card-left">
+                        <span class="bold">Payment Methods</span>
+                      </div>
+                      <hr class="payments-divider light-grey" />
+                      <div class="card-right">
+                        <div>
+                          <span class="bold">Credit Card</span>
+                          <div class="payment-method-wrapper">
+                            <div class="payment-method">
+                              <span
+                                class="material-symbols-outlined card-icon"
+                                style="visibility: visible"
+                                >credit_card</span
+                              ><span>Add credit or debit card</span>
+                            </div>
+                            <div>
+                              <span
+                                class="material-symbols-outlined"
+                                style="visibility: visible"
+                                >add</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <hr class="light-grey" />
+                        <div>
+                          <span class="bold">Bank Account</span>
+                          <div class="payment-method-wrapper">
+                            <div class="payment-method">
+                              <span
+                                class="material-symbols-outlined card-icon"
+                                style="visibility: visible"
+                                >account_balance</span
+                              ><span>Add bank account</span>
+                            </div>
+                            <div>
+                              <span
+                                class="material-symbols-outlined"
+                                style="visibility: visible"
+                                >add</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end of cards -->
             </div>
-            <div>
-              <button class="filter-button">
-                <span
-                  class="material-symbols-outlined plus-icon"
-                  style="visibility: visible"
-                  >add</span
-                ><span>Issue Date</span>
-              </button>
-            </div>
-            <div>
-              <button class="filter-button">
-                <span
-                  class="material-symbols-outlined plus-icon"
-                  style="visibility: visible"
-                  >add</span
-                ><span>Due Date</span>
-              </button>
-            </div>
-            <div>
-              <button class="filter-button">
-                <span
-                  class="material-symbols-outlined plus-icon"
-                  style="visibility: visible"
-                  >add</span
-                ><span>Invoice Date(s)</span>
-              </button>
-            </div>
-            <div>
-              <button class="filter-button">
-                <span
-                  class="material-symbols-outlined plus-icon"
-                  style="visibility: visible"
-                  >add</span
-                ><span>Payment Status</span>
-              </button>
-            </div>
+            <!-- end of main -->
           </div>
         </div>
-
-        <div class="table-container" id="table-container">
-          <table class="generic-table">
-            <thead>
-              <tr class="header-row">
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <div class="arrow-container">
-                      <span
-                        class="material-symbols-outlined arrow-icon"
-                        style="visibility: visible"
-                        >keyboard_arrow_down</span
-                      ><span>Invoice #</span>
-                    </div>
-                    <span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Customer</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Status</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Invoice Amount</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Frequency</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Due Date</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Issue Date</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content">
-                    <span>Last Event</span
-                    ><span
-                      class="material-symbols-outlined header-icon"
-                      style="visibility: visible"
-                      >unfold_more</span
-                    >
-                  </div>
-                </th>
-                <th class="header-item">
-                  <div class="header-item-content actions">
-                    <span>Actions</span>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="generic-table-body">
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000007</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$123.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000013</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$5,555.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>N/A</span></td>
-                <td><span>05-05-2025</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000008</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$19.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000003</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o John Doe</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$2.50</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >payment</span
-                    ><span>One-Time</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000002</span>
-                  </div>
-                </td>
-                <td class="link"><span>Lame Name c/o John Doe</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$2.50</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >payment</span
-                    ><span>One-Time</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000005</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$2.50</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000011</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$12,345.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>N/A</span></td>
-                <td><span>N/A</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000001</span>
-                  </div>
-                </td>
-                <td class="link"><span>Cool Name c/o John Doe</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$2.50</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >payment</span
-                    ><span>One-Time</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000004</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$2.50</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >payment</span
-                    ><span>One-Time</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000012</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$12,345.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>N/A</span></td>
-                <td><span>N/A</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000010</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o bee poro</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$12,345.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>N/A</span></td>
-                <td><span>N/A</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000014</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$999.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>N/A</span></td>
-                <td><span>05-05-2025</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000006</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe</span></td>
-                <td><span class="status past-due">past due</span></td>
-                <td class="money">$0.10</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>05-13-2024</span></td>
-                <td><span>05-13-2024</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="link">
-                  <div class="arrow-container">
-                    <span
-                      class="material-symbols-outlined arrow-icon"
-                      style="visibility: visible"
-                      >keyboard_arrow_down</span
-                    ><span>#0000009</span>
-                  </div>
-                </td>
-                <td class="link"><span>John Doe c/o yone poro</span></td>
-                <td><span class="status paid">paid</span></td>
-                <td class="money">$900.00</td>
-                <td>
-                  <div class="frequency">
-                    <span
-                      class="material-symbols-outlined frequency-icon"
-                      style="visibility: visible"
-                      >sync</span
-                    ><span>Monthly</span>
-                  </div>
-                </td>
-                <td><span>N/A</span></td>
-                <td><span>N/A</span></td>
-                <td><span>None</span></td>
-                <td class="actions-td">
-                  <button class="actions-button">
-                    <span
-                      class="material-symbols-outlined actions-icon"
-                      style="visibility: visible"
-                      >more_vert</span
-                    >
-                  </button>
-                  <div class="actions-menu">
-                    <ul class="actions-list">
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >visibility</span
-                          ><span>View</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >edit</span
-                          ><span>Edit Invoice</span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="actions-item">
-                          <span
-                            class="material-symbols-outlined action-icon"
-                            style="visibility: visible"
-                            >delete</span
-                          ><span>Delete Invoice</span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
-    </div>
+    </main>
+    <footer></footer>
 
-    <!-- <script type="module" src="invoices.js"></script> -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- <script type="module" src="residentInvoice.js"></script> -->
     <!-- Code injected by live-server -->
     <script>
       // <![CDATA[  <-- For SVG support
@@ -1288,5 +296,31 @@
       }
       // ]]>
     </script>
+
+    <iframe
+      name="__privateStripeMetricsController3800"
+      frameborder="0"
+      allowtransparency="true"
+      scrolling="no"
+      role="presentation"
+      allow="payment *"
+      src="https://js.stripe.com/v3/m-outer-3437aaddcdf6922d623e172c2d6f9278.html#url=http%3A%2F%2F127.0.0.1%3A5500%2FResidentPortal%2FresidentInvoice.html&amp;title=Resident%20Invoice&amp;referrer=http%3A%2F%2F127.0.0.1%3A5500%2FResidentPortal%2FresidentInvoice.html&amp;muid=0039915a-6d3a-4f88-ae56-8aeaf2544c7994b88d&amp;sid=a26ae72c-e972-4cd5-9912-1b1f9aefbceb0c34c6&amp;version=6&amp;preview=false&amp;__shared_params__[version]=v3"
+      aria-hidden="true"
+      tabindex="-1"
+      style="
+        border: none !important;
+        margin: 0px !important;
+        padding: 0px !important;
+        width: 1px !important;
+        min-width: 100% !important;
+        overflow: hidden !important;
+        display: block !important;
+        visibility: hidden !important;
+        position: fixed !important;
+        height: 1px !important;
+        pointer-events: none !important;
+        user-select: none !important;
+      "
+    ></iframe>
   </body>
 </html>

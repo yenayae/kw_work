@@ -164,6 +164,7 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
 
 /* INVOICES FUNCTIONS
 - fetchInvoices
+- fetchInvoiceById
 - uploadInvoice
 */
 
@@ -196,6 +197,18 @@ export async function fetchInvoices(
   });
 
   return data;
+}
+
+export async function fetchInvoiceById(invoiceId) {
+  const invoiceRef = doc(db, "invoices", invoiceId);
+  const invoiceSnapshot = await getDoc(invoiceRef);
+
+  if (invoiceSnapshot.exists()) {
+    return { id: invoiceSnapshot.id, ...invoiceSnapshot.data() };
+  } else {
+    console.warn("Invoice not found:", invoiceId);
+    return null;
+  }
 }
 
 //fetch and sort invoices by category

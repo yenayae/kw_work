@@ -10,6 +10,10 @@ const HEROKU_URL = stripeConfig.serverUrl;
 
 const YONE_PORO_ID = "rBCPLxqkvhU9bnLN2ttU";
 
+const stripe = Stripe(stripeConfig.publishableKey, {
+  stripeAccount: YONE_PORO_ID,
+});
+
 let pageTab = "overview";
 window.setPageTab = function (tab) {
   pageTab = tab;
@@ -29,7 +33,7 @@ window.setPageTab = function (tab) {
   if (pageTab === "overview") {
     loadData();
   } else if (pageTab === "settings") {
-    displaySettings();
+    displaySettings(stripe);
   }
 };
 
