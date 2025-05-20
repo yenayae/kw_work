@@ -1,11 +1,27 @@
-import { fetchPayments } from "./hooks/firestore.js";
-import loadIcons from "./hooks/loadIcons.js";
-import { createTable } from "./hooks/createTable.js";
-import createFilterBar from "./hooks/createFilterBar.js";
-import formatDate from "./hooks/formatDate.js";
-import formatCost from "./hooks/formatCost.js";
+import formatCost from "../formatCost.js";
+import formatDate from "../formatDate.js";
 
-const FILTER_OPTIONS = [
+export const PAYMENTS_HEADERS = [
+  "Payment Date",
+  "Amount",
+  "Customer",
+  "Payment Status",
+  "Source",
+  "Payment Method",
+  "Actions",
+];
+
+export const PAYMENT_SORT_FIELDS = {
+  "Payment Date": "invoiceNumber",
+  Amount: "total",
+  Customer: "residentName",
+  "Payment Status": "dueDateTimestamp",
+  Source: "source",
+  "Payment Method": "paymentMethod",
+  Actions: "actions",
+};
+
+export const PAYMENTS_FILTER_OPTIONS = [
   { name: "Invoice Status", options: ["Paid", "Scheduled", "Past Due"] },
   {
     name: "Amount",
@@ -24,36 +40,8 @@ const FILTER_OPTIONS = [
   { name: "Payment Status", options: ["Paid", "Unpaid", "Past Due"] },
 ];
 
-async function loadPayments() {
-  const payments = await fetchPayments();
-  displayPayments(payments);
-}
-
-function displayPayments(payments) {
-  console.log("Payments:", payments);
-
-  const filterContainer = document.querySelector("#filter-container");
-  const filterBar = createFilterBar(FILTER_OPTIONS);
-  filterContainer.appendChild(filterBar);
-
-  displayTable(payments);
-  loadIcons();
-}
-
-function displayTable(payments) {
-  const tableContainer = document.getElementById("table-container");
-
-  const headers = [
-    "Payment Date",
-    "Amount",
-    "Customer",
-    "Payment Status",
-    "Source",
-    "Payment Method",
-    "Actions",
-  ];
-
-  const content = payments.map((payment) => {
+export function formatPaymentsContent(payments) {
+  const formatted = payments.map((payment) => {
     return [
       formatDate(payment.paymentDate) ?? "N/A",
       formatCost(payment.amount ?? 0),
@@ -87,9 +75,6 @@ function displayTable(payments) {
     ];
   });
 
-  const table = createTable(headers, content, "payments-table");
-  tableContainer.appendChild(table);
+  console.log("Formatted payments:", formatted);
+  return formatted;
 }
-
-loadPayments();
-loadIcons();

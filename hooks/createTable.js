@@ -90,6 +90,8 @@ export function createStatusComponent(status) {
 }
 
 function createActionsMenu(functions) {
+  console.log(functions);
+
   //create elements
   const actionsMenu = document.createElement("div");
   actionsMenu.classList.add("actions-menu");
@@ -232,6 +234,9 @@ export function createTableContent(headers, content) {
           invoiceLink.target = "_blank"; // Open in new tab
           invoiceLink.rel = "noopener noreferrer"; // Security measure
           arrowContainer.appendChild(invoiceLink);
+        } else {
+          label.textContent = cell;
+          arrowContainer.appendChild(label);
         }
       }
 

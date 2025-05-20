@@ -2,7 +2,10 @@ import { uploadInvoice, fetchData } from "./hooks/firestore.js";
 import stripeConfig from "../hooks/stripe-config.js";
 import loadIcons from "./hooks/loadIcons.js";
 
-import { serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+  Timestamp,
+  serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import formatDate from "./hooks/formatDate.js";
 
 let selectedCustomer = null;
@@ -79,48 +82,34 @@ function displayCustomers(customers) {
 window.addInvoice = async function (event) {
   event.preventDefault();
 
-  let invoiceData = createInvoiceObject(selectedCustomer);
+  //get invoice amount
+  const invoiceSubtotal = Math.floor(
+    parseFloat(document.getElementById("invoice-amount").value) * 100
+  );
 
-  const invoiceStripePayload = {
-    connectedAccountId: TEST_ACCOUNT_ID,
-    customerId: selectedCustomer.stripeId,
-    amount: invoiceData.total,
-    currency: "usd",
-    dueDate: invoiceData.dueDateTimestamp,
-  };
+  console.log("Invoice subtotal:", invoiceSubtotal);
 
-  console.log(invoiceData);
-  console.log(invoiceStripePayload.amount);
-
-  //send invoice through stripe
-  const response = await fetch(`${HEROKU_URL}create-invoice`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const billingItems = [
+    {
+      amount: invoiceSubtotal,
+      quantity: 1,
+      coaId: "coa_001",
+      coaName: "Example Fee",
+      roomFacilityId: "room_123",
+      isRecurring: true,
+      startDate: "2025-05-01",
+      notes: "",
     },
-    body: JSON.stringify(invoiceStripePayload),
-  });
+  ];
 
-  const data = await response.json();
-
-  if (response.ok) {
-    alert("Invoice created successfully!");
-
-    invoiceData = {
-      ...invoiceData,
-      stripeId: data.invoiceId,
-    };
-
-    console.log(data);
-  } else {
-    console.error("invoice creation failed:", data.error);
-    alert("Error: " + data.error);
-  }
+  let invoiceData = createInvoiceObject(selectedCustomer, billingItems);
 
   //upload records to firestore
   uploadInvoice(invoiceData)
     .then(() => {
       console.log("Invoice uploaded successfully!");
+
+      // return;
 
       //redirect back to inovices page
       window.location.href = "/invoices.html";
@@ -130,53 +119,68 @@ window.addInvoice = async function (event) {
     });
 };
 
-function createInvoiceObject(data) {
-  console.log(data);
-  const DUMMY_DUE_DATE = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60;
-
-  const invoiceSubtotal = Math.floor(
-    parseFloat(document.getElementById("invoice-amount").value) * 100
+function calculateTotalAmount(itemMap) {
+  return Object.values(itemMap).reduce(
+    (total, item) => total + item.amount * item.quantity,
+    0
   );
+}
 
-  const invoiceDiscount = 0;
-  const invoiceCredits = 0;
-  const invoiceTotal = invoiceSubtotal - invoiceDiscount - invoiceCredits;
+function createInvoiceObject(selectedCustomer, billingItems) {
+  const notifyDate = new Date("2025-05-07T00:00:00");
+  const issueDate = new Date("2025-05-07T00:00:00");
+  const dueDate = new Date("2025-05-10T00:00:00");
+
+  const toTimestamp = (date) => Timestamp.fromDate(date);
+
+  const billingItemMap = {};
+  const billingItemIds = [];
+
+  billingItems.forEach((item, index) => {
+    const itemId = `item${index + 1}`;
+    billingItemIds.push(itemId);
+
+    billingItemMap[itemId] = {
+      id: itemId,
+      amount: item.amount,
+      quantity: item.quantity,
+      coaId: item.coaId,
+      coaName: item.coaName,
+      residentId: selectedCustomer.id,
+      residentName: `${selectedCustomer.firstName} ${selectedCustomer.lastName}`,
+      roomFacilityId: item.roomFacilityId,
+      isRecurring: item.isRecurring,
+      startDate: toTimestamp(new Date(item.startDate)),
+      createdAt: toTimestamp(new Date()),
+      notes: item.notes || "",
+    };
+  });
 
   const invoiceData = {
-    billingData: [
-      // you can replace this with dynamic data
-      {
-        description: "Rent for May",
-        amount: 1000,
-      },
-    ],
-    residentId: "TEST_USER_ID",
-    residentName: "John Doe",
-    payerId: data.id,
-    payerName: data.name,
-    payerEmail: data.email ?? null,
-    payerPhoneNum: data.phoneNum ?? null,
+    billTo: {
+      fName: selectedCustomer.firstName || "N/A",
+      lName: selectedCustomer.lastName || "N/A",
+      email: selectedCustomer.email || "",
+      phoneNum: selectedCustomer.phoneNum || "",
+      contactId: selectedCustomer.id,
+    },
+    invoiceMessage: "",
+    notifyDateTimestamp: toTimestamp(notifyDate),
+    notifyDateVal: "2025-05-07",
+    issueDateTimestamp: toTimestamp(issueDate),
+    issueDateVal: "2025-05-07",
+    dueDateTimestamp: toTimestamp(dueDate),
+    residentId: selectedCustomer.id,
+    residentName: "Bailey Pong",
     isPaid: false,
-    dueDateIndex: 0,
-    dueDateVal: "05/14/2024",
-    dueDateTimestamp: DUMMY_DUE_DATE,
-    issueDateVal: formatDate(serverTimestamp()),
-    issueDateTimestamp: serverTimestamp(),
-    notifyDateVal: "05/14/2024",
-    notifyDateTimestamp: Date.now(),
-    subtotal: invoiceSubtotal,
-    discounts: invoiceDiscount,
-    credits: invoiceCredits,
-    total: invoiceTotal,
-    status: "Scheduled",
-    statusIndex: 0,
-    frequencyType: 0,
-    frequencyIntervalIndex: 1,
-    frequencyInterval: "Monthly",
-    recurringPaymentId: "",
-    pdfLink: "https://example.com/invoice/0001.pdf",
-    byStaffId: "staff_001",
-    byStaffName: "Admin User",
+    notifyByEmail: true,
+    byStaffName: "Scheduled",
+    invoiceNumber: 1000000021,
+    repeatInterval: "1",
+    repeatFrequency: "byMonth",
+    billingItemIds,
+    billingItemMap,
   };
+
   return invoiceData;
 }

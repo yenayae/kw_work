@@ -171,18 +171,23 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
 //fetch invoices data
 export async function fetchInvoices(
   customerId = undefined,
-  paidStatus = undefined
+  paidStatus = undefined,
+  invoiceId = undefined
 ) {
   const invoicesRef = collection(db, "invoices");
 
   let constraints = [];
 
   if (customerId !== undefined) {
-    constraints.push(where("payerId", "==", customerId));
+    constraints.push(where("residentId", "==", customerId));
   }
 
   if (paidStatus !== undefined) {
-    constraints.push(where("statusIndex", "==", paidStatus));
+    constraints.push(where("isPaid", "==", paidStatus));
+  }
+
+  if (invoiceId !== undefined) {
+    constraints.push(where("id", "==", invoiceId));
   }
 
   const q =

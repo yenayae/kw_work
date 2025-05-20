@@ -4,6 +4,26 @@ import formatDate from "../hooks/formatDate.js";
 import createModal from "../hooks/createModal.js";
 import { mountBankPayment } from "../hooks/mountPaymentMethods.js";
 
+import { fetchInvoices, fetchPayments } from "../hooks/firestore.js";
+
+import { createTable } from "../hooks/createTable.js";
+
+import {
+  INVOICE_HEADERS,
+  INVOICE_SORT_FIELDS,
+  formatInvoiceContent,
+  INVOICE_FILTER_OPTIONS,
+} from "../hooks/FormatTable/formatInvoiceContent.js";
+
+import {
+  PAYMENTS_HEADERS,
+  PAYMENT_SORT_FIELDS,
+  formatPaymentsContent,
+  PAYMENTS_FILTER_OPTIONS,
+} from "../hooks/FormatTable/formatPaymentsContent.js";
+
+import createFilterBar from "../hooks/createFilterBar.js";
+
 /* this function will need three objects:
 { current balance object,
 schedule payments object,
@@ -36,6 +56,7 @@ export function displayOverview(content = {}) {
   console.log("currentBalance", currentBalance);
 
   const displayContainer = document.querySelector("#tab-display");
+  displayContainer.classList.remove("table");
   displayContainer.innerHTML = ""; // clear previous content
 
   const cardSection1 = document.createElement("div");
@@ -235,23 +256,203 @@ export function displayOverview(content = {}) {
   loadIcons();
 }
 
+// Invoices tab ==========================================
+function formatContent(content) {
+  return content.map((invoice) => {
+    return [
+      {
+        entryId: formatInvoiceEntryId(invoice.invoiceNumber ?? 0),
+        id: invoice.id,
+      }, // default to 0 if undefined
+      formatCustomerName(
+        { name: invoice.residentName, id: invoice.residentId },
+        { name: invoice.payerName, id: invoice.payerId }
+      ) ?? "N/A", // fallback name
+      checkStatus(invoice.dueDateTimestamp, invoice.isPaid) ?? "Unknown", // fallback status
+      formatCost(parseFloat(invoice.total) / 100 ?? 0), // default to 0 if missing
+      invoice.frequencyInterval ?? "N/A",
+      formatDate(invoice.dueDateTimestamp) ?? "N/A",
+      formatDate(invoice.issueDateTimestamp) ?? "N/A",
+      invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
+      [
+        {
+          label: "View",
+          icon: "visibility",
+          action: () => {
+            console.log("View invoice clicked: #", invoice.invoiceNumber);
+          },
+        },
+        {
+          label: "Edit Invoice",
+          icon: "edit",
+          action: () => {
+            console.log("Edit invoice clicked: #", invoice.invoiceNumber);
+          },
+        },
+        {
+          label: "Delete Invoice",
+          icon: "delete",
+          action: () => {
+            console.log("Delete invoice clicked: #", invoice.invoiceNumber);
+          },
+        },
+      ],
+    ];
+  });
+}
+
+function displayInvoiceTable(invoices, containerDiv) {
+  // fill in table
+  const invoicesContainer =
+    containerDiv ?? document.getElementById("table-container");
+
+  const headers = INVOICE_HEADERS;
+
+  //format invoices for the table
+  const content = formatInvoiceContent(invoices);
+
+  const sortFieldsMap = INVOICE_SORT_FIELDS;
+
+  const table = createTable(
+    headers,
+    content,
+    async (header, direction) => {
+      const sortField = sortFieldsMap[header];
+      if (!sortField) return;
+
+      const sortedInvoices = await fetchSortedInvoices({
+        sortField,
+        sortDirection: direction,
+      });
+
+      console.log("Sorted Invoices:", sortedInvoices);
+
+      const tableContainer = document.querySelector(".generic-table");
+
+      updateTable(headers, formatContent(sortedInvoices), tableContainer);
+      loadIcons();
+    },
+    true
+  );
+  invoicesContainer.appendChild(table);
+
+  loadIcons();
+
+  return invoicesContainer;
+}
+
+export async function displayInvoices(customerId) {
+  console.log("Invoices button clicked");
+  const invoices = await fetchInvoices(customerId);
+
+  console.log("Invoices:", invoices);
+
+  const displayContainer = document.querySelector("#tab-display");
+  displayContainer.classList.add("table");
+  displayContainer.innerHTML = "";
+
+  const filterBar = createFilterBar(INVOICE_FILTER_OPTIONS);
+  displayContainer.appendChild(filterBar);
+
+  // displayContainer.appendChild(displayTable(invoices));
+  displayInvoiceTable(invoices, displayContainer);
+}
+
+// Payments tab ==========================================
+function displayPaymentsTable(payments, containerDiv) {
+  // fill in table
+  const paymentsContainer =
+    containerDiv ?? document.getElementById("table-container");
+
+  const headers = PAYMENTS_HEADERS;
+
+  //format invoices for the table
+  const content = formatPaymentsContent(payments);
+
+  const table = createTable(headers, content, "payments-table");
+  paymentsContainer.appendChild(table);
+
+  loadIcons();
+
+  return paymentsContainer;
+}
+
+export async function displayPayments() {
+  console.log("Payments button clicked");
+
+  const payments = await fetchPayments();
+  console.log("Payments:", payments);
+
+  const displayContainer = document.querySelector("#tab-display");
+  displayContainer.classList.add("table");
+  displayContainer.innerHTML = "";
+
+  const filterBar = createFilterBar(PAYMENTS_FILTER_OPTIONS);
+  displayContainer.appendChild(filterBar);
+
+  displayPaymentsTable(payments, displayContainer);
+}
+
 // Details & Settings tab ==========================================
 function buildCardFormContent(stripe) {
-  const container = document.createElement("div");
-  container.classList.add("card-container");
+  // const container = document.createElement("div");
+  // container.classList.add("card-container");
 
-  const cardTitle = document.createElement("span");
-  cardTitle.classList.add("bold", "modal-card-title");
-  cardTitle.textContent = "Add Credit or Debit Card";
-  container.appendChild(cardTitle);
+  // const cardTitle = document.createElement("span");
+  // cardTitle.classList.add("bold", "modal-card-title");
+  // cardTitle.textContent = "Add Credit or Debit Card";
+  // container.appendChild(cardTitle);
 
-  const cardContent = document.createElement("div");
-  cardContent.classList.add("modal-card-content");
-  cardContent.id = "card-element";
-  container.appendChild(cardContent);
+  // const cardContent = document.createElement("div");
+  // cardContent.classList.add("modal-card-content");
+  // cardContent.id = "card-element";
+  // container.appendChild(cardContent);
 
-  return container;
+  // return container;
+  const cardContainer = document.createElement("div");
+  cardContainer.classList.add("card-container");
+
+  const title = document.createElement("span");
+  title.classList.add("bold", "modal-card-title");
+  title.textContent = "Add Credit or Debit Card";
+  cardContainer.appendChild(title);
+
+  cardContainer.appendChild(document.createElement("hr"));
+
+  const cardInput = document.createElement("div");
+  cardInput.classList.add("card-input");
+  cardContainer.appendChild(cardInput);
+
+  const inputGroup = document.createElement("div");
+  cardInput.appendChild(inputGroup);
+
+  // Name on Card
+  inputGroup.appendChild(
+    createInput("Name on Card", "name-on-card", "Full Name")
+  );
+
+  // Card Number and CVV
+  const row1 = document.createElement("div");
+  row1.classList.add("input-row");
+  row1.appendChild(
+    createInput("Card Number", "card-number", "XXXX XXXX XXXX XXXX")
+  );
+  row1.appendChild(createInput("CVV", "CVV", "XXX", "cvv-wrapper"));
+  inputGroup.appendChild(row1);
+
+  // Exp Month, Exp Year, Zip Code
+  const row2 = document.createElement("div");
+  row2.classList.add("input-row");
+
+  row2.appendChild(createMonthDropdown());
+  row2.appendChild(createYearDropdown());
+  row2.appendChild(createInput("Zip Code", "zip-code", "XXXXXX"));
+
+  inputGroup.appendChild(row2);
+
+  return cardContainer;
 }
+
 function buildBankFormContent() {
   const container = document.createElement("div");
   container.classList.add("card-container");
@@ -272,17 +473,104 @@ function buildBankFormContent() {
   return container;
 }
 
+// Helper to create text input
+function createInput(labelText, id, placeholder, extraClass = "") {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("input-wrapper");
+  if (extraClass) wrapper.classList.add(extraClass);
+
+  const label = document.createElement("label");
+  label.classList.add("input-label");
+  label.setAttribute("for", id);
+  label.textContent = labelText;
+
+  const input = document.createElement("input");
+  input.classList.add("input-field");
+  input.type = "text";
+  input.id = id;
+  input.placeholder = placeholder;
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(input);
+
+  return wrapper;
+}
+
+// Helper to create month dropdown
+function createMonthDropdown() {
+  const months = [
+    "01 - Jan",
+    "02 - Feb",
+    "03 - Mar",
+    "04 - Apr",
+    "05 - May",
+    "06 - Jun",
+    "07 - Jul",
+    "08 - Aug",
+    "09 - Sep",
+    "10 - Oct",
+    "11 - Nov",
+    "12 - Dec",
+  ];
+
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("input-wrapper");
+
+  const label = document.createElement("label");
+  label.classList.add("input-label");
+  label.setAttribute("for", "exp-month");
+  label.textContent = "Exp Month";
+
+  const select = document.createElement("select");
+  select.classList.add("input-field");
+  select.id = "exp-month";
+
+  const defaultOption = new Option("MM", "");
+  select.appendChild(defaultOption);
+
+  months.forEach((month, i) => {
+    const option = new Option(month, String(i + 1).padStart(2, "0"));
+    select.appendChild(option);
+  });
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(select);
+  return wrapper;
+}
+
+// Helper to create year dropdown
+function createYearDropdown() {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("input-wrapper");
+
+  const label = document.createElement("label");
+  label.classList.add("input-label");
+  label.setAttribute("for", "exp-year");
+  label.textContent = "Exp Year";
+
+  const select = document.createElement("select");
+  select.classList.add("input-field");
+  select.id = "exp-year";
+
+  const defaultOption = new Option("YY", "");
+  select.appendChild(defaultOption);
+
+  const currentYear = new Date().getFullYear();
+  for (let i = 0; i <= 10; i++) {
+    const year = currentYear + i;
+    const option = new Option(year, year);
+    select.appendChild(option);
+  }
+
+  wrapper.appendChild(label);
+  wrapper.appendChild(select);
+  return wrapper;
+}
+
 function displayAddCard(stripe) {
   console.log("Add Card button clicked");
   const container = buildCardFormContent(stripe);
   createModal(() => container);
-
-  // defer mounting until DOM is ready
-  setTimeout(() => {
-    const elements = stripe.elements();
-    const cardElement = elements.create("card");
-    cardElement.mount("#card-element");
-  }, 0);
 }
 
 function displayAddBank() {
@@ -292,6 +580,7 @@ function displayAddBank() {
 
 export function displaySettings(stripe) {
   const displayContainer = document.querySelector("#tab-display");
+  displayContainer.classList.remove("table");
   displayContainer.innerHTML = ""; // Clear previous content
 
   const cardSection = document.createElement("div");

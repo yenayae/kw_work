@@ -173,6 +173,10 @@ button {
   /* background-color: blue; */
 }
 
+.cards-wrapper.table {
+  flex-direction: column;
+}
+
 .card-section {
   display: flex;
   flex-direction: column;
@@ -189,7 +193,7 @@ button {
 .card {
   background-color: white;
   border-radius: 5px;
-  border-top: 8px solid yellowgreen;
+  border-top: 8px solid var(--primary-color);
 
   /* width: 100%; */
 
@@ -362,4 +366,33 @@ button {
 
 .modal-card-content {
   margin-top: 10px;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.input-wrapper.cvv-wrapper {
+  flex: 0 0 70px;
+}
+
+.input-label {
+  font-size: 0.8em;
+  font-weight: 700;
+  /* color: var(--dark-icon-color); */
+}
+
+.input-field {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--outline-color);
+  width: 100%;
 }

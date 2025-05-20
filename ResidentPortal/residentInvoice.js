@@ -1,14 +1,18 @@
 import loadIcons from "../hooks/loadIcons.js";
 import { fetchInvoices, fetchUserById } from "../hooks/firestore.js";
-import formatCost from "../hooks/formatCost.js";
-import formatDate from "../hooks/formatDate.js";
-import { displayOverview, displaySettings } from "./displayTabs.js";
+import {
+  displayOverview,
+  displayInvoices,
+  displayPayments,
+  displaySettings,
+} from "./displayTabs.js";
 
 import stripeConfig from "../hooks/stripe-config.js";
 
 const HEROKU_URL = stripeConfig.serverUrl;
 
 const YONE_PORO_ID = "rBCPLxqkvhU9bnLN2ttU";
+let customerId = YONE_PORO_ID;
 
 const stripe = Stripe(stripeConfig.publishableKey, {
   stripeAccount: YONE_PORO_ID,
@@ -34,6 +38,10 @@ window.setPageTab = function (tab) {
     loadData();
   } else if (pageTab === "settings") {
     displaySettings(stripe);
+  } else if (pageTab === "invoices") {
+    displayInvoices(customerId);
+  } else if (pageTab === "payments") {
+    displayPayments();
   }
 };
 
@@ -75,21 +83,27 @@ async function loadCustomerData(userId) {
 
 async function loadCustomerInvoices(userId) {
   // status index == 0 should be unpaid invoices
-  const invoices = await fetchInvoices(userId, 0);
+  const invoices = await fetchInvoices(userId, false);
 
+  console.log("customerId:", userId);
   console.log("Invoices for YONE_PORO_ID:", invoices);
   return createCurrentBalanceObject(invoices);
 }
 
 function createCurrentBalanceObject(invoices) {
+  console.log("Creating current balance object from invoices:", invoices);
+
   let currentBalance = 0;
   let dueDate = null;
 
   for (const invoice of invoices) {
-    // calculate current balance
-    currentBalance += invoice.total;
+    // Sum up all billing item amounts in the invoice
+    for (const itemId in invoice.billingItemMap) {
+      const item = invoice.billingItemMap[itemId];
+      currentBalance += item.amount || 0;
+    }
 
-    // find the earliest due date
+    // Find the earliest due date
     if (
       dueDate === null ||
       invoice.dueDateTimestamp.seconds < dueDate.seconds
@@ -99,23 +113,25 @@ function createCurrentBalanceObject(invoices) {
   }
 
   currentBalance = currentBalance / 100;
-  // const currentBalanceSpan = document.querySelector("#current-balance");
-  // currentBalanceSpan.textContent = formatCost(currentBalance);
 
-  // // display next bill due date
-  // const dueDateSpan = document.querySelector("#next-bill");
-  // const formattedDate = dueDate ? formatDate(dueDate) : "N/A";
-  // dueDateSpan.textContent = `Next bill due on ${formattedDate}`;
+  // Invoice ID link
+  let firstInvoiceId = null;
+  if (invoices.length !== 0) {
+    firstInvoiceId = invoices[0].id;
+  }
 
   return {
     amount: currentBalance,
     dueDate: dueDate ? new Date(dueDate.seconds * 1000) : null,
     notifications: [],
-    payNowFunction: payNow,
+    payNowFunction: () => {
+      if (firstInvoiceId) {
+        window.location.href = `/InvoiceDetails/invoiceDetails.html?id=${firstInvoiceId}`;
+      }
+    },
   };
 }
-
-async function payNow() {
+async function payNow(invoiceId, userId, paymentMethodId) {
   console.log("Pay Now button clicked");
 
   const invoices = await fetchInvoices(YONE_PORO_ID, 0);

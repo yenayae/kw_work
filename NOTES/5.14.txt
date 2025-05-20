@@ -21,3 +21,22 @@ stripe dashboard bank account verification process
 - redirect to stripe
 
 prioritize layouts
+
+TODO:
+
+
+bank accoutn verification process: select personal or business ==> redirect to stripe
+- in progress: need to set up a mandate when creating a customer to do recurring payments ex. customer consent
+- revamp payments table 
+
+
+DONE:
+
+new tabs: overview, invoices, payments, settings
+pay now redirect to invoice details
+add more detials to invoice details
+test ach payments (stripe does have a processing fee 0.1%)
+revamp card/debit card payment (inputs)
+
+
+

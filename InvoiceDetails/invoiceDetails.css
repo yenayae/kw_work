@@ -7,6 +7,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  gap: 10px;
 }
 
 .page-header {
@@ -29,13 +31,14 @@
   justify-content: center;
 }
 
-.invoice-wrapper {
+.invoice-wrapper,
+.details-wrapper,
+.payment-wrapper {
   background-color: white;
   width: 500px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
   padding: 15px;
-  margin: 20px 0;
   border-radius: 10px;
 
   display: flex;
@@ -124,4 +127,129 @@
   border: none;
 
   color: var(--primary-color);
+}
+
+.details-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  width: 100%;
+}
+
+.details-label {
+  font-weight: 700;
+  font-size: 1.3em;
+  color: black;
+}
+
+.invoice-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+}
+
+.invoice-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  /* width: 100%; */
+}
+
+.item-header,
+.item-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.item-header {
+  font-weight: 500;
+  /* font-size: 1.1em; */
+}
+
+.invoice-subtotal,
+.invoice-total {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.invoice-subtotal {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.invoice-total {
+  font-weight: 700;
+  font-size: 1.3em;
+}
+
+.payment-methods {
+  width: 100%;
+}
+.payment-method {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  width: 100%;
+}
+
+.payment-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.payment-content {
+  width: 100%;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 100%;
+  gap: 5px;
+}
+
+.expires {
+  white-space: nowrap;
+}
+
+.payment-type {
+  /* font-weight: 500; */
+  color: var(--light-icon-color);
+  font-size: 0.9em;
+}
+
+.pay-wrapper {
+  width: 530px;
+}
+
+.pay-button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  margin: 0;
+  padding: 15px 0;
 }

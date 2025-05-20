@@ -17,6 +17,7 @@ import checkStatus from "./hooks/checkStatus.js";
 import setSearchBarPlaceholder from "./hooks/setSearchBarPlaceholder.js";
 import { clearTable, clearFilter, clearOptions } from "./hooks/clearTable.js";
 import createOptionsButton from "./hooks/createOptionsButton.js";
+import { formatInvoiceContent } from "./hooks/FormatTable/formatInvoiceContent.js";
 
 function formatCustomerName(resident, payer) {
   if (resident.id === payer.id) {
@@ -141,49 +142,49 @@ function displayInvoices(invoices) {
   displayTable(invoices);
 }
 
-function formatContent(content) {
-  return content.map((invoice) => {
-    return [
-      {
-        entryId: formatInvoiceEntryId(invoice.invoiceNumber ?? 0),
-        id: invoice.id,
-      }, // default to 0 if undefined
-      formatCustomerName(
-        { name: invoice.residentName, id: invoice.residentId },
-        { name: invoice.payerName, id: invoice.payerId }
-      ) ?? "N/A", // fallback name
-      checkStatus(invoice.dueDateTimestamp, invoice.isPaid) ?? "Unknown", // fallback status
-      formatCost(parseFloat(invoice.total) / 100 ?? 0), // default to 0 if missing
-      invoice.frequencyInterval ?? "N/A",
-      formatDate(invoice.dueDateTimestamp) ?? "N/A",
-      formatDate(invoice.issueDateTimestamp) ?? "N/A",
-      invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
-      [
-        {
-          label: "View",
-          icon: "visibility",
-          action: () => {
-            console.log("View invoice clicked: #", invoice.invoiceNumber);
-          },
-        },
-        {
-          label: "Edit Invoice",
-          icon: "edit",
-          action: () => {
-            console.log("Edit invoice clicked: #", invoice.invoiceNumber);
-          },
-        },
-        {
-          label: "Delete Invoice",
-          icon: "delete",
-          action: () => {
-            console.log("Delete invoice clicked: #", invoice.invoiceNumber);
-          },
-        },
-      ],
-    ];
-  });
-}
+// function formatContent(content) {
+//   return content.map((invoice) => {
+//     return [
+//       {
+//         entryId: formatInvoiceEntryId(invoice.invoiceNumber ?? 0),
+//         id: invoice.id,
+//       }, // default to 0 if undefined
+//       formatCustomerName(
+//         { name: invoice.residentName, id: invoice.residentId },
+//         { name: invoice.payerName, id: invoice.payerId }
+//       ) ?? "N/A", // fallback name
+//       checkStatus(invoice.dueDateTimestamp, invoice.isPaid) ?? "Unknown", // fallback status
+//       formatCost(parseFloat(invoice.total) / 100 ?? 0), // default to 0 if missing
+//       invoice.frequencyInterval ?? "N/A",
+//       formatDate(invoice.dueDateTimestamp) ?? "N/A",
+//       formatDate(invoice.issueDateTimestamp) ?? "N/A",
+//       invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
+//       [
+//         {
+//           label: "View",
+//           icon: "visibility",
+//           action: () => {
+//             console.log("View invoice clicked: #", invoice.invoiceNumber);
+//           },
+//         },
+//         {
+//           label: "Edit Invoice",
+//           icon: "edit",
+//           action: () => {
+//             console.log("Edit invoice clicked: #", invoice.invoiceNumber);
+//           },
+//         },
+//         {
+//           label: "Delete Invoice",
+//           icon: "delete",
+//           action: () => {
+//             console.log("Delete invoice clicked: #", invoice.invoiceNumber);
+//           },
+//         },
+//       ],
+//     ];
+//   });
+// }
 
 function displayTable(invoices) {
   //clear previous content
@@ -205,7 +206,7 @@ function displayTable(invoices) {
   ];
 
   //format invoices for the table
-  const content = formatContent(invoices);
+  const content = formatInvoiceContent(invoices);
 
   const sortFieldsMap = {
     "Invoice #": "invoiceNumber",
@@ -234,7 +235,11 @@ function displayTable(invoices) {
 
       const tableContainer = document.querySelector(".generic-table");
 
-      updateTable(headers, formatContent(sortedInvoices), tableContainer);
+      updateTable(
+        headers,
+        formatInvoiceContent(sortedInvoices),
+        tableContainer
+      );
       loadIcons();
     },
     true
