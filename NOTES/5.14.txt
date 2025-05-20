@@ -28,6 +28,8 @@ TODO:
 bank accoutn verification process: select personal or business ==> redirect to stripe
 - in progress: need to set up a mandate when creating a customer to do recurring payments ex. customer consent
 - revamp payments table 
+- revamp the way payment methods are added to customers
+- can do instant verification for bank acoutns (without having to login to stripe)
 
 
 DONE:
