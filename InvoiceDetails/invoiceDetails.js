@@ -47,6 +47,8 @@ async function fetchInvoiceData() {
 }
 
 function displayInvoiceData(invoiceData) {
+  console.log(invoiceData);
+
   const displayAmount = document.querySelector("#invoice-amount");
   let invoiceAmount = 0;
   for (const itemId in invoiceData.billingItemMap) {

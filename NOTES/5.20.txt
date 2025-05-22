@@ -1,0 +1,28 @@
+- billign page:
+	- dynamic info display ex. pay now button/set up auto pay not visible if all paid (make everything dynamic) clear that thers is something to pay vs not paid
+	- get rid of frequency, last event headers
+	- actions: only view and download visible for customers
+
+- payment pad:
+	- add link to invoice details page for paid invoices
+	- change headers: customer ==> invoice id, 
+	- action: view and download visieble for custmoers
+
+status checks
+- pending
+- successful
+- paid in person (pending ex. cashing in check)
+- past due
+- 
+
+- filter buttons functionality
+
+- bank connection 
+	- set up intents
+	- mandates
+
+- business perpsective and how to set up business bank account
+
+- FINISH USERS PORTION:
+- start businesses side
+
