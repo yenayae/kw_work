@@ -11,7 +11,7 @@ import stripeConfig from "../hooks/stripe-config.js";
 
 const HEROKU_URL = stripeConfig.serverUrl;
 
-const YONE_PORO_ID = "rBCPLxqkvhU9bnLN2ttU";
+const YONE_PORO_ID = "YxjftiBUqLiwN1xk7hSo";
 let customerId = YONE_PORO_ID;
 
 const stripe = Stripe(stripeConfig.publishableKey, {
@@ -19,7 +19,7 @@ const stripe = Stripe(stripeConfig.publishableKey, {
 });
 
 let pageTab = "overview";
-window.setPageTab = function (tab) {
+window.setPageTab = async function (tab) {
   pageTab = tab;
 
   // Remove 'selected' class from all tabs
@@ -28,20 +28,32 @@ window.setPageTab = function (tab) {
   const selectedTab = document.querySelector(
     `.content-tabs .content-tab[onclick*="${tab}"]`
   );
-
   if (selectedTab) {
     selectedTab.classList.add("selected");
   }
+
   loadIcons();
 
-  if (pageTab === "overview") {
-    loadData();
-  } else if (pageTab === "settings") {
-    displaySettings(stripe);
-  } else if (pageTab === "invoices") {
-    displayInvoices(customerId);
-  } else if (pageTab === "payments") {
-    displayPayments();
+  const loadingEl = document.getElementById("loader-wrapper");
+  loadingEl.classList.add("show");
+
+  const tabDisplay = document.getElementById("tab-display");
+  tabDisplay.innerHTML = "";
+
+  try {
+    if (pageTab === "overview") {
+      await loadData();
+    } else if (pageTab === "settings") {
+      await displaySettings(stripe);
+    } else if (pageTab === "invoices") {
+      await displayInvoices(customerId);
+    } else if (pageTab === "payments") {
+      await displayPayments(customerId);
+    }
+  } catch (err) {
+    console.error("Error loading tab data:", err);
+  } finally {
+    loadingEl.classList.remove("show");
   }
 };
 

@@ -49,7 +49,7 @@
 }
 
 .invoice-wrapper span {
-  font-weight: 500;
+  /* font-weight: 500; */
 }
 
 .location-name {
@@ -73,6 +73,10 @@
   border: 1px solid var(--lighter-outline-color);
 }
 
+.invoice-divider.details {
+  margin: 0;;
+}
+
 .metadata-wrapper {
   display: flex;
   flex-direction: column;
@@ -81,6 +85,10 @@
   gap: 15px;
 
   width: 100%;
+}
+
+.metadata-wrapper span {
+  font-weight: 500;
 }
 
 .metadata-entry {
@@ -144,6 +152,14 @@
   color: black;
 }
 
+.hide-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  cursor: pointer;
+}
+
 .invoice-item-wrapper {
   display: flex;
   flex-direction: column;
@@ -196,15 +212,31 @@
   font-size: 1.3em;
 }
 
-.payment-methods {
+.payment-methods, .chosen-payment-method {
   width: 100%;
+
 }
+
+.chosen-payment-method {
+  background-color: var(--lighter-outline-color);
+  padding: 15px 5px;
+  border-radius: 5px;
+  /* font-weight: 600; */
+  /* font-size: 1.2em; */
+}
+
+.chosen {
+  font-weight: 500;
+}
+
 .payment-method {
   display: flex;
   flex-direction: row;
   gap: 10px;
 
   width: 100%;
+
+  
 }
 
 .payment-header {
@@ -218,6 +250,10 @@
 
 .payment-content {
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .payment-info {
@@ -252,4 +288,10 @@
 
   margin: 0;
   padding: 15px 0;
+}
+
+.loading-box {
+  background-color: var(--lighter-outline-color);
+  height: 30px;
+  width: 100px;
 }

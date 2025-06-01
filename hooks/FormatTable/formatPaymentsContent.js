@@ -1,10 +1,12 @@
 import formatCost from "../formatCost.js";
 import formatDate from "../formatDate.js";
+import formatInvoiceEntryId from "../formatInvoiceEntryId.js";
 
 export const PAYMENTS_HEADERS = [
+  "Invoice #",
   "Payment Date",
   "Amount",
-  "Customer",
+  // "Customer",
   "Payment Status",
   "Source",
   "Payment Method",
@@ -12,9 +14,10 @@ export const PAYMENTS_HEADERS = [
 ];
 
 export const PAYMENT_SORT_FIELDS = {
+  "Invoice #": "invoiceNumber",
   "Payment Date": "invoiceNumber",
   Amount: "total",
-  Customer: "residentName",
+  // Customer: "residentName",
   "Payment Status": "dueDateTimestamp",
   Source: "source",
   "Payment Method": "paymentMethod",
@@ -22,7 +25,6 @@ export const PAYMENT_SORT_FIELDS = {
 };
 
 export const PAYMENTS_FILTER_OPTIONS = [
-  { name: "Invoice Status", options: ["Paid", "Scheduled", "Past Due"] },
   {
     name: "Amount",
     options: [
@@ -35,40 +37,86 @@ export const PAYMENTS_FILTER_OPTIONS = [
     ],
   },
   { name: "Issue Date", options: ["Today", "Not Today"] },
-  { name: "Due Date", options: ["Today", "Not Today"] },
-  { name: "Invoice Date(s)", options: ["Today", "Not Today"] },
-  { name: "Payment Status", options: ["Paid", "Unpaid", "Past Due"] },
+  { name: "Paid Date", options: ["Today", "Not Today"] },
 ];
 
 export function formatPaymentsContent(payments) {
   const formatted = payments.map((payment) => {
+    console.log("payment object:", payment);
+
+    //calculate amount
+    let invoiceAmount = 0;
+    const billingMap = payment.invoiceData.billingItemMap;
+    for (const itemId in billingMap) {
+      const item = billingMap[itemId];
+      invoiceAmount += item.amount || 0;
+    }
+    invoiceAmount /= 100;
+
+    //figure out status
+    let paymentStatus = "";
+
+    console.log(payment.invoiceData.isPaid);
+    if (payment.invoiceData.isPaid) {
+      paymentStatus = "paid";
+    } else {
+      paymentStatus = "error";
+    }
+
     return [
-      formatDate(payment.paymentDate) ?? "N/A",
-      formatCost(payment.amount ?? 0),
-      payment.customer ?? "N/A",
-      payment.paymentStatus ?? "N/A",
+      // invoice number
+      {
+        entryId: formatInvoiceEntryId(payment.invoiceData.invoiceNumber ?? 0),
+        id: payment.invoiceData.id,
+      },
+
+      // payment date
+      formatDate(payment.paidOn) ?? "N/A",
+
+      // amount
+      formatCost(invoiceAmount ?? 0),
+
+      // customer
+      // payment.customer ?? "N/A",
+
+      // payment status
+      paymentStatus ?? "N/A",
+
+      // source
       payment.source ?? "N/A",
+
+      //payment method
       payment.paymentMethod ?? "N/A",
+
+      //actions
       [
+        // {
+        //   label: "Refund",
+        //   icon: "attach_money",
+        //   action: () => {
+        //     console.log("View invoice clicked ID: ", payment.id);
+        //   },
+        // },
+        // {
+        //   label: "Send Receipt",
+        //   icon: "send",
+        //   action: () => {
+        //     console.log("Edit invoice clicked ID: ", payment.id);
+        //   },
+        // },
         {
-          label: "Refund",
-          icon: "attach_money",
+          label: "View Receipt",
+          icon: "visibility",
           action: () => {
-            console.log("View invoice clicked ID: ", payment.id);
+            console.log("View payment clicked ID: ", payment.id);
           },
         },
-        {
-          label: "Send Receipt",
-          icon: "send",
-          action: () => {
-            console.log("Edit invoice clicked ID: ", payment.id);
-          },
-        },
+
         {
           label: "Download Receipt",
           icon: "download",
           action: () => {
-            console.log("Delete invoice clicked ID: ", payment.id);
+            console.log("Download payment clicked ID: ", payment.id);
           },
         },
       ],

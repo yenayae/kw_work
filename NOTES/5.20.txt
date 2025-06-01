@@ -26,3 +26,25 @@ status checks
 - FINISH USERS PORTION:
 - start businesses side
 
+TODO:
+- table updates for billing
+- table updates for payments
+- overview: make the cards dynamic and clear
+- payments: link to invoice details (similar to invoices table)
+- action buttons: view and download only for customers
+- new status things (pending, maybe more?)
+- filter buttons functionality
+- custmoer bank connectinos and set up intents / mandates
+
+optional: business perspectives and how to set up business bank account
+
+===== overall improve user experience ====
+
+DONE:
+- resident portal: spinning loader when clicking between tabs
+- table updates for billing
+- table updates for payments
+
+
+
+

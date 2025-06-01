@@ -25,12 +25,16 @@ form.addEventListener("submit", async (event) => {
   const email = formData.get("email");
   const phone = formData.get("phone");
 
-  //check what type of payment method: card / bank account
+  // check what type of payment method: card / bank account
   // note: little archaic, maybe think of more foolproof way of figuting out
   const useCard = document
     .querySelector("#card-payment-method")
     .classList.contains("open");
   let paymentMethodId = null;
+  let stripePaymentId = null;
+
+  console.log("usercard:", useCard);
+  let paymentMethodData = undefined;
 
   //create payment method
   if (useCard) {
@@ -53,7 +57,8 @@ form.addEventListener("submit", async (event) => {
         currency: "usd",
         routing_number: document.getElementById("bank-routing").value,
         account_number: document.getElementById("bank-account").value,
-        account_holder_name: document.getElementById("bank-name").value,
+        account_holder_name: document.getElementById("account-holder-name")
+          .value,
         account_holder_type: "individual", // or 'company'
       }
     );
@@ -64,11 +69,14 @@ form.addEventListener("submit", async (event) => {
     }
 
     console.log("Created bank account token:", token.id);
+    console.log("token info:", token);
+    console.log("bank acccount", token.bank_account);
     paymentMethodId = token.id; // this is a bank account token, not a payment method
+    stripePaymentId = token.bank_account.id;
+    paymentMethodData = token;
   }
 
   console.log("Payment method created:", paymentMethodId);
-
   const customer = {
     connectedAccountId: TEST_ACCOUNT_ID,
     name: name,
@@ -99,7 +107,21 @@ form.addEventListener("submit", async (event) => {
       taxExempt: "none",
       taxId: "12-3456789",
     },
-    paymentMethodId: paymentMethodId,
+
+    paymentMethodIds: [paymentMethodId],
+
+    paymentMethodMap: {
+      [paymentMethodId]: {
+        type: paymentMethodData.type,
+        createdAt: paymentMethodData.created,
+        id: paymentMethodId,
+        stripe_id: stripePaymentId,
+        isDefault: true,
+        stripe_object: useCard
+          ? paymentMethodData.card
+          : paymentMethodData.bank_account,
+      },
+    },
   };
 
   // send customer to your backend
@@ -133,10 +155,10 @@ form.addEventListener("submit", async (event) => {
 //front end stuff
 
 //mount card elements:
-mountCardPayment("#card-payment-method", stripe);
+// mountCardPayment("#card-payment-method", stripe);
 
 //mount bank elements:
-mountBankPayment("#bank-payment-method");
+document.querySelector("#bank-payment-method").appendChild(mountBankPayment());
 
 window.selectPaymentMethod = function (clickedElement) {
   // Find the associated payment-method div

@@ -377,10 +377,10 @@ function displayPaymentsTable(payments, containerDiv) {
   return paymentsContainer;
 }
 
-export async function displayPayments() {
-  console.log("Payments button clicked");
+export async function displayPayments(customerId) {
+  console.log("Payments button clicked", customerId);
 
-  const payments = await fetchPayments();
+  const payments = await fetchPayments(customerId);
   console.log("Payments:", payments);
 
   const displayContainer = document.querySelector("#tab-display");

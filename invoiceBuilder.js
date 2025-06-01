@@ -180,6 +180,7 @@ function createInvoiceObject(selectedCustomer, billingItems) {
     repeatFrequency: "byMonth",
     billingItemIds,
     billingItemMap,
+    status: "unpaid",
   };
 
   return invoiceData;

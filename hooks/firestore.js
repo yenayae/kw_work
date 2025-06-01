@@ -292,9 +292,26 @@ export async function uploadInvoice(invoiceData) {
 */
 
 //fetch payments data
-export async function fetchPayments(userId = DEV_USER_ID) {
+export async function fetchPayments(
+  customerId = undefined,
+  paymentId = undefined
+) {
   const paymentsRef = collection(db, "payments");
-  const paymentsSnapshot = await getDocs(paymentsRef);
+
+  let constraints = [];
+
+  if (customerId !== undefined) {
+    constraints.push(where("invoiceData.residentId", "==", customerId));
+  }
+
+  if (paymentId !== undefined) {
+    constraints.push(where("id", "==", paymentId));
+  }
+
+  const q =
+    constraints.length > 0 ? query(paymentsRef, ...constraints) : paymentsRef;
+
+  const paymentsSnapshot = await getDocs(q);
 
   let data = [];
 

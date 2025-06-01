@@ -9,10 +9,10 @@ export const INVOICE_HEADERS = [
   "Customer",
   "Status",
   "Invoice Amount",
-  "Frequency",
+  // "Frequency",
   "Due Date",
   "Issue Date",
-  "Last Event",
+  // "Last Event",
   "Actions",
 ];
 
@@ -21,10 +21,10 @@ export const INVOICE_SORT_FIELDS = {
   Customer: "residentName",
   Status: "dueDateTimestamp", // more meaningful sort than isPaid
   "Invoice Amount": "total",
-  Frequency: "frequencyInterval",
+  // Frequency: "frequencyInterval",
   "Due Date": "dueDateTimestamp",
   "Issue Date": "issueDateTimestamp",
-  "Last Event": "lastEvent",
+  // "Last Event": "lastEvent",
 };
 
 export const INVOICE_FILTER_OPTIONS = [
@@ -76,7 +76,7 @@ export function formatInvoiceContent(content) {
       formatCost(parseFloat(invoiceAmount) / 100 ?? 0), // default to -1 if missing
 
       //frequency
-      invoice.frequencyInterval ?? "N/A",
+      // invoice.frequencyInterval ?? "N/A",
 
       //due date
       formatDate(invoice.dueDateTimestamp) ?? "N/A",
@@ -85,31 +85,39 @@ export function formatInvoiceContent(content) {
       formatDate(invoice.issueDateTimestamp) ?? "N/A",
 
       //last event
-      invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
+      // invoice.lastEvent ? `Invoice ${invoice.lastEvent}.` : "None",
 
       //actions
       [
         {
-          label: "View",
+          label: "View Invoice",
           icon: "visibility",
           action: () => {
             console.log("View invoice clicked: #", invoice.invoiceNumber);
           },
         },
+
         {
-          label: "Edit Invoice",
-          icon: "edit",
+          label: "Download Invoice",
+          icon: "download",
           action: () => {
-            console.log("Edit invoice clicked: #", invoice.invoiceNumber);
+            console.log("Download invoice clicked ID: ", invoice.id);
           },
         },
-        {
-          label: "Delete Invoice",
-          icon: "delete",
-          action: () => {
-            console.log("Delete invoice clicked: #", invoice.invoiceNumber);
-          },
-        },
+        // {
+        //   label: "Edit Invoice",
+        //   icon: "edit",
+        //   action: () => {
+        //     console.log("Edit invoice clicked: #", invoice.invoiceNumber);
+        //   },
+        // },
+        // {
+        //   label: "Delete Invoice",
+        //   icon: "delete",
+        //   action: () => {
+        //     console.log("Delete invoice clicked: #", invoice.invoiceNumber);
+        //   },
+        // },
       ],
     ];
   });

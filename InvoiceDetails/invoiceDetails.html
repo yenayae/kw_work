@@ -38,11 +38,16 @@
             <div class="invoice-wrapper">
               <div class="user-profile invoice"></div>
               <div class="location-name">Old Poro Senior Living</div>
-              <div class="invoice-status">
-                <span class="status canceled">Canceled</span>
+              <div id="invoice-status">
+                <span class="status canceled">Loading</span>
               </div>
-              <div id="invoice-amount" class="invoice-amount">$123123.01</div>
-              <div class="invoice-due-date">Due Sep 01, 2024</div>
+
+              <div id="invoice-amount">
+                <div class="loading-box"></div>
+              </div>
+              <div id="invoice-due-date" class="invoice-due-date">
+                Due Sep 01, 2024
+              </div>
               <hr class="invoice-divider" />
               <div class="metadata-wrapper">
                 <div class="metadata-entry">
@@ -51,7 +56,7 @@
                   </div>
 
                   <div>
-                    <span>0000000</span>
+                    <span id="invoice-number">0000000</span>
                   </div>
                 </div>
 
@@ -61,7 +66,7 @@
                   </div>
 
                   <div>
-                    <span>Cow Poro</span>
+                    <span id="invoice-bill-to">Cow Poro</span>
                   </div>
                 </div>
 
@@ -71,7 +76,7 @@
                   </div>
 
                   <div>
-                    <span>Old Poro Senior Living</span>
+                    <span id="invoice-from">Old Poro Senior Living</span>
                   </div>
                 </div>
               </div>
@@ -88,7 +93,7 @@
                   </div>
 
                   <div>
-                    <span>Every 1 Month</span>
+                    <span id="invoice-frequency">Every 1 Month</span>
                   </div>
                 </div>
 
@@ -98,7 +103,7 @@
                   </div>
 
                   <div>
-                    <span>Ends never</span>
+                    <span id="invoice-occurence">Ends never</span>
                   </div>
                 </div>
               </div>
@@ -125,41 +130,43 @@
                 <div>
                   <span class="details-label">Details</span>
                 </div>
-                <div>
+                <div class="hide-icon" onclick="toggleDetails()">
                   <span>Hide</span>
-                  <span>icon</span>
+                  <span class="material-symbols-outlined">
+                    keyboard_control_key
+                  </span>
                 </div>
               </div>
 
-              <div class="invoice-item-wrapper">
+              <div id="invoice-details" class="invoice-item-wrapper">
                 <div class="invoice-item">
                   <div class="item-header">
-                    <span>Name of Invoice</span>
-                    <span>$0.00</span>
+                    <!-- <span>Name of Invoice</span> -->
+                    <!-- <span>$0.00</span> -->
                   </div>
                   <div class="item-content">
-                    <span>Description of Invoice</span>
+                    <!-- <span>Description of Invoice</span> -->
                   </div>
                 </div>
 
                 <div class="invoice-item">
                   <div class="item-header">
-                    <span>Name of Invoice</span>
-                    <span>$0.00</span>
+                    <!-- <span>Name of Invoice</span> -->
+                    <!-- <span>$0.00</span> -->
                   </div>
                   <div class="item-content">
-                    <span>Description of Invoice</span>
+                    <!-- <span>Description of Invoice</span> -->
                   </div>
                 </div>
               </div>
-              <hr class="invoice-divider" />
+              <hr class="invoice-divider details" />
 
               <div class="invoice-subtotal">
                 <div>
                   <span class="subtotal-label">Subtotal</span>
                 </div>
                 <div>
-                  <span>$0.00</span>
+                  <span id="invoice-subtotal">$0.00</span>
                 </div>
               </div>
 
@@ -168,44 +175,50 @@
                   <span class="total-label">Total</span>
                 </div>
                 <div>
-                  <span>$0.00</span>
+                  <span id="invoice-total">$0.00</span>
                 </div>
               </div>
             </div>
 
             <!-- new section -->
-            <div class="payment-wrapper">
+            <div id="payment-wrapper" class="payment-wrapper">
               <div class="details-header">
                 <div>
                   <span class="details-label">Choose Payment Method</span>
                 </div>
-                <div>
+                <div class="hide-icon">
                   <span>Hide</span>
-                  <span>icon</span>
+                  <span class="material-symbols-outlined">
+                    keyboard_control_key
+                  </span>
                 </div>
               </div>
 
-              <div class="payment-methods">
+              <div class="chosen-payment-method">
                 <div class="payment-method card-payment">
                   <div>
-                    <span class="material-symbols-outlined"> credit_card </span>
+                    <span class="material-symbols-outlined">
+                      account_balance
+                    </span>
                   </div>
                   <div class="payment-content">
                     <div class="payment-header">
                       <div class="payment-info">
-                        <span class="issuer">Wells Fargo</span>
+                        <span class="issuer chosen">TEST BANK NAME</span>
                         <span class="number">**** 1234</span>
                       </div>
                       <div>
-                        <span class="expires">Expires 08/26</span>
+                        <span>logo</span>
                       </div>
                     </div>
                     <div class="details">
-                      <span class="payment-type">Credit Card</span>
+                      <span class="payment-type"> Checking Bank Account</span>
                     </div>
                   </div>
                 </div>
+              </div>
 
+              <div class="payment-methods">
                 <div class="payment-method card-payment">
                   <div>
                     <span class="material-symbols-outlined"> credit_card </span>

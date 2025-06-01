@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Customer</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../styles.css" />
     <link rel="stylesheet" href="addCustomer.css" />
   </head>
   <body>
     <header>
       <h1>Add Customer</h1>
     </header>
+
     <main>
       <form id="add-customer-form">
         <label for="name">Name:</label>
@@ -49,6 +50,11 @@
 
         <button type="submit">Add Customer</button>
       </form>
+
+      <div>
+        <span>routing number: 110000000</span>
+        <span>acccount number: 000123456789</span>
+      </div>
     </main>
     <script src="https://js.stripe.com/v3/"></script>
     <script type="module" src="addCustomer.js"></script>

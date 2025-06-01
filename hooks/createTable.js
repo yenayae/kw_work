@@ -255,7 +255,7 @@ export function createTableContent(headers, content) {
       }
 
       //create a status component
-      else if (header === "Status") {
+      else if (header === "Status" || header === "Payment Status") {
         td.appendChild(createStatusComponent(cell));
       }
 
