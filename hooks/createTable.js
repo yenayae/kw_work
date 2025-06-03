@@ -263,7 +263,30 @@ export function createTableContent(headers, content) {
       else if (header === "Payment Method") {
         const methodDiv = document.createElement("div");
         methodDiv.className = "payment-method";
-        methodDiv.innerHTML = `<span>bank icon and card info</span>`;
+
+        console.log("Payment method cell:", cell);
+
+        const isBank = cell.type === "us_bank_account";
+        const isCard = cell.type === "card";
+
+        // Create the icon element
+        const icon = document.createElement("span");
+        icon.classList.add("material-symbols-outlined", "payment-icon");
+
+        if (isBank) {
+          icon.textContent = "account_balance";
+        } else if (isCard) {
+          icon.textContent = "credit_card";
+        }
+
+        // Create the last4 span
+        const last4Span = document.createElement("span");
+        last4Span.textContent = `•••• ${cell.last4}`;
+
+        // Append icon and last4 span to the container
+        methodDiv.appendChild(icon);
+        methodDiv.appendChild(last4Span);
+
         td.appendChild(methodDiv);
       }
 

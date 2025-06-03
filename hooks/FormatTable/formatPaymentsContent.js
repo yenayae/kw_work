@@ -56,7 +56,6 @@ export function formatPaymentsContent(payments) {
     //figure out status
     let paymentStatus = "";
 
-    console.log(payment.invoiceData.isPaid);
     if (payment.invoiceData.isPaid) {
       paymentStatus = "paid";
     } else {
@@ -86,7 +85,10 @@ export function formatPaymentsContent(payments) {
       payment.source ?? "N/A",
 
       //payment method
-      payment.paymentMethod ?? "N/A",
+      {
+        type: payment.payment_method_type ?? "N/A",
+        last4: payment.last4 ?? "0000",
+      },
 
       //actions
       [

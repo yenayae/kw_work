@@ -359,6 +359,11 @@ td.link {
   /* background-color: pink; */
 }
 
+.material-symbols-outlined.payment-icon {
+  font-size: 1.5em;
+  color: var(--selected-color);
+}
+
 /* status boxes */
 .status {
   text-transform: uppercase;
