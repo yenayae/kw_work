@@ -108,7 +108,7 @@ form.addEventListener("submit", async (event) => {
       taxId: "12-3456789",
     },
 
-    paymentMethodIds: [paymentMethodId],
+    paymentMethodIds: [paymentMethodId, paymentMethodId],
 
     paymentMethodMap: {
       [paymentMethodId]: {
@@ -117,6 +117,18 @@ form.addEventListener("submit", async (event) => {
         id: paymentMethodId,
         stripe_id: stripePaymentId,
         isDefault: true,
+        note: "test payment method",
+        stripe_object: useCard
+          ? paymentMethodData.card
+          : paymentMethodData.bank_account,
+      },
+      [`${paymentMethodId}2`]: {
+        type: paymentMethodData.type,
+        createdAt: paymentMethodData.created,
+        id: paymentMethodId,
+        stripe_id: stripePaymentId,
+        isDefault: true,
+        note: "duplicate for testing",
         stripe_object: useCard
           ? paymentMethodData.card
           : paymentMethodData.bank_account,

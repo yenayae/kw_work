@@ -11,7 +11,7 @@ loadIcons();
 
 console.log("Loading icons...");
 
-const CUSTOMER_ID = "YxjftiBUqLiwN1xk7hSo";
+const CUSTOMER_ID = "vwutkwHs1tJfLbXvplFW";
 
 const params = new URLSearchParams(window.location.search);
 const invoiceId = params.get("id");
@@ -184,8 +184,15 @@ function displayInvoiceData(invoiceData) {
   invoiceSubtotal.textContent = formatCost(invoiceAmount);
   invoiceTotal.textContent = formatCost(invoiceAmount);
 
+  console.log(invoiceData.isPaid);
+
   if (!invoiceData.isPaid) {
+    console.log("Invoice is not paid, fetching payment method...");
     fetchPaymentMethod();
+  } else {
+    // Remove payment sections if they exist
+    const container = document.getElementById("payment-sections-container");
+    container.innerHTML = "";
   }
 }
 
@@ -194,16 +201,300 @@ async function fetchPaymentMethod() {
   console.log("fetching customer payment methods");
 
   const userId = CUSTOMER_ID;
-
   const user = await fetchUserById(userId, "customers");
-
   const defaultPaymentMethod = Object.values(user.paymentMethodMap).find(
     (method) => method.isDefault === true
   );
 
   console.log(defaultPaymentMethod);
-
   console.log(user);
+
+  // Create and append payment sections
+  createPaymentSections(user, defaultPaymentMethod);
+}
+
+function createPaymentSections(user, defaultPaymentMethod) {
+  const container = document.getElementById("payment-sections-container");
+  container.innerHTML = ""; // Clear existing content
+
+  // Create payment method section
+  const paymentWrapper = document.createElement("div");
+  paymentWrapper.id = "payment-wrapper";
+  paymentWrapper.className = "payment-wrapper";
+
+  // Payment method header
+  const header = document.createElement("div");
+  header.className = "details-header";
+
+  const headerContent = document.createElement("div");
+  const headerLabel = document.createElement("span");
+  headerLabel.className = "details-label";
+  headerLabel.textContent = "Payment Method";
+  headerContent.appendChild(headerLabel);
+  header.appendChild(headerContent);
+
+  // Create container for chosen method
+  const chosenMethodContainer = document.createElement("div");
+  chosenMethodContainer.id = "chosen-method-container";
+
+  // Function to create and display chosen payment method
+  function displayChosenMethod(method) {
+    const chosenMethodWrapper = document.createElement("div");
+    chosenMethodWrapper.className = "chosen-payment-method-wrapper";
+
+    const chosenMethod = document.createElement("div");
+    chosenMethod.className = "chosen-payment-method card-payment";
+
+    const isBank = method.type === "bank_account";
+    const icon = isBank ? "account_balance" : "credit_card";
+    const type = isBank ? "Checking Bank Account" : "Credit Card";
+    const number = method.last4 || "1234";
+
+    // Left content
+    const chosenContentLeft = document.createElement("div");
+    chosenContentLeft.className = "chosen-content";
+
+    // Icon
+    const centerIcon = document.createElement("div");
+    centerIcon.className = "center-icon";
+    const iconSpan = document.createElement("span");
+    iconSpan.className = "material-symbols-outlined";
+    iconSpan.textContent = icon;
+    centerIcon.appendChild(iconSpan);
+
+    // Payment content
+    const paymentContent = document.createElement("div");
+    paymentContent.className = "payment-content";
+
+    const paymentHeader = document.createElement("div");
+    paymentHeader.className = "payment-header";
+
+    const paymentInfo = document.createElement("div");
+    paymentInfo.className = "payment-info";
+
+    const issuerSpan = document.createElement("span");
+    issuerSpan.className = "issuer chosen";
+    issuerSpan.textContent =
+      method.bank_name || method.brand || "TEST BANK NAME";
+
+    const numberSpan = document.createElement("span");
+    numberSpan.className = "number";
+    numberSpan.textContent = `**** ${number}`;
+
+    paymentInfo.appendChild(issuerSpan);
+    paymentInfo.appendChild(numberSpan);
+    paymentHeader.appendChild(paymentInfo);
+
+    const details = document.createElement("div");
+    details.className = "details";
+    const typeSpan = document.createElement("span");
+    typeSpan.className = "payment-type";
+    typeSpan.textContent = type;
+    details.appendChild(typeSpan);
+
+    paymentContent.appendChild(paymentHeader);
+    paymentContent.appendChild(details);
+
+    chosenContentLeft.appendChild(centerIcon);
+    chosenContentLeft.appendChild(paymentContent);
+
+    // Right content
+    const chosenContentRight = document.createElement("div");
+    chosenContentRight.className = "chosen-content";
+
+    const defaultTag = document.createElement("div");
+    defaultTag.className = "default-tag";
+    const defaultSpan = document.createElement("span");
+    defaultSpan.textContent = "default";
+    defaultTag.appendChild(defaultSpan);
+
+    const radioIcon = document.createElement("span");
+    radioIcon.className = "material-symbols-outlined radio-icon selected";
+    radioIcon.textContent = "radio_button_checked";
+
+    chosenContentRight.appendChild(defaultTag);
+    chosenContentRight.appendChild(radioIcon);
+
+    chosenMethod.appendChild(chosenContentLeft);
+    chosenMethod.appendChild(chosenContentRight);
+    chosenMethodWrapper.appendChild(chosenMethod);
+
+    // Clear and append new chosen method
+    chosenMethodContainer.innerHTML = "";
+    chosenMethodContainer.appendChild(chosenMethodWrapper);
+  }
+
+  // Initial display of chosen method
+  displayChosenMethod(defaultPaymentMethod);
+  paymentWrapper.appendChild(header);
+  paymentWrapper.appendChild(chosenMethodContainer);
+
+  // Create other payment methods section if there are any
+  if (user.paymentMethodIds && user.paymentMethodIds.length > 1) {
+    const toggleExtra = document.createElement("div");
+    toggleExtra.className = "hide-icon chosen";
+    toggleExtra.id = "toggle-extra-payments";
+
+    const toggleText = document.createElement("span");
+    toggleText.id = "toggle-text";
+    toggleText.textContent = "Show More";
+
+    const toggleIcon = document.createElement("span");
+    toggleIcon.id = "toggle-icon";
+    toggleIcon.className = "material-symbols-outlined";
+    toggleIcon.textContent = "keyboard_double_arrow_down";
+
+    toggleExtra.appendChild(toggleText);
+    toggleExtra.appendChild(toggleIcon);
+
+    const extraMethods = document.createElement("div");
+    extraMethods.className = "payment-methods hidden";
+    extraMethods.id = "extra-payment-methods";
+
+    // Keep track of current chosen method
+    let currentChosenMethod = defaultPaymentMethod;
+
+    // Function to update the list of payment methods
+    function updatePaymentMethodsList() {
+      extraMethods.innerHTML = "";
+      user.paymentMethodIds.forEach((methodId) => {
+        const method = user.paymentMethodMap[methodId];
+
+        console.log("check method: ", method);
+        console.log("check currentChosenMethod: ", currentChosenMethod);
+
+        if (method && method !== currentChosenMethod) {
+          const methodElement = createPaymentMethodElement(method);
+
+          console.log("methodlment: ", methodElement);
+
+          // Add click handler for payment method switching
+          methodElement.addEventListener("click", () => {
+            const previousMethod = currentChosenMethod;
+            currentChosenMethod = method;
+            displayChosenMethod(method);
+
+            // Hide the list after selection
+            extraMethods.classList.add("hidden");
+            toggleText.textContent = "Show More";
+            toggleIcon.textContent = "keyboard_double_arrow_down";
+          });
+
+          extraMethods.appendChild(methodElement);
+        }
+      });
+    }
+
+    // Initial population of the list
+    updatePaymentMethodsList();
+
+    paymentWrapper.appendChild(toggleExtra);
+    paymentWrapper.appendChild(extraMethods);
+
+    // Add toggle functionality
+    toggleExtra.addEventListener("click", () => {
+      const isHidden = extraMethods.classList.toggle("hidden");
+      toggleText.textContent = isHidden ? "Show More" : "Show Less";
+      toggleIcon.textContent = isHidden
+        ? "keyboard_double_arrow_down"
+        : "keyboard_double_arrow_up";
+
+      // Update the list when showing it
+      if (!isHidden) {
+        updatePaymentMethodsList();
+      }
+    });
+  }
+
+  // Create pay button section
+  const payWrapper = document.createElement("div");
+  payWrapper.className = "pay-wrapper";
+
+  const payButton = document.createElement("button");
+  payButton.className = "pay-button";
+  payButton.onclick = payInvoice;
+  payButton.textContent = "Pay Now";
+
+  payWrapper.appendChild(payButton);
+
+  // Append everything to container
+  container.appendChild(paymentWrapper);
+  container.appendChild(payWrapper);
+
+  loadIcons();
+}
+
+function createPaymentMethodElement(method) {
+  const isBank = method.type === "bank_account";
+  const icon = isBank ? "account_balance" : "credit_card";
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "payment-method-wrapper card-payment";
+
+  const paymentMethod = document.createElement("div");
+  paymentMethod.className = "payment-method";
+
+  // Icon container
+  const iconContainer = document.createElement("div");
+  const iconSpan = document.createElement("span");
+  iconSpan.className = "material-symbols-outlined";
+  iconSpan.textContent = icon;
+  iconContainer.appendChild(iconSpan);
+
+  // Payment content
+  const paymentContent = document.createElement("div");
+  paymentContent.className = "payment-content";
+
+  const paymentHeader = document.createElement("div");
+  paymentHeader.className = "payment-header";
+
+  const paymentInfo = document.createElement("div");
+  paymentInfo.className = "payment-info";
+
+  const issuerSpan = document.createElement("span");
+  issuerSpan.className = "issuer";
+  issuerSpan.textContent = method.bank_name || method.brand || "Bank Name";
+
+  const numberSpan = document.createElement("span");
+  numberSpan.className = "number";
+  numberSpan.textContent = `**** ${method.last4 || "1234"}`;
+
+  paymentInfo.appendChild(issuerSpan);
+  paymentInfo.appendChild(numberSpan);
+  paymentHeader.appendChild(paymentInfo);
+
+  const details = document.createElement("div");
+  details.className = "details";
+
+  if (method.exp_month) {
+    const expiresSpan = document.createElement("span");
+    expiresSpan.className = "expires";
+    expiresSpan.textContent = `Expires ${String(method.exp_month).padStart(
+      2,
+      "0"
+    )}/${method.exp_year}`;
+    details.appendChild(expiresSpan);
+  }
+
+  paymentContent.appendChild(paymentHeader);
+  paymentContent.appendChild(details);
+
+  paymentMethod.appendChild(iconContainer);
+  paymentMethod.appendChild(paymentContent);
+
+  // Right section
+  const methodRight = document.createElement("div");
+  methodRight.className = "payment-method-right";
+
+  const radioIcon = document.createElement("span");
+  radioIcon.className = "material-symbols-outlined radio-icon";
+  radioIcon.textContent = "radio_button_unchecked";
+  methodRight.appendChild(radioIcon);
+
+  wrapper.appendChild(paymentMethod);
+  wrapper.appendChild(methodRight);
+
+  return wrapper;
 }
 
 // pay invoice function
@@ -238,21 +529,5 @@ window.payInvoice = async function () {
 window.toggleDetails = function () {
   console.log("hide");
 };
-
-// paymet method :
-const toggleBtn = document.getElementById("toggle-extra-payments");
-const extraPayments = document.getElementById("extra-payment-methods");
-const toggleText = document.getElementById("toggle-text");
-const toggleIcon = document.getElementById("toggle-icon");
-
-toggleBtn.addEventListener("click", () => {
-  console.log("Toggle button clicked");
-  const isHidden = extraPayments.classList.toggle("hidden");
-
-  toggleText.textContent = isHidden ? "Show More" : "Show Less";
-  toggleIcon.textContent = isHidden
-    ? "keyboard_double_arrow_down"
-    : "keyboard_double_arrow_up";
-});
 
 fetchInvoiceData();

@@ -230,6 +230,10 @@
   width: 100%;
 }
 
+#chosen-method-container {
+  width: 100%;
+}
+
 .chosen-payment-method-wrapper {
   /* display: flex; */
 
@@ -237,7 +241,7 @@
 
   border-radius: 5px;
 
-  width: 100%;
+  width: inherit;
   /* font-weight: 600; */
   /* font-size: 1.2em; */
 }
