@@ -5,6 +5,8 @@
 :root {
   --primary-color: rgb(9, 72, 97);
   --selected-color: rgb(9, 72, 97);
+  --lighter-primary-color: rgb(15, 108, 145);
+
   --outline-color: rgb(216, 216, 216);
   --lighter-outline-color: rgb(241, 241, 241);
   --dark-icon-color: rgb(94, 94, 94);
@@ -38,16 +40,16 @@
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-  }
+}
 
-  @keyframes rotation {
+@keyframes rotation {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
-  } 
+}
 
 body {
   margin: 0;
@@ -351,6 +353,13 @@ td.link {
   cursor: default;
 }
 
+.material-symbols-outlined.frequency-icon {
+  font-size: 1.5em;
+  color: var(--selected-color);
+  /* background-color: pink; */
+}
+
+/* status boxes */
 .status {
   text-transform: uppercase;
   white-space: nowrap;
@@ -371,7 +380,7 @@ td.link {
 }
 
 .status.past-due {
-  background-color: rgb(230, 168, 168);
+  background-color: rgb(223, 140, 140);
   color: rgb(97, 7, 7);
 }
 
@@ -380,17 +389,42 @@ td.link {
   color: black;
 }
 
-.material-symbols-outlined.frequency-icon {
+.status.unpaid {
+  background-color: rgb(230, 168, 168);
+  color: rgb(97, 7, 7);
+}
+/* status boxes end */
+
+.default-tag {
+  /* background-color: rgb(94, 168, 197); */
+  background-color: var(--lighter-primary-color);
+  color: white;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 0.7em;
+  font-weight: 500;
+
+  text-transform: uppercase;
+
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.material-symbols-outlined.radio-icon {
   font-size: 1.5em;
-  color: var(--selected-color);
-  /* background-color: pink; */
+  color: var(--light-icon-color);
+}
+
+.material-symbols-outlined.radio-icon.selected {
+  color: var(--primary-color);
 }
 
 .frequency {
   display: flex;
   align-items: center;
   gap: 5px;
-  /* background-color: pink; */
 }
 
 .empty-row {

@@ -239,4 +239,20 @@ window.toggleDetails = function () {
   console.log("hide");
 };
 
+// paymet method :
+const toggleBtn = document.getElementById("toggle-extra-payments");
+const extraPayments = document.getElementById("extra-payment-methods");
+const toggleText = document.getElementById("toggle-text");
+const toggleIcon = document.getElementById("toggle-icon");
+
+toggleBtn.addEventListener("click", () => {
+  console.log("Toggle button clicked");
+  const isHidden = extraPayments.classList.toggle("hidden");
+
+  toggleText.textContent = isHidden ? "Show More" : "Show Less";
+  toggleIcon.textContent = isHidden
+    ? "keyboard_double_arrow_down"
+    : "keyboard_double_arrow_up";
+});
+
 fetchInvoiceData();

@@ -141,6 +141,24 @@ export function displayOverview(content = {}) {
   payNowButton.onclick = currentBalance.payNowFunction;
   cardButtons.appendChild(payNowButton);
 
+  // conditional if no payments to be made:
+  if (currentBalance.amount === 0) {
+    // Clear notifications and show "All up to date!"
+    cardNotifications.innerHTML = "";
+    const upToDate = document.createElement("div");
+    upToDate.classList.add("no-notification", "positive");
+    const upToDateText = document.createElement("span");
+    upToDateText.textContent = "All up to date!";
+    upToDate.appendChild(upToDateText);
+    cardNotifications.appendChild(upToDate);
+
+    // Hide the Pay Now button
+    payNowButton.style.display = "none";
+
+    // Update due date message
+    currentBalanceDueDate.textContent = "No upcoming payments due.";
+  }
+
   const setUpAutoPayButton = document.createElement("button");
   setUpAutoPayButton.classList.add("pay-button", "grey");
   setUpAutoPayButton.textContent = "Set Up Auto Pay";
@@ -185,9 +203,7 @@ export function displayOverview(content = {}) {
 
   const scheduledPaymentsDueDate = document.createElement("span");
   scheduledPaymentsDueDate.id = "scheduled-payments-due-date";
-  scheduledPaymentsDueDate.textContent = `Due on ${formatDate(
-    scheduledPayments.dueDate
-  )}`;
+  scheduledPaymentsDueDate.textContent = ``;
   moneyAndDate.appendChild(scheduledPaymentsDueDate);
 
   const invoiceDescription = document.createElement("span");
@@ -199,7 +215,10 @@ export function displayOverview(content = {}) {
   scheduledPaymentsHeader.appendChild(autoPayAndEdit);
 
   const autopayCreatedBy = document.createElement("span");
-  autopayCreatedBy.textContent = `Autopay created by ${scheduledPayments.createdBy}`;
+  autopayCreatedBy.textContent =
+    scheduledPayments.createdBy === "N/A"
+      ? ""
+      : `Autopay created by ${scheduledPayments.createdBy}`;
   autoPayAndEdit.appendChild(autopayCreatedBy);
 
   const editButton = document.createElement("button");
@@ -246,7 +265,7 @@ export function displayOverview(content = {}) {
   paidOnDateAndAmount.appendChild(lastPaymentValue);
 
   const confirmationNumber = document.createElement("span");
-  confirmationNumber.textContent = `Confirmation #${lastPayment.confirmationNumber}`;
+  confirmationNumber.textContent = `Confirmation ${lastPayment.confirmationNumber}`;
   lastPaymentContent.appendChild(confirmationNumber);
 
   const paidByCustomer = document.createElement("span");

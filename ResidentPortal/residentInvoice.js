@@ -1,5 +1,9 @@
 import loadIcons from "../hooks/loadIcons.js";
-import { fetchInvoices, fetchUserById } from "../hooks/firestore.js";
+import {
+  fetchInvoices,
+  fetchPayments,
+  fetchUserById,
+} from "../hooks/firestore.js";
 import {
   displayOverview,
   displayInvoices,
@@ -8,6 +12,7 @@ import {
 } from "./displayTabs.js";
 
 import stripeConfig from "../hooks/stripe-config.js";
+import formatInvoiceEntryId from "../hooks/formatInvoiceEntryId.js";
 
 const HEROKU_URL = stripeConfig.serverUrl;
 
@@ -60,21 +65,55 @@ window.setPageTab = async function (tab) {
 async function loadData() {
   loadCustomerData(YONE_PORO_ID);
 
-  const currentBalance = loadCustomerInvoices(YONE_PORO_ID);
+  const currentBalance = await loadCustomerInvoices(YONE_PORO_ID);
+  const payments = await loadCustomerPayments(YONE_PORO_ID);
+
+  // 🔍 Find the most recent payment
+  let mostRecentPayment = null;
+
+  // TODO: idk i dont like this function
+  if (payments.length > 0) {
+    mostRecentPayment = payments.reduce((latest, current) => {
+      const latestTime =
+        latest.paidOn.seconds * 1_000 +
+        Math.floor(latest.paidOn.nanoseconds / 1_000_000);
+      const currentTime =
+        current.paidOn.seconds * 1_000 +
+        Math.floor(current.paidOn.nanoseconds / 1_000_000);
+      return currentTime > latestTime ? current : latest;
+    });
+  }
+
+  // Fallback if no payments
+  const defaultLastPayment = {
+    amount: 0,
+    date: new Date(),
+    confirmationNumber: "N/A",
+    paidBy: "N/A",
+  };
+
   displayOverview({
-    currentBalance: await currentBalance,
+    currentBalance,
     scheduledPayments: {
       amount: 0,
       dueDate: new Date(),
       description: "No scheduled payments",
       createdBy: "N/A",
     },
-    lastPayment: {
-      amount: 0,
-      date: new Date(),
-      confirmationNumber: "N/A",
-      paidBy: "N/A",
-    },
+    lastPayment: mostRecentPayment
+      ? {
+          amount:
+            Object.values(mostRecentPayment.invoiceData.billingItemMap).reduce(
+              (sum, item) => sum + item.amount,
+              0
+            ) / 100,
+          date: mostRecentPayment.paidOn,
+          confirmationNumber: formatInvoiceEntryId(
+            mostRecentPayment.invoiceData.invoiceNumber
+          ),
+          paidBy: mostRecentPayment.invoiceData.residentName,
+        }
+      : defaultLastPayment,
   });
 
   loadIcons();
@@ -91,6 +130,13 @@ async function loadCustomerData(userId) {
 
   const customerName = document.querySelector("#customer-name");
   customerName.textContent = `Hello, ${user.name}`;
+}
+
+async function loadCustomerPayments(userId) {
+  const payments = await fetchPayments(userId);
+  console.log("Payments for userId:", userId, payments);
+
+  return payments;
 }
 
 async function loadCustomerInvoices(userId) {

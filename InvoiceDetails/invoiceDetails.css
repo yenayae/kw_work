@@ -48,6 +48,10 @@
   gap: 15px;
 }
 
+.payment-wrapper {
+  /* gap: 10px; */
+}
+
 .invoice-wrapper span {
   /* font-weight: 500; */
 }
@@ -74,7 +78,7 @@
 }
 
 .invoice-divider.details {
-  margin: 0;;
+  margin: 0;
 }
 
 .metadata-wrapper {
@@ -160,6 +164,15 @@
   cursor: pointer;
 }
 
+.hide-icon.chosen {
+  font-size: 0.9em;
+  /* align-self: flex-start; */
+  justify-content: flex-start;
+
+  /* background-color: pink; */
+  width: 100%;
+}
+
 .invoice-item-wrapper {
   display: flex;
   flex-direction: column;
@@ -212,15 +225,19 @@
   font-size: 1.3em;
 }
 
-.payment-methods, .chosen-payment-method {
+.payment-methods,
+.chosen-payment-method {
   width: 100%;
-
 }
 
-.chosen-payment-method {
+.chosen-payment-method-wrapper {
+  /* display: flex; */
+
   background-color: var(--lighter-outline-color);
-  padding: 15px 5px;
+
   border-radius: 5px;
+
+  width: 100%;
   /* font-weight: 600; */
   /* font-size: 1.2em; */
 }
@@ -229,14 +246,46 @@
   font-weight: 500;
 }
 
-.payment-method {
+.chosen-payment-method {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.chosen-content,
+.payment-method-right {
+  display: flex;
+  flex-direction: row;
+
+  align-content: center;
+  gap: 10px;
+
+  padding: 15px 10px;
+}
+
+.center-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.payment-method-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 10px;
 
   width: 100%;
+}
 
-  
+.payment-method {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .payment-header {
@@ -265,8 +314,16 @@
   gap: 5px;
 }
 
+.payment-method-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .expires {
   white-space: nowrap;
+  color: var(--light-icon-color);
+  font-size: 0.9em;
 }
 
 .payment-type {
@@ -294,4 +351,8 @@
   background-color: var(--lighter-outline-color);
   height: 30px;
   width: 100px;
+}
+
+.hidden {
+  display: none;
 }
