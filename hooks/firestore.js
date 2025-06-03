@@ -13,6 +13,8 @@ import {
   runTransaction,
   increment,
   orderBy,
+  or,
+  and,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // FIRESTORE FUNCTIONS USED IN DASHBORD.HTML
@@ -172,31 +174,160 @@ export async function fetchRecentActivities(userId = DEV_USER_ID) {
 export async function fetchInvoices(
   customerId = undefined,
   paidStatus = undefined,
-  invoiceId = undefined
+  invoiceId = undefined,
+  filters = {}
 ) {
   const invoicesRef = collection(db, "invoices");
+  let conditions = [];
 
-  let constraints = [];
-
+  // Add base conditions
   if (customerId !== undefined) {
-    constraints.push(where("residentId", "==", customerId));
+    conditions.push(where("residentId", "==", customerId));
   }
 
   if (paidStatus !== undefined) {
-    constraints.push(where("isPaid", "==", paidStatus));
+    conditions.push(where("isPaid", "==", paidStatus));
   }
 
   if (invoiceId !== undefined) {
-    constraints.push(where("id", "==", invoiceId));
+    conditions.push(where("id", "==", invoiceId));
   }
 
+  // Handle filters
+  if (filters) {
+    Object.entries(filters).forEach(([filterName, selectedOptions]) => {
+      if (selectedOptions.length === 0) return;
+
+      switch (filterName) {
+        case "Invoice Status":
+        case "Payment Status": {
+          const statusConditions = [];
+
+          if (selectedOptions.includes("Paid")) {
+            statusConditions.push(where("isPaid", "==", true));
+          }
+
+          if (selectedOptions.includes("Past Due")) {
+            statusConditions.push(
+              and(
+                where("isPaid", "==", false),
+                where("dueDateTimestamp", "<", new Date())
+              )
+            );
+          }
+
+          if (selectedOptions.includes("Scheduled")) {
+            statusConditions.push(
+              and(
+                where("isPaid", "==", false),
+                where("dueDateTimestamp", ">=", new Date())
+              )
+            );
+          }
+
+          if (statusConditions.length > 0) {
+            conditions.push(or(...statusConditions));
+          }
+          break;
+        }
+
+        case "Amount": {
+          const amounts = selectedOptions.filter((opt) => opt !== "All");
+          if (amounts.length > 0) {
+            const amountConditions = amounts.map((range) => {
+              if (range === "1000+") {
+                return where("total", ">=", 1000 * 100); // Convert to cents
+              } else {
+                const [min, max] = range
+                  .split(" - ")
+                  .map((num) => parseInt(num) * 100); // Convert to cents
+                return and(
+                  where("total", ">=", min),
+                  where("total", "<=", max)
+                );
+              }
+            });
+            conditions.push(or(...amountConditions));
+          }
+          break;
+        }
+
+        case "Issue Date": {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const tomorrow = new Date(today);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+
+          const dateConditions = [];
+
+          if (selectedOptions.includes("Today")) {
+            dateConditions.push(
+              and(
+                where("issueDateTimestamp", ">=", today),
+                where("issueDateTimestamp", "<", tomorrow)
+              )
+            );
+          }
+
+          if (selectedOptions.includes("Not Today")) {
+            dateConditions.push(
+              or(
+                where("issueDateTimestamp", "<", today),
+                where("issueDateTimestamp", ">=", tomorrow)
+              )
+            );
+          }
+
+          if (dateConditions.length > 0) {
+            conditions.push(or(...dateConditions));
+          }
+          break;
+        }
+
+        case "Due Date": {
+          const todayForDue = new Date();
+          todayForDue.setHours(0, 0, 0, 0);
+          const tomorrowForDue = new Date(todayForDue);
+          tomorrowForDue.setDate(tomorrowForDue.getDate() + 1);
+
+          const dueConditions = [];
+
+          if (selectedOptions.includes("Today")) {
+            dueConditions.push(
+              and(
+                where("dueDateTimestamp", ">=", todayForDue),
+                where("dueDateTimestamp", "<", tomorrowForDue)
+              )
+            );
+          }
+
+          if (selectedOptions.includes("Not Today")) {
+            dueConditions.push(
+              or(
+                where("dueDateTimestamp", "<", todayForDue),
+                where("dueDateTimestamp", ">=", tomorrowForDue)
+              )
+            );
+          }
+
+          if (dueConditions.length > 0) {
+            conditions.push(or(...dueConditions));
+          }
+          break;
+        }
+      }
+    });
+  }
+
+  // Create the query with all conditions wrapped in a top-level and
   const q =
-    constraints.length > 0 ? query(invoicesRef, ...constraints) : invoicesRef;
+    conditions.length > 0
+      ? query(invoicesRef, and(...conditions))
+      : query(invoicesRef);
 
   const invoicesSnapshot = await getDocs(q);
 
   let data = [];
-
   invoicesSnapshot.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() });
   });

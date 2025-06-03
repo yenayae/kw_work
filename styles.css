@@ -393,6 +393,26 @@ td.link {
   background-color: rgb(230, 168, 168);
   color: rgb(97, 7, 7);
 }
+
+.status.refunded {
+  background-color: rgb(97, 7, 7);
+  color: rgb(31, 14, 14);
+}
+
+.status.void {
+  background-color: rgb(75, 75, 75);
+  color: rgb(216, 216, 216);
+}
+
+.status.pending {
+  background-color: rgb(255, 215, 0);
+  color: rgb(231, 220, 188);
+}
+
+.status.paid-in-person {
+  background-color: rgb(119, 230, 146);
+  color: rgb(11, 92, 18);
+}
 /* status boxes end */
 
 .default-tag {

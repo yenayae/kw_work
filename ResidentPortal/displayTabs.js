@@ -325,6 +325,12 @@ function displayInvoiceTable(invoices, containerDiv) {
   const invoicesContainer =
     containerDiv ?? document.getElementById("table-container");
 
+  // if there is a table, remove the old table
+  const oldTable = invoicesContainer.querySelector(".generic-table");
+  if (oldTable) {
+    oldTable.remove();
+  }
+
   const headers = INVOICE_HEADERS;
 
   //format invoices for the table
@@ -362,19 +368,43 @@ function displayInvoiceTable(invoices, containerDiv) {
 
 export async function displayInvoices(customerId) {
   console.log("Invoices button clicked");
-  const invoices = await fetchInvoices(customerId);
-
-  console.log("Invoices:", invoices);
+  let activeFilters = {}; // Keep track of active filters
 
   const displayContainer = document.querySelector("#tab-display");
   displayContainer.classList.add("table");
   displayContainer.innerHTML = "";
 
-  const filterBar = createFilterBar(INVOICE_FILTER_OPTIONS);
+  // Function to handle filter updates
+  const handleFilterUpdate = async (filterName, selectedOptions) => {
+    // Update the active filters
+    if (selectedOptions.length === 0) {
+      delete activeFilters[filterName];
+    } else {
+      activeFilters[filterName] = selectedOptions;
+    }
+
+    // Fetch new data with current filters
+    const invoices = await fetchInvoices(
+      customerId,
+      undefined,
+      undefined,
+      activeFilters
+    );
+    console.log("Filtered Invoices:", invoices);
+
+    // clear the table
+
+    // display the new data
+    displayInvoiceTable(invoices, displayContainer);
+  };
+
+  const filterBar = createFilterBar(INVOICE_FILTER_OPTIONS, handleFilterUpdate);
   displayContainer.appendChild(filterBar);
 
-  // displayContainer.appendChild(displayTable(invoices));
-  displayInvoiceTable(invoices, displayContainer);
+  // Initial fetch without filters
+  const initialInvoices = await fetchInvoices(customerId);
+  console.log("Initial Invoices:", initialInvoices);
+  displayInvoiceTable(initialInvoices, displayContainer);
 }
 
 // Payments tab ==========================================

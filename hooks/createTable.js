@@ -178,7 +178,7 @@ export function createTableContent(headers, content) {
   if (content.length === 0) {
     //create empty state message
     const emptySpan = document.createElement("span");
-    emptySpan.textContent = "No data available.";
+    emptySpan.textContent = "No results found.";
     emptySpan.classList.add("empty-state-message");
     tbody.appendChild(emptySpan);
 

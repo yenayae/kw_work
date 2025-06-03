@@ -1,4 +1,4 @@
-export default function createFilterBar(filters) {
+export default function createFilterBar(filters, onFilterApply) {
   const filterBar = document.createElement("div");
   filterBar.classList.add("filter-bar");
   filterBar.id = "filter-bar";
@@ -12,7 +12,6 @@ export default function createFilterBar(filters) {
       activeButton.classList.remove("selected");
       activeMenu.classList.add("hidden");
       activeMenu.classList.remove("visible");
-      console.log("Filter removed");
       activeButton = null;
       activeMenu = null;
     }
@@ -29,7 +28,8 @@ export default function createFilterBar(filters) {
       filter.name,
       filter.options,
       closeMenu,
-      button
+      button,
+      onFilterApply
     );
     filterMenu.classList.add("hidden");
 
@@ -65,7 +65,13 @@ export default function createFilterBar(filters) {
   return filterBar;
 }
 
-function createFilterMenu(title, options, onClose, filterButton) {
+function createFilterMenu(
+  title,
+  options,
+  onClose,
+  filterButton,
+  onFilterApply
+) {
   const filterMenu = document.createElement("div");
   filterMenu.classList.add("filter-menu", "hidden");
 
@@ -168,6 +174,9 @@ function createFilterMenu(title, options, onClose, filterButton) {
     filterButton.classList.remove("filtered");
     console.log("Filter cleared");
     onClose?.();
+    if (onFilterApply) {
+      onFilterApply(title, []); // Call with empty filters when cleared
+    }
   };
 
   const applyButton = document.createElement("button");
@@ -177,8 +186,17 @@ function createFilterMenu(title, options, onClose, filterButton) {
     const anyChecked = checkboxes.some((cb) => cb.checked);
     if (anyChecked) {
       filterButton.classList.add("filtered");
+      const selectedOptions = checkboxes
+        .filter((cb) => cb.checked)
+        .map((cb) => cb.value);
+      if (onFilterApply) {
+        onFilterApply(title, selectedOptions);
+      }
     } else {
       filterButton.classList.remove("filtered");
+      if (onFilterApply) {
+        onFilterApply(title, []); // Call with empty filters when none selected
+      }
     }
     console.log("Filter applied");
     onClose?.();
