@@ -11,7 +11,7 @@ loadIcons();
 
 console.log("Loading icons...");
 
-const CUSTOMER_ID = "vwutkwHs1tJfLbXvplFW";
+const CUSTOMER_ID = "YxjftiBUqLiwN1xk7hSo";
 
 const params = new URLSearchParams(window.location.search);
 const invoiceId = params.get("id");
