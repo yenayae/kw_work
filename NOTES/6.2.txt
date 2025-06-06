@@ -1,0 +1,11 @@
+- invoice details:
+	= update ui so at pay now: reload 
+
+- pay now button UI
+		- reload the details page
+		-  overview page for invoice updates
+
+- when clicking link to invoice, stay on current tab
+- business account onboarding page / ui
+
+- START: business perspective of portal / invoices / payments
