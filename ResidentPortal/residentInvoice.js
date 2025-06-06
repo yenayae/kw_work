@@ -116,6 +116,8 @@ async function loadData() {
       : defaultLastPayment,
   });
 
+  const loadingEl = document.getElementById("loader-wrapper");
+  loadingEl.classList.remove("show");
   loadIcons();
 }
 
