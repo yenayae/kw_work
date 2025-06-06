@@ -9,3 +9,7 @@
 - business account onboarding page / ui
 
 - START: business perspective of portal / invoices / payments
+
+- code cleanup : simplify and organize for easy imports
+	+ annotations
+	+ documentation for : heroku, firestore functions, api keys etc.
